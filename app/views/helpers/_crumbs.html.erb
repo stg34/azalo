@@ -1,0 +1,20 @@
+<% if crumbs.size > 1 %>
+  <table><tr>
+    <% i = 0 %>
+    <% crumbs.reverse.each do |c| %>
+      <td style="font-weight: bold; padding-right: 10px; padding-left: 0;">
+        <% if i < crumbs.size - 1 %>
+          <%= link_to c[:type] + " " + n2e(c[:name]), c[:url] %>
+        <% else %>
+          <%= c[:type] + " " + n2e(c[:name])%>
+        <% end %>
+      </td>
+      <td style="font-size: 20px; font-weight: bold">
+        <% if i < crumbs.size - 1 %>
+        &#8594;
+        <% end %>
+      </td>
+      <% i += 1 %>
+    <% end %>
+  </tr></table>
+<% end %>

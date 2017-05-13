@@ -1,0 +1,3 @@
+class AzPageAzPageType < OwnedActiveRecord
+
+end

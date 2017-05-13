@@ -1,0 +1,22 @@
+<% page = node.main_page %>
+
+<% classes = "page-box draggable-page " %>
+<%# classes += "_node_#{node.get_path_string} " %>
+<%# classes += "_page_#{page.id} " %>
+<%# classes += "page_#{page.id} "%>
+<%# classes += "link_#{node.get_link.id} " if node.get_link%>
+<% classes += page.get_page_type == AzPage::Page_user ? 'user ' : 'admin ' %>
+<% classes += page.embedded ? 'embedded ' : '' %>
+<% classes += "#{path} " %>
+
+<div class="<%= classes %>" id="<%= path %>">
+  <div class="content-holder">
+    <div style="width: 30px;"></div>
+    <div style="float: left; height: 30px;"></div>
+      <div id="page_box_holder_<%= path %>">
+        <div class="page_box_holder_<%= page.id %>">
+          
+        </div>
+      </div>
+  </div>
+</div>

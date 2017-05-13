@@ -1,0 +1,53 @@
+<%= page_dialog_title(t(:az_label_description), page) %>
+<% show_title = !embedded_page %>
+
+<% if update_tr %>
+  <% complete_str = "Windows.closeAll(); update_tr_page(#{page_to_update.id});" %>
+<% else %>
+  <% complete_str = "Windows.closeAll(); update_page_box(#{page_to_update.id});" %>
+<% end %>
+
+<div class="page-description-dialog" id="page-description-dialog-content">
+  <%= form_for(page,
+              remote: true,
+              :url => {:controller => 'az_pages', :action => 'update_description_and_title', :id => page.id},
+              :complete => complete_str) do |page_form| %>
+ 
+      <% if show_title %>
+        Заголовок
+        <p>
+          <%= page_form.text_field :title %>
+        </p>
+      <% end %>
+      <%= t(:az_label_description) %>&nbsp;&nbsp;&nbsp;<%= wiki_syntax_help %>
+      <p>
+        <%= page_form.text_area :description, :class=>'description', :id => 'description-page-textarea' %>
+      </p>
+    <%= submit_and_disable_tag(page_form, t(:az_label_save), :disabled => !permitted_to?(:edit, page)) %>
+    <%= page_form.submit t(:az_label_cancel), :onclick => 'Windows.closeAll(); return false;' %>
+
+  <% end %>
+
+  <div style="display: none;" id="description-page-textarea-1"></div>
+
+  <% ops_num = 0 %>
+  <% message = '' %>
+  <% if page.types.size == 0 %>
+    <% message = 'Для того, что бы сгенерировать текст, укажите для этой страницы данные и операции над этими данными. Это можно сделать переключившись в режим Данные.' %>
+  <% else %>
+    <% page.az_typed_pages.each do |t| %>
+      <% if t.az_allowed_operations.size > 0 %>
+        <% ops_num += 1 %>
+      <% end %>
+    <% end %>
+    <% if ops_num > 0 %>
+      <% message = '' %>
+    <% else %>
+      <% message = 'Для того, что бы сгенерировать текст, укажите для этой страницы операции над данными. Это можно сделать переключившись в режим Данные' %>
+    <% end %>
+  <% end %>
+   
+
+  <%= render( :partial => '/az_pages/generate_description_menu', :locals => {:page => page, :texts => texts}) %>
+<%= aligner_tag %>
+</div>

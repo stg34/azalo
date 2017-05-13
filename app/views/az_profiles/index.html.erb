@@ -1,0 +1,193 @@
+<div class="profile">
+  <h1>Мои данные</h1>
+
+  <div class="user-data">
+    <div class="name"><%= h @me.name %> <%= h @me.lastname %> (<%= h @me.login %>)</div>
+    <div class="email"><%= h @me.email %></div>
+    <% if @me.az_companies.size > 0 %>
+      <div class="ceo">
+      Я директор в
+      <% @me.az_companies.each do |w| -%>
+        &quot;<%= link_to(h(w.name), edit_az_company_path(w)) %>&quot;
+      <% end -%>
+      </div>
+    <% end %>
+
+    <%= link_to 'Сменить пароль', {:controller => 'az_users', :action => 'change_password'}, :class => "change-password" %><br/>
+
+    <% if @me.works.size > 0 %>
+      Я работаю в
+      <% @me.works.each do |w| -%>
+        &quot;<%= h w.name %>&quot;
+      <% end -%>
+      <br/>
+    <% end %>
+    <% if @me.disabled_works.size > 0 %>
+      Моя работа приостановлена в
+      <% @me.disabled_works.each do |w| -%>
+          &quot;<%= h w.name %>&quot;
+      <% end -%>
+      <br/>
+    <% end %>
+
+  </div>
+  
+  <div class="user-tariff">
+    <% @me.az_companies.each do |company| %>
+      <% if @me.az_companies.size > 1%>
+        <h2><%= company.name %></h2>
+      <% end %>
+      <% tariff = company.az_tariff %>
+      <div class="tariff">Тариф: <%= tariff.name %>
+        <% if company.test_period_not_finished %>
+          <br/>
+          <span class="test-period-end">Тестовый период до <%= l(company.az_test_period.ends_at) %></span>
+
+        <% end %>
+      </div>
+      
+      <table class="table">
+        <tr>
+          <th>Количество публичных проектов/компонентов</th>
+          <td>
+            <%= tariff.quota_public_projects >= AzTariff.unlimited_value ? "Неограничено" : tariff.quota_public_projects %>
+          </td>
+        </tr>
+        <tr>
+          <th>Количество приватных проектов/компонентов</th>
+          <td>
+            <% if tariff.quota_private_projects == 0 %>
+              Нет
+            <% elsif tariff.quota_private_projects >= AzTariff.unlimited_value %>
+              Неограничено
+            <% else %>
+              <%= tariff.quota_private_projects %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <th>Название студии, логотип и ссылка на сайт</th>
+          <td>
+            <% if tariff.show_logo_and_site %>
+              <img src="/images/tick.gif" alt="Название веб-студии, логотип и ссылка на сайт" />
+            <% else %>
+              Нет
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <th>Работников (не считая меня)</th>
+          <td><%= tariff.quota_employees %></td>
+        </tr>
+      </table>
+      <%= link_to 'Сменить тариф', {:controller => 'az_companies', :action => 'change_tariff', :id => company.id}, :class => "change-tariff" %><br/>
+      <br/>
+      <% balance = company.get_balance %>
+      <div class="<%= balance < 0 ? "negative-balance" : "balance" %>">Счет: <%= balance %>$</div>
+      <%= aligner_tag %><br/><br/>
+      <%= link_to 'Пополнить счет', make_payment_path(:company_id => company.id), :class => 'make-payment' %>
+      <%= aligner_tag %><br/><br/>
+      <%= link_to 'История платежей', {:controller => 'az_companies', :action => 'billing_history', :id => company.id } %><br/><br/>
+
+    <% end %>
+  </div>
+  <%= aligner_tag %>
+  <%= link_to 'Мои работники', {:controller => 'az_employees', :action => 'index_user'} %>
+  
+  <% invitations_to_work = @me.get_invitations_to_get_work %>
+  <% if invitations_to_work.size > 0 %>
+    <hr/>
+    <h2>Меня приглашают на работу</h2>
+    <table class="table">
+      <tr>
+        <th>#</th>
+        <th>email</th>
+        <th>Компания</th>
+        <th>Секретный код</th>
+        <th>Принять</th>
+        <th>Отклонить</th>
+      </tr>
+      <% invitations_to_work.each_with_index do |inv, n| %>
+      <% cmp = AzCompany.find(inv.invitation_data) %>
+        <tr>
+          <td><%= n + 1 %></td>
+          <td><%= h inv.email %></td>
+          <td><%= h cmp.name %></td>
+          <td><%= h inv.hash_str %></td>
+          <td><%= link_to 'Принять', {:controller => 'az_invitations', :action => 'accept', :id => inv.id} %></td>
+          <td><%= link_to 'Отклонить', {:controller => 'az_invitations', :action => 'reject', :id => inv.id}, :confirm => t(:az_label_are_you_sure) %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+  <br/>
+
+  <% if false && current_user.roles.include?(:admin) %>
+    <h2>Приглашения на сайт</h2>
+    У меня пригашений на сайт: <%= @me.azalo_invitation_count %> шт.<br/>
+
+    <h3>Мои приглашения на сайт, которые еще не приняты:</h3>
+    <% n = 0 %>
+
+    <% if @my_invitations_to_site.size == 0 %>
+      Нет отправленных мною приглашений на сайт
+    <% else %>
+      <table class="table">
+        <tr>
+          <th>#</th>
+          <th>email</th>
+          <th>Секретный код</th>
+          <th>Когда</th>
+          <th><%= t(:az_label_cancel) %></th>
+          <th>Повторно отправить</th>
+        </tr>
+        <% @my_invitations_to_site.each do |inv| %>
+          <tr>
+            <td><%= n += 1 %></td>
+            <td><%= h inv.email %></td>
+            <td><%= h inv.hash_str %></td>
+            <td><%= distance_of_time_in_words(inv.created_at, Time.now) %></td>
+            <td><%= link_to t(:az_label_delete), {:controller => 'az_invitations', :action => 'delete_invitation', :id => inv.id}, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+            <td>
+              <%= link_to 'Повторно отправить', {:controller => 'az_invitations', :action => 'resend_invitation_to_site', :id => inv.id}, :confirm => t(:az_label_are_you_sure), :method => :post %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+    <br/>
+
+    <h3>Приглашенные мною пользователи:</h3>
+    <% if @my_invited_users.size == 0 %>
+    <% else %>
+      Нет приглашенных мною пользователей
+    <% n = 0 %>
+      <table class="table">
+        <tr>
+          <th>#</th>
+          <th>email</th>
+          <th>login</th>
+          <th>disabled</th>
+        </tr>
+        <% @my_invited_users.each do |inv| %>
+          <tr>
+            <td><%= n += 1 %></td>
+            <td><%= h inv.email %></td>
+            <td><%= h inv.az_user.login %></td>
+            <td>
+                <% usr = inv.az_user %>
+                <% usr_rc = usr.az_register_confirmation %>
+                <%= h usr.disabled %>
+                <%= link_to("Отпраить подтверждение повторно", :controller => :az_register_confirmations, :action => :resend, :id => usr_rc.id) if usr_rc %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+    <br/>
+    <%= link_to_unless @me.azalo_invitation_count < 1, 'Пригласить на сайт', :controller => 'az_invitations', :action => 'invite_to_site', :user_id => current_user.id %>
+  <% end %>
+
+  <br/><%= link_to 'Сменить состав рассылки', {:controller => 'az_users', :action => 'change_subscribtion'} %>
+
+</div>

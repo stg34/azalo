@@ -1,0 +1,23 @@
+<h1>Сервисные функции</h1>
+<table class="table">
+  <tr>
+    <th>
+      Таблица
+    </th>
+    <th>
+      Кол-во
+    </th>
+    <th>
+      Удалить
+    </th>
+  </tr>
+  <% @tables.each_pair do |k, v| %>
+    <% if k[0] != 'schema_migrations' %>
+      <tr>
+        <td><%= k[0] %></td>
+        <td><%= v %></td>
+        <td><% if k[0] != 'az_users' %><%= link_to t(:az_label_delete), :controller => 'az_services', :action => 'clean_table', :id=>k %><% end %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

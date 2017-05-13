@@ -1,0 +1,14 @@
+
+<% for az_subscribtion_category in @subscribtion_categories %>
+  <%= check_box_tag "az_user[az_subscribtion_categories_ids][]", az_subscribtion_category.id, @user.az_subscribtion_categories.include?(az_subscribtion_category), :include_blank => true %>
+  <%= az_subscribtion_category.name %><br/>
+  <%= f.hidden_field('created_at') #Не удалять это поле! Оно нужно для полной отписки от рассылки
+  %>
+<% end %>
+<br/>
+<div>
+  Очень редко вы будете получать критически важные сообщения. Отписаться от них можно только удалив свой аккаунт.
+</div>
+<br/>
+<%= f.submit(t(:az_label_save)) %>
+

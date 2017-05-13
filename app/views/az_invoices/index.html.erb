@@ -1,0 +1,22 @@
+<h1>Listing az_invoices</h1>
+
+<table>
+  <tr>
+    <th>Az balance transaction</th>
+    <th>Description</th>
+  </tr>
+
+<% @az_invoices.each do |az_invoice| %>
+  <tr>
+    <td><%=h az_invoice.az_balance_transaction_id %></td>
+    <td><%=h az_invoice.description %></td>
+    <td><%= link_to 'Show', az_invoice %></td>
+    <td><%= link_to 'Edit', edit_az_invoice_path(az_invoice) %></td>
+    <td><%= link_to 'Destroy', az_invoice, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_invoice', new_az_invoice_path %>

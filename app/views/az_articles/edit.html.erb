@@ -1,0 +1,52 @@
+<h1>Редактирование статьи</h1>
+
+<%= form_for(@az_article, :html => { :multipart => true }) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render( :partial => '/az_articles/new_edit', :locals => {:f => f}) %>
+
+  <%= @az_article.az_c_images.size %>
+
+
+<% f.fields_for :az_c_images do |c_image_form| %>
+  <hr/>
+
+  <table>
+    <tr>
+      <td>
+        <p>
+          <%= c_image_form.file_field :c_image %><br/>
+        </p>
+
+        <% unless c_image_form.object.new_record? %>
+          <%= c_image_form.check_box '_destroy' %>
+          <%= c_image_form.label '_destroy', 'Remove' %>
+        <% end %>
+
+      </td>
+      <td style="padding-left: 300px;">
+        <% unless c_image_form.object.new_record? %>
+          <%= image_tag(c_image_form.object.c_image.url(:small)) %>
+          <br/>
+          
+          <br/>
+          <%= text_field_tag('small', "!" + c_image_form.object.c_image.url(:small, false) + "!", :style => 'width: 400px')%><br/>
+          <%= text_field_tag('medium', "!" + c_image_form.object.c_image.url(:medium, false) + "!", :style => 'width: 400px') %><br/>
+          <%= text_field_tag('big', "!" + c_image_form.object.c_image.url(:big, false) + "!", :style => 'width: 400px') %><br/>
+          <%= text_field_tag('original', "!" + c_image_form.object.c_image.url(:original, false) + "!", :style => 'width: 400px') %>
+          
+        <% end %>
+      </td>
+    </tr>
+  </table>
+
+
+<% end %>
+
+  <p>
+    <%= f.submit t(:az_label_save) %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_show), @az_article %> |
+<%= link_to t(:az_label_back), az_articles_path %>

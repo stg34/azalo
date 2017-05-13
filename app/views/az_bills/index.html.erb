@@ -1,0 +1,28 @@
+<h1>Listing az_bills</h1>
+
+<table>
+  <tr>
+    <th>Invoice</th>
+    <th>Description</th>
+    <th>Date from</th>
+    <th>Date till</th>
+    <th>Fee</th>
+  </tr>
+
+<% @az_bills.each do |az_bill| %>
+  <tr>
+    <td><%=h az_bill.invoice_id %></td>
+    <td><%=h az_bill.description %></td>
+    <td><%=h az_bill.date_from %></td>
+    <td><%=h az_bill.date_till %></td>
+    <td><%=h az_bill.fee %></td>
+    <td><%= link_to 'Show', az_bill %></td>
+    <td><%= link_to 'Edit', edit_az_bill_path(az_bill) %></td>
+    <td><%= link_to 'Destroy', az_bill, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_bill', new_az_bill_path %>

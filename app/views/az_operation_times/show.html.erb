@@ -1,0 +1,23 @@
+<p>
+  <b>Az base data type:</b>
+  <%=h @az_operation_time.az_base_data_type_id %>
+</p>
+
+<p>
+  <b>Az operation:</b>
+  <%=h @az_operation_time.az_operation_id %>
+</p>
+
+<p>
+  <b>Operation time:</b>
+  <%=h @az_operation_time.operation_time %>
+</p>
+
+<p>
+  <b>Copy of:</b>
+  <%=h @az_operation_time.copy_of %>
+</p>
+
+
+<%= link_to 'Edit', edit_az_operation_time_path(@az_operation_time) %> |
+<%= link_to 'Back', az_operation_times_path %>

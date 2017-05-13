@@ -1,0 +1,25 @@
+<h1>Список коллекций</h1>
+
+<table class="table">
+  <tr>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th><%= t(:az_label_name) %></th>
+    <th>.</th>
+    <th>.</th>
+    <th>.</th>
+  </tr>
+
+<% @az_collection_templates.each do |ct| %>
+  <tr>
+    <td><%= h(ct.get_owner_name) %></td>
+    <td><%=h ct.name %></td>
+    <td><%= link_to t(:az_label_show), ct %></td>
+    <td><%= link_to t(:az_label_edit), edit_az_collection_template_path(ct) %></td>
+    <td><%= link_to t(:az_label_delete), ct, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Новая коллекция', new_az_collection_template_path %>

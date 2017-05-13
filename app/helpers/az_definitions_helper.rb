@@ -1,0 +1,2 @@
+module AzDefinitionsHelper
+end

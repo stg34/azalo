@@ -1,0 +1,17 @@
+<p>
+  <b>Company:</b>
+  <%=h @az_balance_transaction.az_company.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @az_balance_transaction.description %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%=h @az_balance_transaction.amount %>
+</p>
+
+<%= link_to 'Edit', edit_az_balance_transaction_path(@az_balance_transaction) %> |
+<%= link_to 'Back', az_balance_transactions_path %>

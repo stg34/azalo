@@ -1,0 +1,28 @@
+<h1>Editing az_payment</h1>
+
+<%= form_for(@az_payment) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :az_company_id %><br />
+    <%= f.text_field :az_company_id %>
+  </p>
+  <p>
+    <%= f.label :amount %><br />
+    <%= f.text_field :amount %>
+  </p>
+  <p>
+    <%= f.label :status %><br />
+    <%= f.text_field :status %>
+  </p>
+  <p>
+    <%= f.label :response %><br />
+    <%= f.text_area :response %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @az_payment %> |
+<%= link_to 'Back', az_payments_path %>

@@ -1,0 +1,33 @@
+<p>
+  <b>Операция:</b><br/>
+  <% if @az_tr_text.az_operation %>
+    <%=h @az_tr_text.az_operation.name  %>
+  <% else %>
+    Операция не задана
+  <% end %>
+</p>
+
+<p>
+  <b>Тип данных:</b><br/>
+  <% if @az_tr_text.data_type %>
+    <%=h AzBaseDataType::DataTypeById[@az_tr_text.data_type][:name] %>
+  <% else %>
+    Тип данных не указан
+  <% end %>
+  
+</p>
+
+<p>
+  <b><%= t(:az_label_name) %>:</b><br/>
+  <%=h @az_tr_text.name %>
+</p>
+
+<p>
+  <b>Текст:</b>
+  <%= RedCloth.new(n2e(@az_tr_text.get_description(node, struct))).to_html %>
+</p>
+
+
+
+<%= link_to t(:az_label_edit), edit_az_tr_text_path(@az_tr_text) %> |
+<%= link_to t(:az_label_back), :action => :index_user %>

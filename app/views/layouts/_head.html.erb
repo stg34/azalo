@@ -1,0 +1,46 @@
+
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title><%= controller.get_title %>/Azalo</title>
+  <%= stylesheet_link_tag 'reset' %>
+
+  <%= stylesheet_link_tag 'main' %>
+  <%= stylesheet_link_tag 'pagination' %>
+  <%= stylesheet_link_tag 'help' %>
+  <%= stylesheet_link_tag 'lightbox' %>
+  <%= stylesheet_link_tag 'themes/default' %>
+  <%= stylesheet_link_tag 'themes/spread' %>
+  <%= stylesheet_link_tag 'carousel/prototype-ui' %>
+  <%= stylesheet_link_tag 'protofish' %>
+
+  <%= javascript_include_tag "prototype.js" %>
+  <%= javascript_include_tag "carousel.js" %>
+  <%= javascript_include_tag "effects.js" %>
+  <%= javascript_include_tag "builder.js" %>
+  <%= javascript_include_tag "lightbox.js" %>
+  <%= javascript_include_tag "dragdrop.js" %>
+  <%= javascript_include_tag "window.js" %>
+  <%= javascript_include_tag "tooltip.js" %>
+  <%= javascript_include_tag "raphael.js" %>
+  <%= javascript_include_tag "connectors2.js" %>
+  <%= javascript_include_tag "droplicious.js" %>
+  <%= javascript_include_tag "protofish.js" %>
+  <%= javascript_include_tag "azalo.js" %>
+
+  <% if false && USE_GOOGLE_ANALYTICS %>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-16604346-2']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  <% end %>
+  <script type="text/javascript">
+    TooltipManager.init("tooltip", {options: {method: 'get'}}, {className: 'spread', delayOver: 100, delayOut: 400, shiftX: 0, shiftY: 0, width: '400', showEffect: Element.show, hideEffect: Element.hide});
+  </script>

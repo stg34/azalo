@@ -1,0 +1,12 @@
+<h1>Editing az_store</h1>
+
+<%= form_for(@az_store) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @az_store %> |
+<%= link_to 'Back', az_stores_path %>

@@ -1,0 +1,64 @@
+<% is_admin = current_user.roles.include?(:admin) %>
+<% @my_companies.each do |company| %>
+
+  <%= item_list_header("Список компонентов", company, @my_companies.size > 1) %>
+
+  <table class="table">
+    <tr>
+      <th><%= t(:az_label_name) %></th>
+      <th>Техзадание</th>
+      <th>Размер</th>
+      <th>Создан</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <% if is_admin %>
+        <th>seed</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      <% end %>
+    </tr>
+
+  <% @project_blocks[company].each do |az_project_block| %>
+    <tr>
+      <td><%= link_to h(az_project_block.name), az_project_block %>
+        <% if az_project_block.store_item %><%= link_to "Store", az_store_item_path(az_project_block.store_item.id), :class => 'item-list-store' %><% end %>
+      </td>
+      <td><%= link_to("Техзадание", :controller=>'az_project_blocks', :action => 'edit_tr', :id => az_project_block.id) %></td>
+      <td><%= (az_project_block.get_disk_usage/10000)/100.0 %> Mb</td>
+      <td><%= l(az_project_block.created_at) %></td>
+      <td><%= (link_to 'Копировать', {:controller=>'az_project_blocks', :action => 'copy', :id => az_project_block.id, :owner_id => company.id}, :confirm => t(:az_label_are_you_sure)) %></td>
+      <td><%= link_to t(:az_label_delete), az_project_block, :confirm => 'Точно? Удаление может занять несколько минут.', :method => :delete %></td>
+      <td>
+        <%= link_to( img_go_up,   :controller=>'az_project_blocks', :action => 'move_up',   :id => az_project_block.id) %>
+        <%= link_to( img_go_down, :controller=>'az_project_blocks', :action => 'move_down', :id => az_project_block.id) %>
+      </td>
+      <% if is_admin %>
+        <td class="admin"><%= boolean_to_img(az_project_block.seed) %></td>
+        <td class="admin">
+          <% if az_project_block.seed %>
+            <%= link_to 'Обновить всем', :controller=>'az_services', :action => 'update_az_project_block_from_seed', :id => az_project_block.id %>
+          <% else %>
+            &nbsp;
+          <% end %>
+        </td>
+        <td class="admin">
+          <% if az_project_block.seed %>
+            <%= link_to 'Удалить всем', :controller=>'az_services', :action => 'delete_seeded_project_blocks' %>
+          <% else %>
+            &nbsp;
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+  </table>
+
+  <br /><br />
+  <%= link_to 'Еще компоненты', '/store' %>
+
+  <br /><br />
+  <%= link_to 'Новый компонент', :controller=>'az_project_blocks', :action => 'new', :owner_id => company.id %><br /><br />
+
+<% end %>
+

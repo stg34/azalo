@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+#one:
+#  title: MyString
+#  announce: MyText
+#  body: MyText
+#  show: false
+#  az_user_id: 1
+#
+#two:
+#  title: MyString
+#  announce: MyText
+#  body: MyText
+#  show: false
+#  az_user_id: 1

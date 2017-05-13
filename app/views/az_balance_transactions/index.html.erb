@@ -1,0 +1,45 @@
+<h1>История платежей</h1>
+
+<%# form_tag '/posts' do -%>
+    <div><%#= submit_tag 'Save' %></div>
+  <%# end -%>
+<% form_tag az_balance_transactions_path, :method => :get do %>
+  <span>Логин:</span> <%= text_field_tag :login, params[:login] %><br/>
+  <br/>
+  <%= submit_tag 'search' %>
+<% end %>
+<div class="digg_pagination">
+  <%= will_paginate @az_balance_transactions %>
+</div>
+
+<table class="table">
+  <tr>
+    <th><%= t(:az_label_date) %></th>
+    <th>Company</th>
+    <th>Description</th>
+    <th>Amount</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @az_balance_transactions.each do |az_balance_transaction| %>
+  <tr>
+    <td><%=l az_balance_transaction.created_at %></td>
+    <td><%=link_to(h(az_balance_transaction.az_company.name), :controller => 'az_companies', :action => 'admin_show', :id => az_balance_transaction.az_company.id) %></td>
+    <td><%=h az_balance_transaction.description %></td>
+    <td><%=h az_balance_transaction.amount %></td>
+    <td><%= link_to 'Show', az_balance_transaction %></td>
+    <td><%= link_to 'Edit', edit_az_balance_transaction_path(az_balance_transaction) %></td>
+    <td><%= link_to 'Destroy', az_balance_transaction, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<div class="digg_pagination">
+  <%= will_paginate @az_balance_transactions %>
+</div>
+
+<br />
+
+<%= link_to 'New az_balance_transaction', new_az_balance_transaction_path %>

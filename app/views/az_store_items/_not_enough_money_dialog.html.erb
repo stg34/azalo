@@ -1,0 +1,9 @@
+<% payment_amount = @store_item.price - @company.get_balance %>
+
+<div class="not-enough-money-dialog">
+  <h1>У вас недостаточно средств</h1>
+
+  <div class="amount">Необходимо <%= @store_item.price %>$, имеется <%= @company.get_balance %>$</div>
+
+  <%= link_to "Пополнить счет на #{payment_amount}$", make_payment_path(:company_id => @company.id, :amount => payment_amount), :class => 'make-payment' %>
+</div>

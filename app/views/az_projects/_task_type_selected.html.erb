@@ -1,0 +1,16 @@
+<div id="task-type-selected-container">
+  <div id="task-type-selected-content">
+
+      <%= t(:az_label_tasks_done_by_roles) %>:
+      <ul>
+        <% @selected_roles.each do |role| %>
+          <li><%= role.name %></li>
+        <% end %>
+      </ul>
+
+      <% if @selected_roles.size == 0 %>
+        <em><%= t(:az_label_no_tasks_selected) %></em><br/>
+      <% end %>
+  </div>
+  <%= submit_tag t(:az_label_close), :onclick => 'Windows.closeAll(); return false;' %>
+</div>

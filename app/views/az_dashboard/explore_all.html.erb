@@ -1,0 +1,20 @@
+<div class="explore-content">
+
+  <% if @projects.size > 0 %>
+    <%= aligner_tag %>
+    <div class="info">
+      <h3><%= title %>:</h3>
+      <%= render(:partial => "projects_explore_block", :locals => {:projects => @projects}) %>
+    </div>
+  <% else %>
+    <%= aligner_tag %>
+    <div class="info">
+      <h3>Нет проектов</h3>
+    </div>
+  <% end %>
+  <br/>
+  <div class="digg_pagination">
+    <%= will_paginate @projects %>
+  </div>
+  <%= link_to("Назад", explore_path, :class => "explore-projects") %>
+</div>

@@ -1,0 +1,31 @@
+<h1>Список статусов</h1>
+
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th><%= t(:az_label_name) %></th>
+    <th><%= t(:az_label_description) %></th>
+    <th>Состояние</th>
+    <th>Позиция</th>
+    <th>.</th>
+    <th>.</th>
+    <th>.</th>
+  </tr>
+
+<% @az_project_statuses.each do |az_project_status| %>
+  <tr>
+    <td><%=h az_project_status.id %></td>
+    <td><%=h az_project_status.name %></td>
+    <td><%=h az_project_status.description %></td>
+    <td><%=h az_project_status.state %></td>
+    <td><%=h az_project_status.position %></td>
+    <td><%= link_to t(:az_label_show), az_project_status %></td>
+    <td><%= link_to t(:az_label_edit), edit_az_project_status_path(az_project_status) %></td>
+    <td><%= link_to t(:az_label_delete), az_project_status, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Новый статус', new_az_project_status_path %>

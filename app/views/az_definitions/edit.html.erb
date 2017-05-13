@@ -1,0 +1,20 @@
+
+<h1>Редактирование определения</h1>
+
+<%= form_for(@az_definition, :builder => AzFormBuilder) do |f| %>
+  <%#= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:form => f}) %>
+
+  <p>
+    <%= f.submit t(:az_label_save) %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_show), @az_definition %> |
+<% if @az_definition.az_base_project == nil %>
+  <%= link_to t(:az_label_back), '/definitions' %>
+<% else %>
+  <% controller = @az_definition.az_base_project.class.name.underscore.pluralize %>
+  <%= link_to t(:az_label_back), :controller => controller, :action => 'edit', :id => @az_definition.az_base_project.id %>
+<% end %>

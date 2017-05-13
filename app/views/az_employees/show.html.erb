@@ -1,0 +1,13 @@
+<p>
+  <b>Az user:</b>
+  <%=h @az_employee.az_user_id %>
+</p>
+
+<p>
+  <b>Az company:</b>
+  <%=h @az_employee.az_company_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_az_employee_path(@az_employee) %> |
+<%= link_to 'Back', az_employees_path %>

@@ -1,0 +1,47 @@
+<div id="tooltip-content-new-project" style="display:none;">
+  <p>
+    <strong>Публичный доступ</strong> - любой может просматривать ваш проект или скопировать его себе.
+  </p>
+  <p>
+    <strong>Приватный доступ</strong> - доступ к проекту имеете только вы.<br/>
+    Доступно для пользователей платных тарифов.
+  </p>
+</div>
+
+<%= form_for(project, :builder => AzFormBuilder, :html => { :multipart => true }) do |f| %>
+  <%#= f.error_messages %>
+
+  <label><%= t(:az_label_name) %><br/>
+    <%= f.text_field :name %>
+  </label><br/><br/>
+
+  <% if project.instance_of?(AzProject) %>
+    
+    <br/>
+
+    <label>
+      <%= t(:az_label_favicon) %> (png, jpg, gif, ico)<br/>
+      <%= f.file_field :favicon, :style=>'width: 300px;' %>
+    </label>
+    <br/><br/>
+
+    <%= t_b %><%= t(:az_label_project_access) %><%= t_e("tooltip-data-new-project", "tooltip-content-new-project") %>
+    <%
+      if project.owner.az_tariff.quota_private_projects != 0
+        prj_access = [['Приватный', false], ['Публичный', true]]
+      else
+        prj_access = [['Публичный', true]]
+      end
+    %>
+
+    <%= f.select :public_access, prj_access %><br/><br/>
+
+  <% end %>
+
+  <% if current_user.roles.include?(:admin) %>
+    <%= f.label :seed %><br />
+    <%= f.check_box :seed %><br />
+  <% end %>
+
+<%= f.submit button_caption %>
+<% end %>

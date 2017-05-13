@@ -1,0 +1,34 @@
+<h1>Сделанные покупки</h1>
+
+<div class="digg_pagination">
+  <%= will_paginate @az_purchases %>
+</div>
+
+<table class="table">
+  <tr>
+    <th><%= t(:az_label_date) %></th>
+    <th>Az company</th>
+    <th>Az item store</th>
+    <th>Цена</th>
+    <th>&nbsp;</th>
+  </tr>
+
+<% @az_purchases.each do |az_purchase| %>
+  <tr>
+    <td><%=l az_purchase.created_at %></td>
+    <td><%=link_to(h(az_purchase.az_company.name), :controller => 'az_companies', :action => 'admin_show', :id => az_purchase.az_company.id) %></td>
+    <td>
+      <% url = {:controller => az_purchase.az_store_item.item.class.to_s.tableize, :action => 'show', :id => az_purchase.az_store_item.item.id } %>
+      <%= link_to(h(az_purchase.az_store_item.item.name), url) %>
+    </td>
+    <td><%=h az_purchase.az_store_item.price %></td>
+    <td><%= link_to 'Show', az_purchase %></td>
+  </tr>
+<% end %>
+</table>
+
+<div class="digg_pagination">
+  <%= will_paginate @az_purchases %>
+</div>
+
+<br />

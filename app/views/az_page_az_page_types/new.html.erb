@@ -1,0 +1,19 @@
+<h1>New az_page_az_page_type</h1>
+
+<%= form_for(@az_page_az_page_type) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :az_page %><br />
+    <%= f.text_field :az_page %>
+  </p>
+  <p>
+    <%= f.label :az_page_type %><br />
+    <%= f.text_field :az_page_type %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', az_page_az_page_types_path %>

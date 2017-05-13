@@ -1,0 +1,39 @@
+  <table class="table">
+    <tr>
+      <th>Ссылка</th>
+      <th><%= t(:az_label_project) %></th>
+      <th>Гость</th>
+      <th>Срок годности</th>
+      <th>&nbsp</th>
+      <th>&nbsp</th>
+    </tr>
+
+  <% @az_guest_links.each do |az_guest_link| %>
+    <% guest_path = url_for :controller => 'az_projects', :action => 'guest_show', :hash_str => az_guest_link.hash_str, :only_path => false %>
+    <tr>
+      <td>
+        <%= link_to guest_path, guest_path %>
+      </td>
+      <td>
+        <% if az_guest_link.az_project %>
+          <%= link_to az_guest_link.az_project.name, :controller => 'az_projects', :action => 'show', :id => az_guest_link.az_base_project_id %>
+        <% else %>
+          ???
+        <% end %>
+      </td>
+      <td>
+        <%= az_guest_link.az_user.login if az_guest_link.az_user %>
+      </td>
+      <td>
+        <%=h az_guest_link.expired_at %> (еще <%= distance_of_time_in_words(az_guest_link.expired_at, Time.now) %> )
+      </td>
+      <td>
+        <%= link_to 'Изменить', "#", :onclick => "show_edit_guest_link_dialog(#{az_guest_link.id}); return false;" %>
+      </td>
+      <td>
+        <%= link_to t(:az_label_delete), az_guest_link, :confirm => t(:az_label_are_you_sure), :method => :delete %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+

@@ -1,0 +1,14 @@
+<% page = node.main_page %>
+<% classes = "page-box " %>
+<% classes += page.az_base_project.class == AzProjectBlock ? 'component ' : '' %>
+<% classes += page.embedded ? 'embedded ' : '' %>
+<% classes += "#{path} " %>
+
+<div class="<%= classes %>" id="<%= path %>">
+  <div class="content-holder">
+    <div style="float: left; height: 16px;"></div>
+      <div class="page_box_holder page_box_holder_<%= page.id %>" <%= "style='display:none'" if is_node_collapsed(path) %>>
+        <%= render( :partial => '/az_pages/page_box_content', :locals => {:page => page, :project => project, :page_type => page_type}, :inline => true) %>
+      </div>
+  </div>
+</div>

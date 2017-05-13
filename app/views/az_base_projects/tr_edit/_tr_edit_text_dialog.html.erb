@@ -1,0 +1,18 @@
+<div class="tr-text-edit-dialog" id="tr-text-edit-dialog-content">
+  <% remote_form_for(entity, :url => update_url,
+                             :update => "tr-text-edit-dialog-container",
+                             :builder => AzDialogFormBuilder) do |form| %>
+      <%= t(:az_label_description) %>&nbsp;&nbsp;&nbsp;<%= wiki_syntax_help %>
+      <p>
+        <%= form.text_area field, :class=>'description' %>
+      </p>
+      <%= aligner_tag %>
+      <br/>
+      <%= aligner_tag %>
+    <%= submit_and_disable_tag(form, t(:az_label_save), :style=>'float: left') %>
+    <%= form.submit t(:az_label_cancel), :style=>'float: left', :onclick => 'Windows.closeAll(); return false;' %>
+
+  <% end %>
+
+  <%= aligner_tag %>
+</div>

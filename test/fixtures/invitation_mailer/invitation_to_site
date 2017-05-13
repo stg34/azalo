@@ -1,0 +1,3 @@
+InvitationMailer#invitation_to_site
+
+Find me in app/views/invitation_mailer/invitation_to_site.erb

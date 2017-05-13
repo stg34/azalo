@@ -1,0 +1,25 @@
+body
+{
+    background-color: white;
+    color: #728FA8;
+    font-family: "Century Gothic", Century, sans-serif, verdana, arial, helvetica;
+}
+
+.container
+{
+    padding-top: 100px;
+    width: 800px;
+    margin: auto;
+    text-align: center;
+}
+
+.message
+{
+    font-size: 24px;
+}
+
+.login
+{
+    font-size: 16px;
+    padding-top: 32px;
+}

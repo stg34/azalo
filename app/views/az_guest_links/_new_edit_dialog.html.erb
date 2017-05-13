@@ -1,0 +1,23 @@
+<% remote_form_for(az_guest_link, :update => "new-edit-guest-link-dialog-container", :builder => AzDialogFormBuilder) do |form| %>
+
+<p>
+  <%= form.hidden_field :az_base_project_id %>
+</p>
+
+<p>
+  Ссылка годная<br />
+  <%= form.select(:expired_in, AzGuestLink::Link_expirations) %>
+</p>
+
+<% if current_user.roles.include?(:admin) %>
+  <%= form.label :url %><br />
+  <%= form.text_field :url %>
+<% end %>
+
+<p>
+  <% value = az_guest_link.new_record? ? t(:az_label_create) : t(:az_label_save) %>
+  <%= submit_and_disable_tag(form, value) %>
+  <%= form.submit t(:az_label_cancel), :onclick => 'Windows.closeAll(); return false;' %>
+</p>
+
+<% end %>

@@ -1,0 +1,22 @@
+<%= crumbs(@az_validator.get_crumbs_to_parent) %>
+
+
+<div id="tooltip-content-validator-1" style="display:none;">
+  <p>Валидатор &#8211; это подпрограмма, которая осуществляет проверку корректности введенных пользователем данных.</p>
+  <p>Например, валидатор "Email" проверяет, что введенные пользователем данные соответсвуют
+    формату на email.</p>
+</div>
+<%= t_b %><h1>Новый валидатор</h1><%= t_e("tooltip-validator-1", "tooltip-content-validator-1") %>
+
+<%= form_for(@az_validator, :builder => AzFormBuilder) do |f| %>
+  <%#= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:form => f}) %>
+
+  <p>
+    <%= f.submit t(:az_label_create) %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_back), '/validators' %>
+  

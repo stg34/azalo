@@ -1,0 +1,2 @@
+module AzPageAzProjectBlocksHelper
+end

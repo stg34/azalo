@@ -1,0 +1,24 @@
+<h1>Спиок az_page_az_page_types</h1>
+
+<table class="table">
+  <tr>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th>Az page</th>
+    <th>Az page type</th>
+  </tr>
+
+<% @az_page_az_page_types.each do |az_page_az_page_type| %>
+  <tr>
+    <td><%=h az_page_az_page_type.get_owner_name %></td>
+    <td><%=h az_page_az_page_type.az_page %></td>
+    <td><%=h az_page_az_page_type.az_page_type %></td>
+    <td><%= link_to 'Show', az_page_az_page_type %></td>
+    <td><%= link_to 'Edit', edit_az_page_az_page_type_path(az_page_az_page_type) %></td>
+    <td><%= link_to 'Destroy', az_page_az_page_type, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_page_az_page_type', new_az_page_az_page_type_path %>

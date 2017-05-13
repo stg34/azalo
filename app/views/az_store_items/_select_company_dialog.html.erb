@@ -1,0 +1,17 @@
+<div class="not-enough-money-dialog">
+  <% current_user.az_companies.each do |cmp| %>
+    <% if current_user.az_companies.size > 1 %>
+      <h2><%= cmp.name %></h2>
+    <% end %>
+    <% not_enough_money = cmp.get_balance < @az_store_item.price %>
+    <% amount = @az_store_item.price - cmp.get_balance %>
+    <% if not_enough_money %>
+      Недостаточно денег. <%= link_to "Пополнить счет на #{amount}$", make_payment_path(:company_id => cmp.id, :amount => amount) %>
+    <% else %>
+      <%= form_for(@az_store_item, :url => {:action => 'buy', :id => @az_store_item, :company_id => cmp}) do |f| %>
+        <%= f.submit 'Купить', :confirm => t(:az_label_are_you_sure) %>
+      <% end %>
+    <% end %>
+    
+  <% end %>
+</div>

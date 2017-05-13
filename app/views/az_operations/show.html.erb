@@ -1,0 +1,23 @@
+<p>
+  <b>Name:</b>
+  <%=h @az_operation.name %>
+</p>
+
+<p>
+  <b>Az typed page:</b>
+  <%=h @az_operation.az_typed_page_id %>
+</p>
+
+<p>
+  <b>Copy of:</b>
+  <%=h @az_operation.copy_of %>
+</p>
+
+<p>
+  <b>Is assignable:</b>
+  <%=h @az_operation.is_assignable %>
+</p>
+
+
+<%= link_to 'Edit', edit_az_operation_path(@az_operation) %> |
+<%= link_to 'Back', az_operations_path %>

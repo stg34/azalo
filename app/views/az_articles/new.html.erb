@@ -1,0 +1,13 @@
+<h1>Новая статья</h1>
+
+<%= form_for(@az_article) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render( :partial => '/az_articles/new_edit', :locals => {:f => f}) %>
+
+  <p>
+    <%= f.submit t(:az_label_create) %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_back), az_articles_path %>

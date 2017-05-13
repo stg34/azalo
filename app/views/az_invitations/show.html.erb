@@ -1,0 +1,16 @@
+<p>
+  <b>Hash:</b>
+  <%=h @az_invitation.hash_str %>
+</p>
+
+<p>
+  <b>Invitation type:</b>
+  <%=h @az_invitation.invitation_type %>
+</p>
+
+<p>
+  <b>email:</b>
+  <%=h @az_invitation.email %>
+</p>
+
+<%= link_to t(:az_label_back), az_profiles_path %>

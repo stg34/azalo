@@ -1,0 +1,15 @@
+<div class="base-project-edit-commons-page">
+  <h1><%= t(:az_label_component_editing) %> <q><%= h(@project_block.name) %></q></h1>
+
+  <fieldset class="common-block">
+      <legend>Общие положения</legend>
+      <div id='commons_id'><div>
+        <%= render( :partial => '/az_base_projects/new_edit', :locals => {:button_caption => t(:az_label_save), :project => @project_block}) %>
+      </div></div>
+  </fieldset>
+
+  <%= aligner_tag %>
+
+  <%= link_to t(:az_label_back), :action => 'show' %>
+
+</div>

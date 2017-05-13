@@ -1,0 +1,14 @@
+<%= form_for(@project, :html => { :multipart => true }) do |f| %>
+  <%= f.error_messages %>
+
+  <%= t(:az_label_name) %><br/>
+  <%= f.text_field :name %><br/>
+
+  <%= t(:az_label_layout_time_per_page)%><br/>
+  <%= f.text_field :layout_time %><br/>
+
+  <%= t(:az_label_favicon) %><br />
+  <%= f.file_field :favicon %><br/>
+
+<%= f.submit button_caption %>
+<% end %>

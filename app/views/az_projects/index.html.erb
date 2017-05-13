@@ -1,0 +1,49 @@
+<h1><%= t(:az_label_project_list) %></h1>
+
+<div class="digg_pagination">
+  <%= will_paginate @projects %>
+</div>
+
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th><%= t(:az_label_name) %></th>
+    <th>Создан</th>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th>Страниц</th>
+    <th>Компонентов</th>
+    <th><%= t(:az_label_done) %></th>
+    <th><%= t(:az_label_project_disk_usage) %></th>
+    <th>Рейтинг</th>
+  </tr>
+
+<% @projects.each do |az_project| %>
+  <tr>
+    <td><%= az_project.id %></td>
+    <td><%= link_to h(az_project.name), az_project %></td>
+    <td><%= az_project.created_at %></td>
+    <td><%= h(az_project.get_owner_name) %></td>
+    <td><%= az_project.az_pages.size %></td>
+    <td><%= az_project.components.size %></td>
+    <td>
+      <% if az_project.percent_complete > 0%>
+        <%= az_project.percent_complete %>
+      <% end %>
+    </td>
+    <td>
+      <% if az_project.get_disk_usage > 0%>
+        <%= (az_project.get_disk_usage/10000)/100.0 %> Mb
+      <% end %>
+    </td>
+    <td>
+      <% az_project.update_stats; rating = az_project.get_rating %>
+      <div class="projcet-rating-<%= rating %>" title="Рейтинг проекта <%= rating %>"></div>
+      <%= render :partial => "/az_base_project_stats/stat_details.html", :locals => {:stat => az_project.stat } %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<div class="digg_pagination">
+  <%= will_paginate @projects %>
+</div>

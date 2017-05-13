@@ -1,0 +1,27 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  hello: "Hello world"
+
+  az_label_are_you_sure: Точно?
+  az_label_are_you_sure_may_take_a_while: Are you sure? Это может занять несколько минут.
+  az_label_delete: Удалить
+  az_label_copy: Копировать
+  az_label_update_seed_to_all: Обновить всем
+  az_label_project_limit_exceed_message: Вы не можете создавать больше проектов с вашим тарифным планом. Вы можете изменить статус одного или нескольких проектов, либо удалить не нужные проекты, либо перейти на другой тарифный план
+  az_label_project_done: Готовность проекта
+  az_label_project_status: Статус проекта
+  az_label_activity: Активность
+  az_label_new_website: Новый сайт
+  az_label_project_name: Название проекта
+  az_label_project_done: Готовность
+  az_label_project_specification: Specification
+  az_label_project_disk_usage: Размер
+  az_label_project_created_at: Created
+  az_label_project_list: Project list
+  az_label_company_disk_usage: "Использование дискового пространства: %{used_size} из %{available_size}"
+  az_label_company_projects_usage: "Использование проектов: %{used_size} из %{available_size}"
+
+  az_label_hide: Hide
+  az_label_show: Show

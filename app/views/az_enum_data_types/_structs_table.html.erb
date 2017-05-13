@@ -1,0 +1,42 @@
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th><%= t(:az_label_name) %></th>
+    <th>Страница</th>
+    <th>Копия</th>
+    <th>Операции</th>
+    <th>Имет коллекций</th>
+    <th>Принадлежит проектам</th>
+    <th>Seed</th>
+    <th>.</th>
+    <th>.</th>
+    <th>.</th>
+  </tr>
+
+<% structs.each do |dt| %>
+  <tr>
+    <td><%=h dt.id %></td>
+    <td><%=h dt.name %></td>
+    <td>
+      <% dt.typed_pages.each do |page|%>
+        <%= link_to(page.name, az_page_path(page)) %>, <%= page.get_project.get_type_name %> <%= page.get_project.name %>,
+        <%= page.get_project_over_block == nil ? "" : page.get_project_over_block.name %>,
+        <%= page.get_page_over_block == nil ? "" : page.get_page_over_block.name %><br/>
+      <% end %>
+    </td>
+    <td><%= dt.copy_of %></td>
+    <td>
+      <% dt.az_operation_times.each do |ot| %>
+        <%= ot.az_operation.name %> <%= ot.operation_time %><br/>
+      <% end %>
+    </td>
+    <td><%= dt.az_collection_data_types.size %></td>
+    <td><%= dt.find_parent_project_ids %></td>
+    <td><%= dt.seed %></td>
+    <td><%= link_to t(:az_label_edit), edit_az_struct_data_type_path(dt) %></td>
+    <td><%= link_to('Копировать', :controller=>:az_struct_data_type, :action => :copy, :id=>dt) %></td>
+    <td><%= link_to t(:az_label_delete), dt, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+

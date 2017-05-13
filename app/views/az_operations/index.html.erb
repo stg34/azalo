@@ -1,0 +1,29 @@
+<h1>Список операций</h1>
+
+<table class="table">
+  <tr>
+    <th>Id</th>
+    <th><%= t(:az_label_name) %></th>
+    <th>CRUD-название</th>
+    <th>Сложность</th>
+    <th>.</th>
+    <th>.</th>
+    <th>.</th>
+  </tr>
+
+<% @az_operations.each do |az_operation| %>
+  <tr>
+    <td><%=h az_operation.id %></td>
+    <td><%=h az_operation.name %></td>
+    <td><%=h az_operation.crud_name %></td>
+    <td><%=h az_operation.complexity %></td>
+    <td><%= link_to 'Show', az_operation %></td>
+    <td><%= link_to 'Edit', edit_az_operation_path(az_operation) %></td>
+    <td><%= link_to 'Destroy', az_operation, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Новая операция', new_az_operation_path %>

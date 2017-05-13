@@ -1,0 +1,32 @@
+
+<h1>Типированные страницы</h1>
+
+<table class="table">
+  <tr>
+    <th>Страница</th>
+    <th>Тип</th>
+    <th>CRUD</th>
+    <th>Редактировать</th>
+  </tr>
+
+<% @az_pages_types.each do |tp| %>
+  <tr>
+    <td><%=h tp.az_page.name %></td>
+    <td><%=h tp.az_base_data_type.name %></td>
+    <td>
+      <%= tp.operation_create ? "C" : "_" %>
+      <%= tp.operation_read ? "R" : "_" %>
+      <%= tp.operation_update ? "U" : "_" %>
+      <%= tp.operation_delete ? "D" : "_" %>
+    </td>
+    <td>
+      <%= link_to t(:az_label_edit), edit_az_typed_page_path(tp) %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Новый контакт' %>
+

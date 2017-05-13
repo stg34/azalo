@@ -1,0 +1,18 @@
+<h1>Пополнить счет</h1>
+
+<%= form_for(payment, :builder => AzFormBuilder) do |f| %>
+  <%= f.error_messages(:header_message => '', :message => '') %>
+
+  <p>
+    Пополнить на сумму<br />
+    <%= f.text_field(:amount) %>
+  </p>
+
+  <p>
+    <%= f.submit 'Пополнить' %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_back), az_profiles_path %>
+
+  

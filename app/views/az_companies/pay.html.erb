@@ -1,0 +1,9 @@
+<h1>Оплатить</h1>
+
+<form action="https://www.liqpay.com/?do=clickNbuy" method="POST">
+  <input type="text" name="operation_xml" value="<%= operation_xml %>"/>
+  <input type="text" name="signature" value="<%= signature %>"/>
+  <input type="submit" value="Оплатить"/>
+</form>
+
+<%= link_to t(:az_label_back), az_profiles_path %>

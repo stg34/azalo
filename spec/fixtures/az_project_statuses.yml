@@ -1,0 +1,80 @@
+
+az_project_status_1:
+  id: 1
+  name: "Новый"
+  position: 1
+  owner_id: 1
+  created_at: 2010-12-22 10:09:20.000000000 Z
+  updated_at: 2010-12-22 10:09:20.000000000 Z
+  state: 0
+  description: ''
+
+az_project_status_2:
+  id: 2
+  name: "Обсуждается"
+  position: 2
+  owner_id: 1
+  created_at: 2010-12-22 10:09:20.000000000 Z
+  updated_at: 2011-09-25 10:34:32.000000000 Z
+  state: 0
+  description: ''
+
+az_project_status_3:
+  id: 3
+  name: "В процессе"
+  position: 3
+  owner_id: 1
+  created_at: 2010-12-22 10:09:20.000000000 Z
+  updated_at: 2011-09-25 10:34:24.000000000 Z
+  state: 0
+  description: ''
+
+az_project_status_4:
+  id: 4
+  name: "Тестирование"
+  position: 4
+  owner_id: 1
+  created_at: 2010-12-22 10:09:20.000000000 Z
+  updated_at: 2011-09-25 10:34:16.000000000 Z
+  state: 0
+  description: ''
+
+az_project_status_5:
+  id: 5
+  name: "Сдача"
+  position: 5
+  owner_id: 1
+  created_at: 2010-12-22 10:09:20.000000000 Z
+  updated_at: 2011-09-25 10:34:08.000000000 Z
+  state: 0
+  description: ''
+
+az_project_status_6:
+  id: 6
+  name: "Сделан"
+  position: 6
+  owner_id: 1
+  created_at: 2010-12-22 10:09:20.000000000 Z
+  updated_at: 2011-09-25 10:33:58.000000000 Z
+  state: 0
+  description: ''
+
+az_project_status_7:
+  id: 7
+  name: "Закрыт"
+  position: 7
+  owner_id: 1
+  created_at: 2011-09-25 10:33:35.000000000 Z
+  updated_at: 2011-09-25 10:33:35.000000000 Z
+  state: 1
+  description: ''
+
+az_project_status_8:
+  id: 8
+  name: "Заморожен"
+  position: 8
+  owner_id: 1
+  created_at: 2011-09-25 10:33:48.000000000 Z
+  updated_at: 2011-09-25 10:33:48.000000000 Z
+  state: 1
+  description: ''

@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+#one:
+#  az_base_data_type_id: 1
+#  az_operation_id: 1
+#  operation_time: 9.99
+#  copy_of: 1
+#
+#two:
+#  az_base_data_type_id: 1
+#  az_operation_id: 1
+#  operation_time: 9.99
+#  copy_of: 1

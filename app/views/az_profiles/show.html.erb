@@ -1,0 +1,13 @@
+<p>
+  <b>Name:</b>
+  <%=h @az_profile.name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%=h @az_profile.email %>
+</p>
+
+
+<%= link_to 'Edit', edit_az_profile_path(@az_profile) %> |
+<%= link_to 'Back', az_profiles_path %>

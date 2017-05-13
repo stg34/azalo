@@ -1,0 +1,34 @@
+<h1>Listing az_validators</h1>
+
+<table>
+  <tr>
+    <th>Owner</th>
+    <th>Az variable</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Condition</th>
+    <th>Message</th>
+    <th>Copy of</th>
+    <th>Seed</th>
+  </tr>
+
+<% @az_validators.each do |az_validator| %>
+  <tr>
+    <td><%=h az_validator.owner_id %></td>
+    <td><%=h az_validator.az_variable_id %></td>
+    <td><%=h az_validator.name %></td>
+    <td><%=h az_validator.description %></td>
+    <td><%=h az_validator.condition %></td>
+    <td><%=h az_validator.message %></td>
+    <td><%=h az_validator.copy_of %></td>
+    <td><%=h az_validator.seed %></td>
+    <td><%= link_to 'Show', az_validator %></td>
+    <td><%= link_to 'Edit', edit_az_validator_path(az_validator) %></td>
+    <td><%= link_to 'Destroy', az_validator, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_validator', new_az_validator_path %>

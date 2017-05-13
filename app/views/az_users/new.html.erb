@@ -1,0 +1,51 @@
+<h1>Регистрация</h1>
+
+<% @az_user.password = @az_user.password_confirmation = nil %>
+
+<%#= error_messages_for :az_user %>
+<%= form_for(:az_user, :url => az_users_path, :builder => AzFormBuilder) do |f| -%>
+
+  <% if @hide_hash %>
+    <div style="display: none">
+  <% end %>
+  
+    <p>Приглашение <%= required_field %><br/>
+    <%= f.text_field :hash_str %></p>
+  
+  <% if @hide_hash %>
+    </div>
+  <% end %>
+
+
+  <%= hidden_field_tag('tariff_id', @tariff_id) %>
+
+  <p>Логин <%= required_field %><br/>
+  <%= f.text_field :login %></p>
+
+  <p>Имя <%= required_field %><br/>
+  <%= f.text_field :name %></p>
+
+  <p>Фамилия <%= required_field %><br/>
+  <%= f.text_field :lastname %></p>
+
+  <% if @hide_email %>
+    <div style="display: none">
+  <% end %>
+  <p>Email <%= required_field %><br/>
+  <%= f.text_field :email %></p>
+  <% if @hide_email %>
+    </div>
+  <% end %>
+
+  <p>Пароль <%= required_field %><br/>
+  <%= f.password_field :password %></p>
+
+  <p>Еще раз пароль <%= required_field %><br/>
+  <%= f.password_field :password_confirmation %></p>
+
+  <p>Все поля обязательны для заполнения</p>
+
+  Регистрируясь вы тем самым принимаете условия <%= link_to 'лицензионного соглашения', '/license_agreement.html' %>
+
+  <p><%= submit_tag 'Зарегистрироваться', :style => 'width: 200px;' %></p>
+<% end -%>

@@ -1,0 +1,18 @@
+<h1>Новая структура</h1>
+
+<%= form_for(@az_struct_data_type) do |f| %>
+  <%= f.error_messages %>
+
+  <%= f.hidden_field :az_base_project_id %>
+
+  <p>
+    <%= t(:az_label_name) %><br />
+    <%= f.text_field :name %>
+  </p>
+    <%= f.hidden_field :owner_id %>
+  <p>
+    <%= f.submit t(:az_label_create) %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_back), '/structs' %>

@@ -1,0 +1,37 @@
+<%
+  show_type = @show_type
+  if defined?(show_mode) && show_mode != nil
+    show_type = show_mode
+  end
+%>
+
+<% if show_type == :design %>
+  <%= page_box_images(page) %>
+<% end %>
+
+<% if show_type == :data %>
+  <%= page_box_data(page, project, false) %>
+<% end %>
+
+<% if show_type == :components %>
+  <%= page_box_components(page) %>
+<% end %>
+
+<% if show_type == :description %>
+  <%= page_box_descriptions(page, project) %>
+<% end %>
+
+<%= aligner_tag %>
+
+<% begin %>
+  <% if update_dependent %>
+    <% if show_type == :design %>
+      <script type="text/javascript">
+        <% page.design_recipients.each do |dr| %>
+          update_page_box(<%= dr.id %>);
+        <% end %>
+      </script>
+    <% end %>
+<% end %>
+<% rescue %>
+<% end %>

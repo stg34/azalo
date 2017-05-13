@@ -1,0 +1,103 @@
+<h1><%= @az_company.name %></h1>
+<h2>Тарифы</h2>
+<div class="tariffs-page">
+            <table class="table">
+              <tr>
+                <th>&nbsp;</th>
+                <% tariffs.each do |tariff| %>
+                  <th>
+                    <div class="name"><%= tariff.name %></div>
+                    <div class="price">
+                      <% if tariff.price != 0%>
+                        $<%= Integer(tariff.price) %>/месяц
+                      <% else %>
+                        Бесплатно
+                      <% end %>
+                    </div>
+                  </th>
+                <% end %>
+              </tr>
+              <tr class="tr1st trlarge">
+                <td class="option">Количество публичных проектов</td>
+                <% tariffs.each do |tariff| %>
+                  <td><small><%= tariff.quota_public_projects >= AzTariff.unlimited_value ? "Неограничено" : tariff.quota_public_projects %></small></td>
+                <% end %>
+              </tr>
+              <tr class="tr1st trlarge">
+                <td class="option">Количество приватных проектов</td>
+                <% tariffs.each do |tariff| %>
+                  <td>
+                    <small>
+                      <% if tariff.quota_private_projects == 0 %>
+                        Нет
+                      <% elsif tariff.quota_private_projects >= AzTariff.unlimited_value %>
+                        Неограничено
+                      <% else %>
+                        <%= tariff.quota_private_projects %>
+                      <% end %>
+                    </small>
+                  </td>
+                <% end %>
+              </tr>
+
+
+
+              <tr class="tr1st trlarge">
+                <td class="option">Сотрудники</td>
+                <% tariffs.each do |tariff| %>
+                  <td><%= tariff.quota_employees == 0 ? "Нет" : tariff.quota_employees %></td>
+                <% end %>
+              </tr>
+
+
+              <tr>
+                <td class="option">Название студии, логотип и ссылка на сайт</td>
+
+                <% tariffs.each do |tariff| %>
+                  <% if tariff.show_logo_and_site %>
+                    <% if tariff.optimal %>
+                      <td class="optimal"><img src="/images/tick_big.gif" alt="Название веб-студии, логотип и ссылка на сайт" /></td>
+                    <% else %>
+                      <td class="optimal"><img src="/images/tick.gif" alt="Название веб-студии, логотип и ссылка на сайт" /></td>
+                    <% end %>
+                  <% else %>
+                    <td></td>
+                  <% end %>
+                <% end %>
+              </tr>
+            </table>
+</div>
+<br/>
+<div style="width: 500px"
+  <p>
+    Смена тарифа осуществляется немедленно при выборе нового тарифа.
+  </p>
+  <p>
+    При этом происходит пересчет денег, так, что возвращается часть денег
+    пропорциональная времени до конца месяца и стоимости старого тарифа и
+    снимается соответствующая сумма по новому тарифу.
+  </p>
+  <p>
+    При переходе на более дешевый тариф происходит возврат <%= AzCompany::Refund_tariff_coeff*100 %>% от суммы
+  </p>
+
+  <p>
+    Например, если вы решаете сменить тариф в средине месяца и текущий тариф стоит 10, а новый 20, то вам
+    будет возвращена половина стоимости старого тарифа - 5 уе, и списана половина стоимости нового тарифа, т.е. 10.
+  </p>
+</div>
+<%= form_for(@az_company, :url => {:controller => 'az_companies', :action => 'set_tariff', :id => @az_company.id },
+                         :builder => AzFormBuilder) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <h3>Новый тариф</h3>
+    <%= f.select(:az_tariff_id, available_tariffs) %>
+  </p>
+  
+  <p>
+    <%= f.submit t(:az_label_save), :onclick => "return c_warning(#{@az_company.ceo_id});" %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_back), profile_path %>

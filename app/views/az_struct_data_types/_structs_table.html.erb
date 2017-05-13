@@ -1,0 +1,39 @@
+<div class="digg_pagination">
+  <%= will_paginate structs %>
+</div>
+
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th><%= t(:az_label_name) %></th>
+    <th>Страница</th>
+    <th>Операции</th>
+    <th>Имет коллекций</th>
+    <th>Принадлежит проектам</th>
+  </tr>
+
+<% structs.each do |dt| %>
+  <tr>
+    <td><%=h dt.id %></td>
+    <td><%=h dt.name %></td>
+    <td>
+      <% dt.typed_pages.each do |page|%>
+        <%= link_to(page.name, az_page_path(page)) %>, <%= page.get_project.get_type_name %> <%= page.get_project.name %>,
+        <%= page.get_project_over_block == nil ? "" : page.get_project_over_block.name %>,
+        <%#= page.get_page_over_block == nil ? "" : page.get_page_over_block.name %><br/>
+      <% end %>
+    </td>
+    <td>
+      <% dt.az_operation_times.each do |ot| %>
+        <%= ot.az_operation.name %> <%= ot.operation_time %><br/>
+      <% end %>
+    </td>
+    <td><%= dt.az_collection_data_types.size %></td>
+    <td><%= dt.find_parent_project_ids.collect{|id| id.to_s }.join(', ') %></td>
+  </tr>
+<% end %>
+</table>
+
+<div class="digg_pagination">
+  <%= will_paginate structs %>
+</div>

@@ -1,0 +1,2 @@
+module AzPurchasesHelper
+end

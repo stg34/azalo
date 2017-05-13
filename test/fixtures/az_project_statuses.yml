@@ -1,0 +1,29 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+#one:
+#  name: MyString
+#  position: 1
+#
+#two:
+#  name: MyString
+#  position: 1
+
+az_project_status_:
+  id: 
+  name: 
+  position: 
+  owner_id: 
+  created_at: 
+  updated_at: 
+  state: 0
+  description: ''
+
+az_project_status_:
+  id: 
+  name: 
+  position: 
+  owner_id: 
+  created_at: 
+  updated_at: 
+  state: 0
+  description: ''

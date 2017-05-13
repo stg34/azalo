@@ -1,0 +1,23 @@
+<h1>Ваши контакты</h1>
+
+<table class="table">
+  <tr>
+    <th>Логин</th>
+    <th>Имя</th>
+    <th>Фамилия</th>
+    <th>.</th>
+  </tr>
+
+<% @az_contacts.each do |az_contact| %>
+  <tr>
+    <td><%=h az_contact.az_user.login %></td>
+    <td><%=h az_contact.az_user.name %></td>
+    <td><%=h az_contact.az_user.lastname %></td>
+    <td><%= link_to t(:az_label_delete), az_contact, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Новый контакт', new_az_contact_path %>

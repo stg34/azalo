@@ -1,0 +1,71 @@
+<h1>Сервисные функции</h1>
+
+
+<%= link_to 'Обновить seed-объекты у пользователей', :controller => 'az_services', :action => 'update_from_seeds', :id=>1 %><br/>
+<hr/>
+<%= link_to 'Чистка таблиц', :controller => 'az_services', :action => 'tables_size', :id=>1 %>
+<hr/>
+<%= link_to 'Создать роли', :controller => 'az_services', :action => 'create_roles', :id=>1 %><br/>
+<%= link_to 'Создать базовые типы данных', :controller => 'az_services', :action => 'create_simple_data_types', :id=>1 %><br/>
+<%= link_to 'Создать базовые операции', :controller => 'az_services', :action => 'create_operations', :id=>1 %><br/>
+<%= link_to 'Создать время для базовых операций и типов', :controller => 'az_services', :action => 'create_operations_time', :id=>1 %><br/>
+
+<hr/>
+
+<% form_tag('/az_services/su') do %>
+  <p>
+    Стать пользователем (логин или email):
+    <%= text_field_tag 'user' %>
+  </p>
+  <p>
+    <%= submit_tag 'SU!' %>
+  </p>
+<% end %>
+  
+<hr/>
+
+<p>
+  Копировать все проекты (компоненты):
+</p>
+<% form_tag('/az_services/make_copy_all') do %>
+  <p>
+    Что:
+    <%= select_tag('entity', "<option>project</option><option>component</option>" ) %>
+  </p>
+  <p>
+    от пользователя (login или id):
+    <%= text_field_tag 'from_user' %>
+  </p>
+  <p>
+    к пользователю (login или id):
+    <%= text_field_tag 'to_user' %>
+  </p>
+  <p>
+    <%= submit_tag 'Copy!' %>
+  </p>
+<% end %>
+
+<hr/>
+
+<p>
+  Копировать проект (компонент):
+</p>
+<% form_tag('/az_services/make_copy') do %>
+  <p>
+    проект или компонент (id):
+    <%= text_field_tag 'id' %>
+  </p>
+  <p>
+    Сделать компонентом:
+    <%= check_box_tag 'make_component' %>
+  </p>
+  <p>
+    к пользователю (login или id):
+    <%= text_field_tag 'to_user' %>
+  </p>
+  <p>
+    <%= submit_tag 'Copy!' %>
+  </p>
+<% end %>
+
+<hr/>

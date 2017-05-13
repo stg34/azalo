@@ -1,0 +1,26 @@
+<h1>Listing az_payments</h1>
+
+<table>
+  <tr>
+    <th>Az company</th>
+    <th>Amount</th>
+    <th>Status</th>
+    <th>Response</th>
+  </tr>
+
+<% @az_payments.each do |az_payment| %>
+  <tr>
+    <td><%=h az_payment.az_company_id %></td>
+    <td><%=h az_payment.amount %></td>
+    <td><%=h az_payment.status %></td>
+    <td><%=h az_payment.response %></td>
+    <td><%= link_to 'Show', az_payment %></td>
+    <td><%= link_to 'Edit', edit_az_payment_path(az_payment) %></td>
+    <td><%= link_to 'Destroy', az_payment, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_payment', new_az_payment_path %>

@@ -1,0 +1,206 @@
+<h1>Seeds</h1>
+
+<h2>Компоненты</h2>
+<table class="table">
+  <tr>
+    <th>Id</th>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th><%= t(:az_label_name) %></th>
+    <th>page</th>
+    <th>Копия</th>
+    <th>Сводка</th>
+    <th>.</th>
+  </tr>
+
+<% @seed_project_blocks.each do |az_project_block| %>
+  <tr>
+    <td><%= h(az_project_block.id) %></td>
+    <td><%= h(az_project_block.get_owner_name) %></td>
+    <td><%= link_to h(az_project_block.name), az_project_block %></td>
+    <td><%#= az_project_block.az_page_id %></td>
+    <td><%= az_project_block.copy_of %></td>
+    <td><%= link_to "Сводка", :controller=>'az_project_blocks', :action => 'summary', :id => az_project_block.id %></td>
+    <td><%= link_to t(:az_label_delete), az_project_block, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+
+<h2><%= t(:az_label_projects) %></h2>
+
+<table class="table">
+  <tr>
+    <th>Id</th>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th><%= t(:az_label_name) %></th>
+    <th>page</th>
+    <th>Копия</th>
+    <th>Сводка</th>
+    <th>.</th>
+  </tr>
+
+<% @seed_projects.each do |az_project| %>
+  <tr>
+    <td><%= h(az_project.id) %></td>
+    <td><%= h(az_project.get_owner_name) %></td>
+    <td><%= link_to h(az_project.name), az_project %></td>
+    <td><%#= az_project.az_page_id %></td>
+    <td><%= az_project.copy_of %></td>
+    <td><%= link_to "Сводка", :controller=>'az_project_blocks', :action => 'summary', :id => az_project.id %></td>
+    <td><%= link_to t(:az_label_delete), az_project, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<h2>Задачи</h2>
+
+<table class="table">
+  <tr>
+    <th>Id</th>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th><%= t(:az_label_name) %></th>
+    <th><%= t(:az_label_description) %></th>
+    <th>Родитель</th>
+    <th>Тип</th>
+    <th>Копия</th>
+    <th><%= AzPage.get_page_types[AzPage::Page_user] %></th>
+    <th><%= AzPage.get_page_types[AzPage::Page_admin] %></th>
+    <th>.</th>
+    <th>.</th>
+    <th>.</th>
+  </tr>
+
+<% @seed_tasks.each do |az_task| %>
+  <tr>
+    <td><%=h az_task.id %></td>
+    <td><%=h az_task.get_owner_name %></td>
+    <td><%=h az_task.name %></td>
+    <td><%=h az_task.description %></td>
+    <td><%=h az_task.parent_id %></td>
+    <td><%=h AzTask.get_task_types[az_task.task_type] %></td>
+    <td><%=h az_task.copy_of %></td>
+    <td><%= boolean_to_img(az_task.role_user) %></td>
+    <td><%= boolean_to_img(az_task.role_admin) %></td>
+    <td><%= link_to t(:az_label_show), az_task %></td>
+    <td><%= link_to t(:az_label_edit), edit_az_task_path(az_task) %></td>
+    <td><%= link_to t(:az_label_delete), az_task, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<h2>Структуры</h2>
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th><%= t(:az_label_name) %></th>
+    <th>Страница</th>
+    <th>Копия</th>
+    <th>Операции</th>
+    <th>Имет коллекций</th>
+    <th>Принадлежит проектам</th>
+    <th>Копия</th>
+    <th></th>
+    <th>.</th>
+    <th>.</th>
+    <th>.</th>
+  </tr>
+
+<% @seed_structs.each do |dt| %>
+  <tr>
+    <td><%=h dt.id %></td>
+    <td><%=h dt.name %></td>
+    <td>
+      <% dt.typed_pages.each do |page|%>
+        <%= link_to(page.name, az_page_path(page)) %>, <%= page.get_project.get_type_name %> <%= page.get_project.name %>,
+        <%= page.get_project_over_block == nil ? "" : page.get_project_over_block.name %>,
+        <%= page.get_page_over_block == nil ? "" : page.get_page_over_block.name %><br/>
+      <% end %>
+    </td>
+    <td><%= dt.copy_of %></td>
+    <td>
+      <% dt.az_operation_times.each do |ot| %>
+        <%= ot.az_operation.name %> <%= ot.operation_time %><br/>
+      <% end %>
+    </td>
+    <td><%= dt.az_collection_data_types.size %></td>
+    <td><%= dt.find_parent_project_ids %></td>
+    <td><%=h dt.copy_of %></td>
+    <td><%= link_to t(:az_label_edit), edit_az_struct_data_type_path(dt) %></td>
+    <td><%= link_to('Копировать', :controller=>:az_struct_data_type, :action => :copy, :id=>dt) %></td>
+    <td><%= link_to t(:az_label_delete), dt, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<br />
+
+<h2>Общее</h2>
+
+<table class="table">
+  <tr>
+    <th>Id</th>
+    <th>Owner</th>
+    <th>Тип</th>
+    <th>Az base project</th>
+    <th><%= t(:az_label_description) %></th>
+    <th>Копия</th>
+    <th>.</th>
+    <th>.</th>
+    <th>.</th>
+  </tr>
+
+<% @seed_commons.each do |az_common| %>
+  <tr>
+    <td><%=h az_common.id %></td>
+    <td><%=h az_common.owner_id %></td>
+    <td><%=h az_common.class.get_label %></td>
+    <td><%=h az_common.az_base_project_id %></td>
+    <td><%=h cut_string(az_common.description, 300) %></td>
+    <td><%=h az_common.copy_of %></td>
+    <td><%= link_to t(:az_label_show), az_common %></td>
+    <td><%= link_to t(:az_label_edit), edit_az_common_path(az_common) %></td>
+    <td><%= link_to t(:az_label_delete), az_common, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<h2>Определения</h2>
+
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th><%= t(:az_label_name) %></th>
+    <th>Определение</th>
+    <th>Пользователь</th>
+    <th><%= t(:az_label_project) %></th>
+    <th>Копия</th>
+    <th>.</th>
+    <th>.</th>
+    <th>.</th>
+  </tr>
+
+<% @seed_definitions.each do |az_definition| %>
+  <tr>
+    <td><%=h az_definition.id %></td>
+    <td><%=h az_definition.owner.id %></td>
+    <td><%=h az_definition.name %></td>
+    <td><%=h az_definition.definition %></td>
+    <td><%=h az_definition.az_user_id %></td>
+    <td><%=h az_definition.az_base_project_id %></td>
+    <td><%=h az_definition.copy_of %></td>
+    <td><%= link_to t(:az_label_show), az_definition %></td>
+    <td><%= link_to t(:az_label_edit), edit_az_definition_path(az_definition) %></td>
+    <td><%= link_to t(:az_label_delete), az_definition, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />

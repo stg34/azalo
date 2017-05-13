@@ -1,0 +1,20 @@
+<h1>Editing az_invoice</h1>
+
+<%= form_for(@az_invoice) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :az_balance_transaction_id %><br />
+    <%= f.text_field :az_balance_transaction_id %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @az_invoice %> |
+<%= link_to 'Back', az_invoices_path %>

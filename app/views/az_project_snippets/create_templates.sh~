@@ -1,0 +1,10 @@
+#!/bin/bash
+
+:> _purpose_exploitation.html.erb
+:> _purpose_functional.html.erb
+:> _requirements_reliability.html.erb
+:> _requirements_marking.html.erb
+:> _requirements_storing.html.erb
+:> _requirements_hosting.html.erb
+:> _content_creation.html.erb
+:> _acceptance_conditions.html.erb

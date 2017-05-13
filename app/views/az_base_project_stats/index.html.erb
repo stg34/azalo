@@ -1,0 +1,36 @@
+<h1>Listing az_base_project_stats</h1>
+
+<table>
+  <tr>
+    <th>Az base project</th>
+    <th>Components num</th>
+    <th>Pages num</th>
+    <th>Design sources num</th>
+    <th>Designs num</th>
+    <th>Images num</th>
+    <th>Words num</th>
+    <th>Disk usage</th>
+    <th>Version</th>
+  </tr>
+
+<% @az_base_project_stats.each do |az_base_project_stat| %>
+  <tr>
+    <td><%=h az_base_project_stat.az_base_project_id %></td>
+    <td><%=h az_base_project_stat.components_num %></td>
+    <td><%=h az_base_project_stat.pages_num %></td>
+    <td><%=h az_base_project_stat.design_sources_num %></td>
+    <td><%=h az_base_project_stat.designs_num %></td>
+    <td><%=h az_base_project_stat.images_num %></td>
+    <td><%=h az_base_project_stat.words_num %></td>
+    <td><%=h az_base_project_stat.disk_usage %></td>
+    <td><%=h az_base_project_stat.version %></td>
+    <td><%= link_to 'Show', az_base_project_stat %></td>
+    <td><%= link_to 'Edit', edit_az_base_project_stat_path(az_base_project_stat) %></td>
+    <td><%= link_to 'Destroy', az_base_project_stat, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_base_project_stat', new_az_base_project_stat_path %>

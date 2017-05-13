@@ -1,0 +1,37 @@
+<h1>Пользователи</h1>
+
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th>Login/email</th>
+    <th>Last visit</th>
+    <th>Работники</th>
+    <th><%= t(:az_label_projects) %></th>
+  </tr>
+<% for az_user in @az_users %>
+  <tr>
+    <td><%= az_user.id %></td>
+    <td><b><%= link_to az_user.login, edit_az_user_path(az_user) %></b><br/><%= h az_user.email %></td>
+    <td><%= az_user.az_user_logins[0].created_at if az_user.az_user_logins.size > 0 %></td>
+    <td>
+      <% az_user.az_companies.each do |company| %>
+        <% company.az_employees.each do |az_employee| %>
+          <%= az_employee.az_user.login %><br/>
+        <% end %>
+      <% end %>
+    </td>
+    <td>
+      <% az_user.az_companies.each do |company| %>
+        <% projects = AzProject.get_by_company(company) %><br/>
+          <% projects.each do |project| %>
+              <% if project.name == "Сайт дизайн-студии" %>
+                <%= project.name%><br/>
+              <% else %>
+                <%= link_to project.name, project %><br/>
+              <% end %>
+          <% end %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+</table>

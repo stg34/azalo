@@ -1,0 +1,18 @@
+<% no_ops = operations.select{|op| op[:operation].id == -1}%>
+<% ops = operations.select{|op| op[:operation].id != -1}%>
+
+<% ops.each do |opertion_texts| %>
+  <li class='active'>
+    <a href='#' onclick="return false;" class='sub'><%= opertion_texts[:operation].name %></a>
+    <ul>
+      <%= render( :partial => '/az_pages/generate_description_menu_texts', 
+              :locals => {:page => page, :tr_texts => opertion_texts[:tr_texts], :data_type => data_type, :operation => opertion_texts[:operation]}) %>
+    </ul>
+  </li>
+<% end %>
+
+<% no_ops.each do |opertion_texts| %>
+  <%= render( :partial => '/az_pages/generate_description_menu_texts', 
+          :locals => {:page => page, :tr_texts => opertion_texts[:tr_texts], :data_type => data_type, :operation => nil}) %>
+<% end %>
+            

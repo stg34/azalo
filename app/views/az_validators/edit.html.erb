@@ -1,0 +1,19 @@
+<%= crumbs(@az_validator.get_crumbs_to_parent) %>
+
+<h1>Редактирование валидатора</h1>
+
+<%= form_for(@az_validator) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:form => f}) %>
+
+  <p>
+    <%= f.submit t(:az_label_save) %>
+  </p>
+<% end %>
+
+<% if @az_validator.az_variable != nil && @az_validator.az_variable.az_struct_data_type != nil%>
+  <%= link_to t(:az_label_back), edit_az_struct_data_type_path(@az_validator.az_variable.az_struct_data_type) %>
+<% else %>
+  <%= link_to t(:az_label_back), '/validators' %>
+<% end %>

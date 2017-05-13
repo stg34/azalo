@@ -1,0 +1,27 @@
+<h1>Пополнить счет?</h1>
+
+<p>
+  <b>Компания:</b>
+  <%=h @az_payment.az_company.name %>
+</p>
+
+<p>
+  <b>Сумма:</b>
+  <%=h @az_payment.amount %>
+</p>
+
+
+<form id="lpform" action="https://www.liqpay.com/?do=clickNbuy" method="POST" style="display: none">
+  <input type="text" name="operation_xml" value="<%= operation_xml %>"/>
+  <input type="text" name="signature" value="<%= signature %>"/>
+</form>
+
+<% remote_form_for(@az_payment,
+          :url => {:controller => 'az_payments', :action => 'start', :id => @az_payment.id},
+          :success => '$("lpform").submit();',
+          :failure => 'alert("Ошибка!");') do |form| %>
+  <%= form.hidden_field :status, {:value => 'started'} %>
+  <%= submit_and_disable_tag(form, 'Оплатить') %>
+<% end %>
+<br/>
+<%= link_to 'Отказаться', @az_payment, :confirm => t(:az_label_are_you_sure), :method => :delete %>

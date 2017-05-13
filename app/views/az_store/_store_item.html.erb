@@ -1,0 +1,43 @@
+<div class="store-store-item">
+
+  <div class="store-store-item-title"><h3><%= h(store_item.item.name) %></h3>
+
+    <div class="store-store-item-description">
+      <%= RedCloth.new(n2e store_item.announce).to_html %>
+    </div>
+
+    <div class="store-store-item-language">
+      <b>Язык:</b> <%= h(store_item.az_language.name) %>
+    </div>
+
+    <div class="store-store-item-scetch-program">
+      <b>Формат эскизов:</b>
+      <%= store_item.az_scetch_program.name %>
+    </div>
+
+    <div class="store-store-item-created">
+      <b>Добавлен:</b>
+      <%= l(store_item.created_at) %>
+    </div>
+
+    <div class="store-store-item-author">
+      <b>Автор:</b>
+      <%= h(store_item.item.owner.name) %>
+    </div>
+
+    <div class="store-store-item-price">
+      <% if store_item.price > 0 %>
+        <span class="store-store-item-price-value"><%= h(store_item.price) %></span>
+        <span class="store-store-item-price-currency">$</span>
+      <% else %>
+        <span class="store-store-item-price-value">Бесплатно</span>
+      <% end %>
+    </div>
+
+    <div class="store-store-item-details">
+      <%= link_to 'Подробная информация', az_store_item_path(store_item) %>
+    </div>
+
+  </div>
+</div>
+

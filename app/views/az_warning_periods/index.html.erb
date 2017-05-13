@@ -1,0 +1,24 @@
+<h1>Listing az_warning_periods</h1>
+
+<table class="table">
+  <tr>
+    <th>company</th>
+    <th>Ends at</th>
+    <th>State</th>
+  </tr>
+
+<% @az_warning_periods.each do |az_warning_period| %>
+  <tr>
+    <td><%=link_to(h(az_warning_period.az_company.name), :controller => 'az_companies', :action => 'admin_show', :id => az_warning_period.az_company.id) %> <%=h az_warning_period.az_company.get_balance %></td>
+    <td <%= az_warning_period.ends_at < Time.now ? "style='color: red;'" : "" %> ><%=h az_warning_period.ends_at %></td>
+    <td><%=h az_warning_period.state %></td>
+    <td><%= link_to 'Show', az_warning_period %></td>
+    <td><%= link_to 'Edit', edit_az_warning_period_path(az_warning_period) %></td>
+    <td><%= link_to 'Destroy', az_warning_period, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_warning_period', new_az_warning_period_path %>

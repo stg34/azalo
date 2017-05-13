@@ -1,0 +1,24 @@
+<h1>Editing az_balance_transaction</h1>
+<h2> Компания <%= @az_balance_transaction.az_company.name %></h2>
+<%= form_for(@az_balance_transaction) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :az_company_id %><br />
+    <%= f.text_field :az_company_id %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label :amount %><br />
+    <%= f.text_field :amount %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @az_balance_transaction %> |
+<%= link_to 'Back', az_balance_transactions_path %>

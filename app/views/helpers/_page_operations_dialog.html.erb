@@ -1,0 +1,25 @@
+<% page = typed_page.az_page %>
+<div id="typed-page-operations-dialog">
+  <%= page_dialog_title("Операции", page) %>
+  <% tpaop = typed_page.az_allowed_operations.collect{|aop| aop.az_operation.id} %>
+  <%= az_remote_form_for(typed_page,
+                     :complete => "Windows.closeAll(); update_page_box(#{page.id})",
+                     :url => {:controller => 'az_typed_pages', :action => 'update_operations', :id => typed_page.id}) do |f| %>
+    <table class="table" style="width: 200px">
+      <% operations.each do |op| %>
+        <tr>
+          <td style="padding-right: 4px; padding-left: 4px;">
+            <%= op.name %>
+          </td>
+          <td width="1%">
+            <%= check_box_tag "operations[#{op.id}]", op.id, tpaop.include?(op.id) %>
+          </td>
+        </tr>
+        <% end %>
+    </table>
+    <%= f.submit t(:az_label_save), :style=>'float: left; width: 90px; margin-left: 10px; margin-right: 5px;', :disabled => !permitted_to?(:edit, page) %>
+    <%= f.submit t(:az_label_close), :style=>'float: left; width: 90px;', :onclick => 'Windows.closeAll(); return false;' %>
+  <% end %>
+  
+</div>
+

@@ -1,0 +1,13 @@
+<p>
+  <b>Az company:</b>
+  <%=h @az_purchase.az_company_id %>
+</p>
+
+<p>
+  <b>Az item store:</b>
+  <%=h @az_purchase.az_item_store_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_az_purchase_path(@az_purchase) %> |
+<%= link_to 'Back', az_purchases_path %>

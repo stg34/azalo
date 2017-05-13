@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+#one:
+#  owner_id: 1
+#  az_base_project_id: 1
+#  description: MyText
+#
+#two:
+#  owner_id: 1
+#  az_base_project_id: 1
+#  description: MyText

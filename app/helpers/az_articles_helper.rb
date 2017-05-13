@@ -1,0 +1,2 @@
+module AzArticlesHelper
+end

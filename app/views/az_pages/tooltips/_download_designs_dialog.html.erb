@@ -1,0 +1,28 @@
+<div class="download-designs-dialog">
+  <%= page_dialog_title("Скачать дизайн", page) %>
+  <table class="table download-dialog" style="width: 100%;">
+    <tr>
+        <th class="description"><%= t(:az_label_description) %></th>
+        <th class="filename">Файл</th>
+    </tr>
+
+    <% designs.each do |design| %>
+      <tr>
+        <td class="description">
+          <%= design.description %>
+        </td>
+        <td class="filename">
+          <% if design.az_design_source != nil && design.az_design_source.source.url != nil && design.az_design_source.source_file_name != nil %>
+            <% link_text = design.az_design_source.source_file_name %>
+            <%= link_to(link_text, design.az_design_source.source.url) if design.az_design_source.source.url != nil %><br/>
+          <% else %>
+            файл не загружен<br/>
+          <% end %>
+         </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<%= aligner_tag %>
+<%= submit_tag t(:az_label_close), :style=>'float: left; margin-left: 10px;', :onclick => 'Windows.closeAll(); return false;' %>

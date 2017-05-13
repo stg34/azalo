@@ -1,0 +1,20 @@
+<h1>Editing az_participant</h1>
+
+<%= form_for(@az_participant) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :az_project_id %><br />
+    <%= f.text_field :az_project_id %>
+  </p>
+  <p>
+    <%= f.label :az_user_id %><br />
+    <%= f.text_field :az_user_id %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @az_participant %> |
+<%= link_to 'Back', az_participants_path %>

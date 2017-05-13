@@ -1,0 +1,20 @@
+<h1>Editing az_test_period</h1>
+
+<%= form_for(@az_test_period) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :az_company_id %><br />
+    <%= f.text_field :az_company_id %>
+  </p>
+  <p>
+    <%= f.label :ends_at %><br />
+    <%= f.datetime_select :ends_at %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @az_test_period %> |
+<%= link_to 'Back', az_test_periods_path %>

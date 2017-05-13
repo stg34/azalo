@@ -1,0 +1,13 @@
+<p>
+  <b>Az typed page:</b>
+  <%=h @az_allowed_operation.az_typed_page_id %>
+</p>
+
+<p>
+  <b>Az operation:</b>
+  <%=h @az_allowed_operation.az_operation_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_az_allowed_operation_path(@az_allowed_operation) %> |
+<%= link_to 'Back', az_allowed_operations_path %>

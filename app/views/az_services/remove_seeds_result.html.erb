@@ -1,0 +1,12 @@
+<table class="table">
+  <tr>
+    <th>company</th>
+    <th>item</th>
+  </tr>
+<% @remove_result.each_pair do |company, res| %>
+  <tr>
+    <td><%=h company.name %> (<%=h company.id %>)</td>
+    <td><%=h res[0] %></td>
+  </tr>
+<% end %>
+</table>

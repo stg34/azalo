@@ -1,0 +1,17 @@
+<h1>Незавершенные платежи</h1>
+
+<table class="table">
+  <tr>
+    <th>Создан</th>
+    <th>Сумма</th>
+    <th>Status</th>
+  </tr>
+
+<% @az_payments.each do |az_payment| %>
+  <tr>
+    <td><%=h az_payment.created_at %></td>
+    <td><%=h az_payment.amount %></td>
+    <td><%=h az_payment.status %></td>
+  </tr>
+<% end %>
+</table>

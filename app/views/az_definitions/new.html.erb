@@ -1,0 +1,14 @@
+<h1>Новое определение</h1>
+
+<%= form_for(@az_definition, :builder => AzFormBuilder) do |f| %>
+  <%#= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:form => f}) %>
+  <%= f.hidden_field :owner_id %>
+
+  <p>
+    <%= f.submit t(:az_label_create) %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_back), '/definitions' %>

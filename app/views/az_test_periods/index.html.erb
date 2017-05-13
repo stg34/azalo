@@ -1,0 +1,27 @@
+<h1>Тестовые периоды по платным тарифам</h1>
+
+<table class="table">
+  <tr>
+    <th>Компания</th>
+    <th>Тариф</th>
+    <th>Заканчивается</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </tr>
+
+<% @az_test_periods.each do |az_test_period| %>
+  <tr>
+    <td><%=link_to(h(az_test_period.az_company.name), :controller => 'az_companies', :action => 'admin_show', :id => az_test_period.az_company.id) %></td>
+    <td><%=h az_test_period.az_company.az_tariff.name %></td>
+    <td <%= az_test_period.ends_at < Time.now ? "style='color:red'":"" %> ><%=h az_test_period.ends_at %></td>
+    <td><%= link_to 'Show', az_test_period %></td>
+    <td><%= link_to 'Edit', edit_az_test_period_path(az_test_period) %></td>
+    <td><%= link_to 'Destroy', az_test_period, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_test_period', new_az_test_period_path %>

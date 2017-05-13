@@ -1,0 +1,24 @@
+<h1>Список участников</h1>
+
+<table class="table">
+  <tr>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th>Az project</th>
+    <th>Az user</th>
+  </tr>
+
+<% @az_participants.each do |az_participant| %>
+  <tr>
+    <td><%=h az_participant.get_owner_name %></td>
+    <td><%=h az_participant.az_project_id %></td>
+    <td><%=h az_participant.az_user_id %></td>
+    <td><%= link_to 'Show', az_participant %></td>
+    <td><%= link_to 'Edit', edit_az_participant_path(az_participant) %></td>
+    <td><%= link_to 'Destroy', az_participant, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_participant', new_az_participant_path %>

@@ -1,0 +1,29 @@
+<p>
+  <%= form.hidden_field :owner_id %>
+</p>
+<p>
+  <%= form.hidden_field :az_variable_id %>
+</p>
+<p>
+  Название <%= required_field %><br />
+  <%= form.text_field :name %>
+</p>
+<p>
+  Описание <%= required_field %> &nbsp;&nbsp;&nbsp;<%= wiki_syntax_help %><br />
+  <%= form.text_area :description %>
+</p>
+<!--p>
+  Условие<br />
+  <%= form.text_area :condition %>
+</p-->
+<p>
+  Сообщение <%= required_field %> &nbsp;&nbsp;&nbsp;<%= wiki_syntax_help %><br />
+  <%= form.text_area :message %>
+</p>
+
+<% if current_user.roles.include?(:admin) %>
+  <p>
+    <%= form.label :seed %><br />
+    <%= form.check_box :seed %>
+  </p>
+<% end %>

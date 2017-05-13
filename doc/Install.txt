@@ -1,0 +1,128 @@
+Установка redmine (http://www.redmine.org/wiki/redmine/RedmineInstall)
+gem install rails -v=2.3.5
+gem install rack -v=1.0.1
+apt-get install libopenssl-ruby1.8
+apt-get install gcc
+apt-get install libmysqlclient-dev
+apt-get install ruby1.8-dev
+apt-get install libmysql-ruby1.8
+gem install mysql
+
+Для отправки мыла редмайном через gmail необходим плагин git://github.com/collectiveidea/action_mailer_optional_tls.git (Детальнее тут http://seriyps.ru/blog/2010/01/15/uchim-redmine-rassylat-pochtu-cherez-gmail/)
+
+Установить плагин restful_authentication, нужен для авторизации через azalo, скопировать site_keys.rb
+
+create database redmine character set utf8;
+
+rake db:migrate
+
+INSERT INTO `auth_sources` VALUES (NULL,'AuthSourceAzalo','Azalo','localhost',3306,'root','1234567890','mysql:azalo','login','name','lastname','email',1,0);
+
+# В настройках Включить веб-сервис REST
+# ВАЖНО!!! Сначала таблица настроек пуста, если ни разу не нажималась в редмине кнопка "Сохранить"
+# поэтому если таблица пуста - insert, иначе - update
+insert into `settings` (name, value, updated_on) values ('rest_api_enabled', 1, Now())
+или если запись уже есть
+update `settings` set value=1 WHERE `name`='rest_api_enabled'
+
+# Что бы у юзеров не светились наружу их email, по умолчанию ставим не показывать мыло:
+alter table user_preferences modify hide_mail tinyint(1) DEFAULT 1;
+
+# В настройках Восстановление пароля - Выключить
+insert into `settings` (name, value, updated_on) values ('lost_password', 0, Now())
+или если запись уже есть
+update `settings` set value = 0 WHERE name='lost_password'
+
+# Возможна саморегистрация - отключено
+insert into `settings` (name, value, updated_on) values ('self_registration', 0, Now())
+# или если запись уже есть
+update `settings` set value = 0 WHERE name='self_registration'
+
+#Установить по умолчанию русский язык
+insert into `settings` (name, value, updated_on) values ('default_language', 'ru', Now())
+или обновить
+update `settings` set value = 'ru' WHERE name='default_language'
+
+
+Создать роли в соотв с ролями в azalo
+
+Создать трекер в настройках или с помощью SQL:
+INSERT INTO `trackers` (`name`, `position`, `is_in_roadmap`, `is_in_chlog`) VALUES('Задачи', 1, 1, 0)
+
+Определить статус задачи по умолчанию:
+Администрирование -> Статусы задачи
+INSERT INTO `issue_statuses` (`name`, `position`, `is_default`, `default_done_ratio`, `is_closed`) VALUES('Новая', 1, 1, NULL, 0)
+
+Создать настраивоемые поля:
+INSERT INTO `custom_fields` (`id`, `type`, `name`, `field_format`, `possible_values`, `regexp`, `min_length`, `max_length`, `is_required`, `is_for_all`, `is_filter`, `position`, `searchable`, `default_value`, `editable`) VALUES
+(3, 'IssueCustomField', 'page_id', 'string', '--- []\n\n', '', 6, 20, 0, 1, 0, 1, 0, '', 1);
+INSERT INTO `custom_fields` (`id`, `type`, `name`, `field_format`, `possible_values`, `regexp`, `min_length`, `max_length`, `is_required`, `is_for_all`, `is_filter`, `position`, `searchable`, `default_value`, `editable`) VALUES
+(4, 'IssueCustomField', 'task_id', 'int', '--- []\n\n', '^[0-9]$', 1, 9, 0, 1, 0, 2, 0, '', 1);
+
+Важно!!! В redmine_integrator-е захардкожен ID кастом-фиелда!. Он равен 3, и ссответвуюе ID в вышеприведенном запросе
+
+Затем нужно соединить custom_fields и tracker:
+INSERT INTO `custom_fields_trackers` (`custom_field_id`, `tracker_id`) VALUES (3, 1)
+
+
+Создать хотябы оди приоритет для задачи: Справочники->Приоритеты задач
+UPDATE `enumerations` SET is_default = 0 WHERE (`enumerations`.`type` = 'IssuePriority')
+INSERT INTO `enumerations` (`name`, `position`, `is_default`, `project_id`, `type`, `parent_id`, `active`) VALUES('Нормальный', 1, 1, NULL, 'IssuePriority', NULL, 1)
+
+# 8
+Создать проект azalo и роль azalo_user, для того, чтоб подключать к этому
+проекту зарегистрированных юзеров и давать им форум и багтрекер
+
+
+--------------------------------------------------------------------------------
+Установка Azalo
+
+apt-get install libmagickcore-dev
+apt-get install libmagickwand-dev
+gem install rmagick
+gem install unicode
+#gem install bluecloth (Важно! не BlueCloth, а bluecloth. Первый - старая версия) - заменен на redcloth
+gem install RedCloth (как у redmine)
+
+Для очереди задач и рассылок (resque_mailer и его зависимости):
+gem install redis redis-namespace json vegas sinatra
+gem install resque
+#gem install resque_mailer  - установлен как плагин
+gem install SystemTimer # нужно для Redis client
+
+---------------------------------------
+Для установки пагиантора will_paginate для рельсов 2.3 нужно:
+config/environment.rb
+Rails::Initializer.run do |config|
+  config.gem 'will_paginate', :version => '~> 2.3.16'
+end
+> sudo rake gems:install
+---------------------------------------
+
+
+create database azalo character set utf8;
+
+rake db:migrate
+
+Создать коллекцию - список!!! Сейчас она забыта
+
+После создания базы первым юзерам необходимо залогиниться на редмине вручную. По
+крайней мере для юзерва "seeder" необходимо, чтоб, когда сидер начнет делать 
+проекты не получать ошибки при создании проекта редмине.
+
+
+
+Настроить az_rm_roles
+
+
+
+==========================================================================================================================
+Для межсайтовой авторизации нужно установить идентичные настройки для хранилища сессии и в azalo и в redmine:
+config/initializers/session_store.rb
+
+ActionController::Base.session = {
+  :key         => '_redmine_session',
+  :secret      => '5fe95950a30c06c3508fb131aaf8de0edcf36fca9310f1e2bda616045e4cf00d094c8d46aeea7b36',
+  :domain => ".azalo.net"
+}
+==========================================================================================================================

@@ -1,0 +1,14 @@
+<h1>Редактирование операции</h1>
+
+<%= form_for(@az_operation) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:form => f}) %>
+
+  <p>
+    <%= f.submit 'Обновить' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @az_operation %> |
+<%= link_to 'Back', az_operations_path %>

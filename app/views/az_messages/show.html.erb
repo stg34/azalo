@@ -1,0 +1,25 @@
+<!--p>
+  <b>Message type:</b>
+  <%=h @az_message.message_type %>
+</p-->
+
+<p>
+  <b>Email:</b>
+  <%=h @az_message.email %>
+</p>
+
+<p>
+  <b>Тема:</b>
+  <%=h @az_message.subject %>
+</p>
+
+<p>
+  <b>Сообщение:</b><br/>
+  <%=h @az_message.message %>
+</p>
+
+
+<%#= link_to 'Edit', edit_az_message_path(@az_message) %>
+<%= link_to t(:az_label_delete), az_messages_path %>
+<br/><br/>
+<%= link_to t(:az_label_back), az_messages_path %><br/>

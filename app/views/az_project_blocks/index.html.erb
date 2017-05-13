@@ -1,0 +1,29 @@
+<h1>Список компонентов</h1>
+
+<div class="digg_pagination">
+  <%= will_paginate @az_project_blocks %>
+</div>
+
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th><%= t(:az_label_name) %></th>
+    <th>Создан</th>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th>Страниц</th>
+  </tr>
+
+  <% @az_project_blocks.each do |az_project_block| %>
+    <tr>
+      <td><%= az_project_block.id %></td>
+      <td><%= link_to h(az_project_block.name), az_project_block %></td>
+      <td><%= az_project_block.created_at %></td>
+      <td><%= h(az_project_block.get_owner_name) %></td>
+      <td><%= az_project_block.az_pages.size %></td>
+    </tr>
+  <% end %>
+</table>
+
+<div class="digg_pagination">
+  <%= will_paginate @az_project_blocks %>
+</div>

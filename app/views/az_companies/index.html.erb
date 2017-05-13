@@ -1,0 +1,76 @@
+
+<fieldset>
+  <legend>Фильтр</legend>
+  <b>Тариф</b>
+  <%= form_for(AzCompany.new, :url => {:controller => 'az_companies', :action => 'set_filter'}) do |f| %>
+    <%= f.select(:az_tariff_id, @tariffs) %>
+    <%= f.submit('Найти') %>
+  <% end %>
+  <%= form_for(AzCompany.new, :url => {:controller => 'az_companies', :action => 'reset_filter'}) do |f| %>
+    <%= f.submit('Сброс') %>
+  <% end %>
+</fieldset>
+
+
+
+<h1>Компании</h1>
+<div class="digg_pagination">
+  <%= will_paginate @companies %>
+</div>
+<table class="table companies">
+  <tr>
+    <th>id</th>
+    <th>Тариф</th>
+    <th>logo</th>
+    <th>Ceo/email/Roles</th>
+    <th>Работники</th>
+    <th><%= t(:az_label_projects) %></th>
+    <th>Компоненты</th>
+    <th>Обновить</th>
+    <th><%= t(:az_label_delete) %></th>
+  </tr>
+<% for company in @companies %>
+  <% ceo = company.ceo %>
+  <tr>
+    <td><%=link_to(h(company.name), :controller => 'az_companies', :action => 'admin_show', :id => company.id) %></td>
+    <td>
+      <%= company.az_tariff.name %><br/>
+      <%= company.get_balance %>
+    </td>
+    <td><%= image_tag(company.logo.url(:tiny), :alt => company.name, :title=> company.name) %></td>
+    <td>
+      <b><%= company.ceo.login %></b><br/>
+      <%= h ceo.email %><br/>
+      <%= h ceo.roles.map(&:to_s) * ',' if ceo.roles %><br/>
+      <%= l ceo.created_at %><br/>
+    </td>
+    <td>
+      <% company.az_employees.each do |az_employee| %>
+        <%= az_employee.az_user.login %><br/>
+      <% end %>
+    </td>
+    <td>
+      <% projects = AzProject.get_by_company(company) %>
+      <%# projects_and_seeds = @seeds[AzProject].clone %>
+      <%= projects.collect{|p| p.name}.join(', ') %>
+    </td>
+    <td>
+      <% blocks = AzProjectBlock.get_by_company(company) %>
+      <%= blocks.collect{|p| p.name}.join(', ') %>
+      <%# blocks_and_seeds = @seeds[AzProjectBlock].clone %>
+      <%#= items_and_seeds(blocks, blocks_and_seeds) %>
+    </td>
+    <td>
+      <%= link_to "Обновить", :controller => 'az_services', :action => 'update_from_seeds', :id=>company.id %><br/>
+    </td>
+    <td>
+      <%= link_to t(:az_label_delete), company, :confirm => t(:az_label_are_you_sure), :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
+<div class="digg_pagination">
+  <%= will_paginate @companies %>
+</div>
+<br/>
+<%= link_to('Создать компанию', new_az_company_path) %>

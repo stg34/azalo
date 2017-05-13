@@ -1,0 +1,32 @@
+<h1>Список страниц</h1>
+
+<div class="digg_pagination">
+  <%= will_paginate @pages %>
+</div>
+
+<table class="table">
+  <tr>
+    <th><%= t(:az_label_date) %></th>
+    <th><%= t(:az_label_name) %></th>
+    <th>Проект/компонент</th>
+    
+  </tr>
+
+<% @pages.each do |page| %>
+  <tr>
+    <td><%= page.created_at %></td>
+    <td>
+      <%= link_to(h(page.name), az_page_path(page.id)) %>
+    </td>
+    <td>
+      <% prj = page.get_project_over_block %>
+      <%= link_to(h(prj.name), :controller => prj.class.to_s.tableize, :action => 'show', :id => prj.id ) %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<div class="digg_pagination">
+  <%= will_paginate @pages %>
+</div>
+

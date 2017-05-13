@@ -1,0 +1,19 @@
+  <p>
+    Название <%= required_field %><br />
+    <%= form.text_field :name %>
+  </p>
+  <p>
+    Описание&nbsp;&nbsp;&nbsp;<%= wiki_syntax_help %><br/>
+    <%= form.text_area :description %>
+  </p>
+
+  <% if current_user.roles.include?(:admin) %>
+    <p>
+      <%= form.label :seed %><br />
+      <%= form.check_box :seed %>
+    </p>
+  <% end %>
+
+<div id="variables-struct-id-<%= @az_struct_data_type.id %>">
+  <%= render( :partial => 'variables_list1', :locals => {:struct => @az_struct_data_type, :permitted_to_edit => true}) %>
+</div>

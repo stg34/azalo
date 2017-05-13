@@ -1,0 +1,50 @@
+<div class="add-update-design-dialog" id="add-update-design-dialog-content">
+
+  <%= form_for(design,
+      :update => "add-update-design-dialog-container",
+      :success => "Windows.closeAll(); update_page_box(#{design.az_page.id});",
+      :builder => AzDialogFormBuilder,
+      remote: true) do |az_design_form| %>
+    <div class="dialog-form-content">
+      <% dialog_title = (design_action == :new ? t(:az_label_new_design) : t(:az_label_update_design)) %>
+      <%= page_dialog_title(dialog_title, design.az_page) %>
+      <% link_id =  'designs_' + az_design_form.object.id.to_s %>
+      <div id="<%= link_id %>">
+
+        <%= t(:az_label_design_description) %> <%= required_field %><br/>
+        <p>
+          <%= az_design_form.text_area :description %>
+        </p>
+
+        <%= az_design_form.hidden_field :design_rnd, :value=>design.design_rnd %>
+        <% if design.az_page_id %>
+          <%= az_design_form.hidden_field :id, :value=>design.az_page_id %>
+        <% end %>
+
+        <% if permitted_to?(:add_source, design) %>
+          <div class="uploader-holder">
+            <% if image == nil %>
+              <iframe class="uploader" src="/az_images/new/<%= design.design_rnd %>" width="388" height="90" align="">Ваш браузер не поддерживает плавающие фреймы!</iframe>
+            <% else %>
+              <iframe src="/az_images/show/<%= image.id %>" width="400" height="90" align="">Ваш браузер не поддерживает плавающие фреймы!</iframe>
+            <% end %>
+          </div>
+
+          <% if source == nil %>
+            <iframe src="/az_design_sources/new/<%= design.design_rnd %>" width="388" height="90" align="">Ваш браузер не поддерживает плавающие фреймы!</iframe>
+          <% else %>
+            <iframe src="/az_design_sources/show/<%= source.id %>" width="388" height="90" align="">Ваш браузер не поддерживает плавающие фреймы!</iframe>
+          <% end %>
+        <% else %>
+          Загрузка изображений невозможна, так как достигнут лимит использования дискового пространтсва
+        <% end %>
+      </div>
+    </div>
+    <div class="dialog-form-buttons">
+      <%= submit_and_disable_tag(az_design_form, t(:az_label_save)) %>
+      <%= az_design_form.submit t(:az_label_cancel), :onclick => 'Windows.closeAll(); return false;' %>
+    </div>
+
+  <% end %>
+</div>
+

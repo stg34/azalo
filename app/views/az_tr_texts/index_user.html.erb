@@ -1,0 +1,51 @@
+<% is_admin = current_user.roles.include?(:admin) %>
+<% @my_companies.each do |company| %>
+
+  <%= item_list_header("Список текстов ТЗ", company, @my_companies.size > 1) %>
+
+  <% @tr_text_types.each do |text_type| %>
+    <% tr_texts = @tr_texts[company][text_type] %>
+    <% data_type= @tr_text_data_types[text_type]  %>
+
+    <h2><%= @tr_text_type_names[text_type] %></h2>
+
+    <table class="table topailgn">
+      <tr>
+        <th><%= t(:az_label_name) %></th>
+        <% if text_type != :other %>
+          <th>Операция</th>
+        <% end %>
+        <th>Текст</th>
+        <% if is_admin %>
+          <th>&nbsp;</th>
+        <% end %>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+      <% tr_texts.each do |tr_text| %>
+        <tr>
+          <td>
+            <p><%=h tr_text.name %></p>
+          </td>
+          <% if text_type != :other %>
+            <td>
+              <p><%= @operations_by_id[tr_text.az_operation_id] %></p>
+            </td>
+          <% end %>
+          <td>
+            <%= RedCloth.new(n2e(tr_text.get_description(node, data_type))).to_html %>
+          </td>
+          <% if is_admin %>
+            <td class="admin"><%= boolean_to_img(tr_text.seed) %></td>
+          <% end %>
+          <td><%= link_to t(:az_label_edit), edit_az_tr_text_path(tr_text) %></td>
+          <td><%= link_to t(:az_label_delete), tr_text, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+        </tr>
+      <% end %>
+    </table>
+    <br />
+
+  <% end %>
+  <%= link_to 'Новый текст', new_tr_text_path(:owner_id => company.id) %>
+
+<% end %>

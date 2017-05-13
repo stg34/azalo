@@ -1,0 +1,8 @@
+<% if az_page.id != current_az_page.id %>
+  <option value="<%= az_page.id %>" <%= "selected" if @az_page.parent_id == az_page.id %>>
+    <%= "&#8226;" * level %><%=h az_page.name %>
+  </option>
+  <% az_page.get_children.each do |p| %>
+    <%= render(:partial => 'parent_option', :locals => {:az_page => p, :current_az_page => current_az_page, :level => level + 1}) -%>
+  <% end %>
+<% end %>

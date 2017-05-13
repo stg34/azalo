@@ -1,0 +1,13 @@
+<h1>Новый статус проекта</h1>
+
+<%= form_for(@az_project_status) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:f => f}) %>
+
+  <p>
+    <%= f.submit t(:az_label_create) %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_back), az_project_statuses_path %>

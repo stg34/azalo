@@ -1,0 +1,64 @@
+<h1><%=h @az_company.name %></h1>
+
+<p>
+  <b>Дата регистрации:</b><br/>
+  <%=l @az_company.created_at %>
+</p>
+
+<p>
+  <b>Тариф:</b><br/>
+  <%=h @az_company.az_tariff.name %> (тестовый период до <%=l @az_company.az_test_period.ends_at if @az_company.az_test_period%>)
+</p>
+
+<p>
+  <b>Счет:</b><br/>
+  <%=h @az_company.get_balance %>
+</p>
+<p>
+  <b>Движение по счету:</b><br/>
+  <table class="table">
+  <tr>
+    <th><%= t(:az_label_date) %></th>
+    <th><%= t(:az_label_description) %></th>
+    <th>Сумма</th>
+  </tr>
+
+<% @az_company.az_balance_transactions.each do |bt| %>
+  <tr>
+    <td><%=l bt.created_at %></td>
+    <td><%=h bt.description %></td>
+    <td><%=h bt.amount %></td>
+  </tr>
+<% end %>
+</table>
+</p>
+
+<p>
+  <b>CEO:</b><br/>
+  <%=h @az_company.ceo.login %> (<%=h @az_company.ceo.name %> <%=h @az_company.ceo.lastname %>), зарегистрирован <%= l @az_company.ceo.created_at %>
+</p>
+
+<p>
+  <b>Работники:</b><br/>
+  <% @az_company.az_employees.each do |e| %>
+    <%=h e.az_user.login %> (<%=h e.az_user.name %> <%=h e.az_user.lastname %>) Логинился: <%= e.az_user.all_logins.size %> раз<br/>
+  <% end %>
+</p>
+
+<p>
+  <b>Проекты:</b><br/>
+  <% @az_company.projects.each do |p| %>
+    <%= link_to(h(p.name), :controller => 'az_projects', :action => 'show', :id => p.id) %><br/>
+  <% end %>
+</p>
+
+<p>
+  <b>Компоненты:</b><br/>
+  <% @az_company.project_blocks.each do |pb| %>
+    <%= link_to(h(pb.name), :controller => 'az_project_blocks', :action => 'show', :id => pb.id) %><br/>
+  <% end %>
+</p>
+
+
+<%= link_to 'Edit', edit_az_company_path(@az_company) %> |
+<%= link_to 'Back', az_companies_path %>

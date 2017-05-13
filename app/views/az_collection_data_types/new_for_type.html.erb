@@ -1,0 +1,38 @@
+<%= crumbs(@az_collection_data_type.get_crumbs_to_parent) %>
+
+<div id="tooltip-content-collection-1" style="display:none;">
+  <p>Коллекция &#8211; это набор однотипных структур данных, их массив.</p>
+  <p>Например, страница "Новость" должна быть связана со <em>структурой</em> "Новость", а
+    страница "Архив новостей" &#8211; с <em>коллекцией</em> "Новости".</p>
+</div>
+
+<%= t_b %><h1>Новая коллекция</h1><%= t_e("tooltip-collection-1", "tooltip-content-collection-1") %>
+
+<%= form_for(@az_collection_data_type) do |form| %>
+  <%= form.error_messages %>
+
+  <p>
+    <%= t(:az_label_name) %><br />
+    <%= form.text_field :name %>
+  </p>
+
+  <p>
+    Описание<br />
+    <%= form.text_area :description %>
+  </p>
+
+  <p style="display: none;">
+    Тип коллекции<br />
+    <%= form.select(:az_collection_template_id, @collection_templates.collect {|p| [ p.name, p.id ] } ) %>
+  </p>
+
+  <p>
+    <%= form.submit t(:az_label_create) %>
+  </p>
+
+  <%= form.hidden_field :owner_id %>
+  <%= form.hidden_field :az_base_data_type_id %>
+
+<% end %>
+
+<%= back_link_for_data_type(@az_collection_data_type.az_base_data_type) %>

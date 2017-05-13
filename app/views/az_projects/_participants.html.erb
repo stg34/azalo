@@ -1,0 +1,25 @@
+<fieldset class="participatnts-block">
+  <legend><%= t(:az_label_project_participants) %></legend>
+  <%= form_for(@project, :url => '/az_projects/change_members/' + @project.id.to_s) do |f| %>
+    <table class="table participants-table">
+      <% @az_rm_roles.each do |role| %>
+      <tr>
+          <td class="role">
+            <%= role.name %>
+          </td>
+          <td>
+            <select id="az_project_role[<%= role.id %>]_id" name="az_project_role[<%= role.id %>][id]">
+              <% @employees_can_be_added.each do |employee| -%>
+                <% selected = false -%>
+                <% user = employee.az_user %>
+                <% selected = @project.is_paricipant?(employee, role) -%>
+                <option id="<%= user.login %>" value="<%= user.login %>" <%= 'selected="selectd"' if selected %> ><%= user.login %></option>
+              <% end -%>
+            </select>
+          </td>
+        <% end %>
+      </tr>
+    </table>
+    <%= f.submit t(:az_label_save) %>
+  <% end %>
+</fieldset>

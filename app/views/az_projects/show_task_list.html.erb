@@ -1,0 +1,68 @@
+<% total_time = 0 %>
+<% total_layout_time = 0 %>
+
+<h2>Оценка времени на разработку проекта <q><%= @project.name %></q></h2>
+
+<% total_time = 0 %>
+<table class="table">
+  <tr>
+    <th>Страница<br/>проекта</th>
+    <th>Структуры сведенные</th>
+    <th>Тип</th>
+    <th>Данные</th>
+    <th><%= t(:az_label_time) %></th>
+    <th><%= t(:az_label_time) %></th>
+  </tr>
+  <% @all_pages.sort!{ |a, b| a.page_type<=>b.page_type}.each do |page| -%>
+  <% total_page_time = 0 %>
+    <tr>
+      <td>
+        <%= page.name %>
+      </td>
+
+      <td style="background: #E5F4FA;">
+        <% page.types.each do |type| %>
+          <%= type.name %><br/>
+        <% end %>
+
+      </td>
+      <td>
+        <%= page.page_type == 0 ? 'юзер' : 'админ'%>
+      </td>
+      <td>
+        <%= page_data_types_tag(page) %>
+      </td>
+        
+      <td>
+        <% page.get_task_list.each do |task| %>
+
+          <% title = task.get_title(page)
+          time = task.get_time(page) %>
+
+          <% if time != nil && time > 0 %>
+            <b><%= t(:az_label_task_name) %>: <%= title %></b><br/>
+            Время на задачу: <%= time %><br/><br/>
+            <% total_page_time += time %>
+            <% total_time += time %>
+          <% end %>
+
+        <% end %>
+      </td>
+      <td><%= total_page_time %></td>
+        
+    </tr>
+  <% end %>
+
+  <tfoot>
+  <tr>
+    <td>Итого</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><%= total_time %></td>
+  </tr>
+  </tfoot>
+</table>
+<h2><%= t(:az_label_project_estimated_time, :total_time => total_time) %></h2>
+    

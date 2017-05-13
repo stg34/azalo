@@ -1,0 +1,73 @@
+<h1>Список сообщений</h1>
+
+<%= @selected_statuses %>
+
+<% form_tag('/az_messages/set_filter') do %>
+<table>
+  <tr>
+    <td style="padding-right: 3px;">
+      <%= select_tag('status1', options_for_select([['Не задано', -1]] + @statuses1, @selected_statuses[:status1])) %>
+    </td>
+    <td style="padding-right: 3px;">
+      <%= select_tag('status2', options_for_select([['Не задано', -1]] + @statuses2, @selected_statuses[:status2])) %>
+    </td>
+    <td style="padding-right: 3px;">
+      <%= select_tag('status3', options_for_select([['Не задано', -1]] + @statuses3, @selected_statuses[:status3])) %>
+    </td>
+  </tr>
+</table>
+  <p>
+    <%= submit_tag 'Фильтровать' %>
+  </p>
+<% end %>
+
+<div class="digg_pagination">
+  <%= will_paginate @az_messages %>
+</div>
+<table class="table">
+  <tr>
+    <th>#</th>
+    <th>id</th>
+    <th>Email</th>
+    <th>Тема</th>
+    <th>Сообщение</th>
+    <th>&nbsp;</th>
+    
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+
+    <th>&nbsp;</th>
+  </tr>
+
+<% i = 0 %>
+<% @az_messages.each do |az_message| %>
+  <% i = i + 1 %>
+  <tr>
+    <td><%= i %></td>
+    <td><%= az_message.id %></td>
+    <td>
+      <%=h az_message.email %><br/>
+      <% if @users_by_email[az_message.email] != nil%>
+        <%= link_to h(@users_by_email[az_message.email].login), edit_az_user_path(@users_by_email[az_message.email]) %><%= %><br/>
+      <% end %>
+      <%=h az_message.created_at %>
+    </td>
+    <td><%=h az_message.subject %></td>
+    <td><%=h az_message.message %></td>
+    <!--td><%= link_to t(:az_label_show), az_message %></td-->
+    <td style="background-color: <%= az_message.get_status1_color %>">&nbsp;</td>
+    <td style="background-color: <%= az_message.get_status2_color %>">&nbsp;</td>
+    <td style="background-color: <%= az_message.get_status3_color %>">&nbsp;</td>
+    <td><%= h az_message.note %></td>
+
+    <td><%= link_to t(:az_label_edit), edit_az_message_path(az_message) %></td>
+    <td><%= link_to t(:az_label_delete), az_message, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<div class="digg_pagination">
+  <%= will_paginate @az_messages %>
+</div>
+

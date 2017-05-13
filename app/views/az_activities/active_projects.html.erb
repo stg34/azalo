@@ -1,0 +1,69 @@
+<h1>Активные проекты</h1>
+<h2>За последние 24 часа</h2>
+
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th><%= t(:az_label_name) %></th>
+    <th>Создан</th>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th>Страниц</th>
+    <th>Компонентов</th>
+    <th><%= t(:az_label_project_disk_usage) %></th>
+    <th>count</th>
+  </tr>
+<% @az_activities_last_day.each do |az_activity| %>
+<% az_project = az_activity.az_project %>
+  <tr>
+    <td><%= az_project.id if az_project %></td>
+    <td><%= link_to h(az_project.name), az_project if az_project %></td>
+    <td><%= az_project.created_at if az_project %></td>
+    <td><%= link_to(h(az_project.owner.name), :controller => 'az_companies', :action => 'admin_show', :id => az_project.owner.id) if az_project %></td>
+    <td><%= az_project.az_pages.size if az_project %></td>
+    <td><%= az_project.components.size if az_project %></td>
+    <td>
+      <% if az_project && az_project.get_disk_usage > 0%>
+        <%= (az_project.get_disk_usage/10000)/100.0 %> Mb
+      <% end %>
+    </td>
+    <td><%= h az_activity.cnt %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<h2>За последние 7 дней</h2>
+
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th><%= t(:az_label_name) %></th>
+    <th>Создан</th>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th>Страниц</th>
+    <th>Компонентов</th>
+    <th><%= t(:az_label_project_disk_usage) %></th>
+    <th>count</th>
+  </tr>
+
+  <% @az_activities_last_week.each do |az_activity| %>
+  <% az_project = az_activity.az_project %>
+    <tr>
+      <td><%= az_project.id if az_project %></td>
+      <td><%= link_to h(az_project.name), az_project if az_project %></td>
+      <td><%= az_project.created_at if az_project %></td>
+      <td><%= link_to(h(az_project.owner.name), :controller => 'az_companies', :action => 'admin_show', :id => az_project.owner.id) if az_project %></td>
+      <td><%= az_project.az_pages.size if az_project %></td>
+      <td><%= az_project.components.size if az_project %></td>
+      <td>
+        <% if az_project && az_project.get_disk_usage > 0%>
+          <%= (az_project.get_disk_usage/10000)/100.0 %> Mb
+        <% end %>
+      </td>
+      <td><%= h az_activity.cnt %></td>
+    </tr>
+  <% end %>
+  </table>
+
+<br />

@@ -1,0 +1,35 @@
+
+  <p>
+    <%= t(:az_label_name) %><br />
+    <%= form.text_field :name %>
+  </p>
+  <% if current_user.roles.include?(:admin) %>
+    <p>
+      <%= form.label :seed %><br />
+      <%= form.check_box :seed %>
+    </p>
+  <% end %>
+
+
+
+<table class="table">
+  <tr>
+    <th>Переменная</th>
+    <th>Тип</th>
+    <th>Валидаторы</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </tr>
+  <% @az_struct_data_type.az_variables.each do |az_variable| %>
+    <tr>
+      <td><%=h az_variable.name %></td>
+      <td><%=h az_variable.az_base_data_type.name %></td>
+      <td><% az_variable.az_validators.each do |validator| %>
+          <%=h validator.name %><br/>
+        <% end %>
+      </td>
+      <td><%= link_to t(:az_label_edit), edit_az_variable_path(az_variable) %></td>
+      <td><%= link_to t(:az_label_delete), az_variable, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+    </tr>
+  <% end %>
+  </table>

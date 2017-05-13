@@ -1,0 +1,28 @@
+<p>
+  <b>Action:</b>
+  <%=h @az_activity.action %>
+</p>
+
+<p>
+  <b>Model name:</b>
+  <%=h @az_activity.model_name %>
+</p>
+
+<p>
+  <b>Model:</b>
+  <%=h @az_activity.model_id %>
+</p>
+
+<p>
+  <b>Owner:</b>
+  <%=h @az_activity.owner_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%=h @az_activity.user_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_az_activity_path(@az_activity) %> |
+<%= link_to 'Back', az_activities_path %>

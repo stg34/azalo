@@ -1,0 +1,17 @@
+
+<p>
+  <%= form.label :az_base_data_type_id %><br />
+  <%= form.text_field :az_base_data_type_id %>
+</p>
+<p>
+Операция<br />
+  <%= form.select(:az_operation_id, az_operations.collect {|p| [ p.name, p.id ] } ) %>
+</p>
+<p>
+  <%= form.label :operation_time %><br />
+  <%= form.text_field :operation_time %>
+</p>
+<p>
+  <%= form.label :copy_of %><br />
+  <%= form.text_field :copy_of %>
+</p>

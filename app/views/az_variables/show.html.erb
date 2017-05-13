@@ -1,0 +1,16 @@
+<p>
+  <b><%= t(:az_label_name) %>:</b>
+  <%=h(@az_variable.name) %>
+</p>
+
+<p>
+  <b>Тип данных:</b>
+  <%=h(@az_variable.az_base_data_type.name) %>
+</p>
+
+<%= link_to 'Редактировать переменную', edit_az_variable_path(@az_variable) %> |
+<% if @az_variable.az_struct_data_type == nil %>
+  <%= link_to t(:az_label_back), az_variables_path %>
+<% else %>
+  <%= link_to 'Назад к структуре', edit_az_struct_data_type_path(@az_variable.az_struct_data_type) %>
+<% end %>

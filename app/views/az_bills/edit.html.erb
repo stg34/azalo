@@ -1,0 +1,32 @@
+<h1>Editing az_bill</h1>
+
+<%= form_for(@az_bill) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :invoice_id %><br />
+    <%= f.text_field :invoice_id %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </p>
+  <p>
+    <%= f.label :date_from %><br />
+    <%= f.datetime_select :date_from %>
+  </p>
+  <p>
+    <%= f.label :date_till %><br />
+    <%= f.datetime_select :date_till %>
+  </p>
+  <p>
+    <%= f.label :fee %><br />
+    <%= f.text_field :fee %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @az_bill %> |
+<%= link_to 'Back', az_bills_path %>

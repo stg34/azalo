@@ -1,0 +1,28 @@
+<h1>Editing az_warning_period</h1>
+
+<%= form_for(@az_warning_period) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :az_company_id %><br />
+    <%= f.text_field :az_company_id %>
+  </p>
+  <p>
+    <%= f.label :type %><br />
+    <%= f.text_field :type %>
+  </p>
+  <p>
+    <%= f.label :ends_at %><br />
+    <%= f.datetime_select :ends_at %>
+  </p>
+  <p>
+    <%= f.label :state %><br />
+    <%= f.text_field :state %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @az_warning_period %> |
+<%= link_to 'Back', az_warning_periods_path %>

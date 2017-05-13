@@ -1,0 +1,23 @@
+<% if current_user.roles.include?(:admin) %>
+
+  <h1>Список seed-структур</h1>
+  <%= render( :partial => 'structs_table', :locals => {:structs => @seed_structs }) %>
+
+  <h1>Список структур</h1>
+  <%= render( :partial => 'structs_table', :locals => {:structs => @structs_assigned_to_block }) %>
+
+  <h1>Список структур назначенных только блоку</h1>
+  <%= render( :partial => 'structs_table', :locals => {:structs => @structs_assigned_to_block }) %>
+
+  <h1>Список структур назначенных проекту</h1>
+  <%= render( :partial => 'structs_table', :locals => {:structs => @structs_assigned_to_project }) %>
+
+  <h1>Список несвязанных структур</h1>
+  <%= render( :partial => 'structs_table', :locals => {:structs => @unussigned_structs }) %>
+
+  <br />
+
+  <%= link_to 'Новая структура', new_az_struct_data_type_path %>
+
+<% end %>
+  

@@ -1,0 +1,41 @@
+<div id="new-edit-variable-dialog" class="dialog">
+
+  <h2>Редактирование переменной <q><%= h @az_variable.name %></q> структуры <q><%= h @az_variable.az_struct_data_type.name %></q></h2>
+
+  <div style="float: left; height: 400px;">
+
+    <% form_id = "update-variable-@az_variable-#{@az_variable.id}" %>
+    <% remote_form_for(@az_variable, :update => "new-edit-variable-dialog-container",
+                                     :after => "",
+                                     :before => "",
+                                     :builder => AzDialogFormBuilder,
+                                     :html => {:id => form_id}) do |f| %>
+      <%#= f.error_messages %>
+
+      <table style="height: 290px;">
+        <tr>
+          <td style="vertical-align: top; padding-left: 10px;">
+            <%= render( :partial => 'new_edit', :locals => {:form => f}) %>
+          </td>
+        </tr>
+      </table>
+
+    <%= aligner_tag %>
+
+    <p>
+      <%= f.submit t(:az_label_save) %>
+      <%= f.submit t(:az_label_close), :onclick => 'Windows.closeAll(); return false;' %>
+    </p>
+    
+    <% end %>
+  </div>
+
+  <div style="float: left">
+    Валидаторы
+    <div id="variable-validators-holder">
+      <%= render( :partial => 'validators', :locals => {:variable => @az_variable}) %>
+    </div>
+  </div>
+  <%= aligner_tag %>
+
+</div>

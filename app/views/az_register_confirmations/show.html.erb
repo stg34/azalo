@@ -1,0 +1,13 @@
+<p>
+  <b>User:</b>
+  <%=h @az_register_confirmation.user_id %>
+</p>
+
+<p>
+  <b>Confirm hash:</b>
+  <%=h @az_register_confirmation.confirm_hash %>
+</p>
+
+
+<%= link_to 'Edit', edit_az_register_confirmation_path(@az_register_confirmation) %> |
+<%= link_to 'Back', az_register_confirmations_path %>

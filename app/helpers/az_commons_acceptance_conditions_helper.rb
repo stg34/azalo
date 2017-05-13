@@ -1,0 +1,2 @@
+module AzCommonsAcceptanceConditionsHelper
+end

@@ -1,0 +1,15 @@
+<div class='demo-item'>
+    <ul id='menu-2' class='menu-pf'>
+      <li class='active'>
+        <a class='sub' onclick="return false;" href='#'>Сгенерировать текст</a>
+        <ul>
+          <%= render( :partial => '/az_pages/generate_description_menu_data_types', :locals => {:page => page, :texts => texts}) %>
+        </ul>
+      </li>
+    </ul>
+</div>
+
+
+<script type="text/javascript">
+    new ProtoFish('menu-2', '800', 'hover', false, true, false);
+</script>

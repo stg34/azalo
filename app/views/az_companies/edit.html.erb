@@ -1,0 +1,51 @@
+<h1><%= @az_company.name %></h1>
+
+<%= form_for(@az_company, :url => {:action => :user_update, :id => @az_company.id },
+                         :html => { :multipart => true },
+                         :builder => AzFormBuilder) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    Название <%= required_field %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    Сайт (например http://example.com)<br />
+    <%= f.text_field :site %>
+  </p>
+
+  <p>
+    Логотип (.jpeg, .png, .gif, до 1Мб; будет вписан в размеры 96x48 пикселов)
+    <div style="width: 96px; height: 48px; border: 1px solid silver; padding: 1px; text-align: center;">
+      <%= image_tag(@az_company.logo.url(:main), :style=>'margin: 0; padding: 0;') %>
+    </div><br/>
+    <% if @az_company.logo_file_name %>
+      <%= f.check_box :delete_logo %>Удалить логотип<br/>
+    <% end %>
+    <%= f.file_field :logo, :style=>"width: 350px;" %>
+  </p>
+
+  <script type="text/javascript">
+      function c_warning(old_ceo_id){
+        se = $$(".ceo_list");
+        if (se){
+          if(old_ceo_id != se[0].value)
+            return confirm('Вы уверены, что хотите изменить директора? Вы потеряете ряд привилегий.');
+        }
+        return true;
+      }
+
+  </script>
+
+  <p>
+    Директор компании:<br />
+    <% employees = @az_company.az_employees.collect{|e| ["#{e.az_user.name} #{e.az_user.lastname} (#{e.az_user.login})", e.az_user.id]} %>
+    <%= f.select(:ceo_id, employees, {}, :class => 'ceo_list') %>
+  </p>
+
+  <p>
+    <%= f.submit t(:az_label_save), :onclick => "return c_warning(#{@az_company.ceo_id});" %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_back), profile_path %>

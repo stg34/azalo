@@ -1,0 +1,27 @@
+<h1>Список сотрудников</h1>
+
+<table class="table">
+  <tr>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th>Az user</th>
+    <th>Az company</th>
+    <th>.</th>
+    <th>.</th>
+    <th>.</th>
+  </tr>
+
+<% @az_employees.each do |az_employee| %>
+  <tr>
+    <td><%=h az_employee.get_owner_name %></td>
+    <td><%=h az_employee.az_user_id %></td>
+    <td><%=h az_employee.az_company_id %></td>
+    <td><%= link_to 'Show', az_employee %></td>
+    <td><%= link_to 'Edit', edit_az_employee_path(az_employee) %></td>
+    <td><%= link_to 'Destroy', az_employee, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_employee', new_az_employee_path %>

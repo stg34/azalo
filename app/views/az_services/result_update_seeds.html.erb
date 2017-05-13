@@ -1,0 +1,12 @@
+<% @update_result.each_key do |company| %>
+<%= company.name %><br/>
+<table class="table">
+  <% @update_result[company].each do |res| %>
+    <tr>
+      <td style="width: 500px"><%= res[0].name %> (<%= res[0].id %>)</td>
+      <td style="width: 50px"><%= res[1] %></td>
+    </tr>
+  <% end %>
+</table>
+
+<% end %>

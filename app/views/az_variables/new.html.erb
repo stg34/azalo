@@ -1,0 +1,23 @@
+<%= crumbs(@az_variable.get_crumbs_to_parent) %>
+
+<h1>Новая переменная структуры <q><%= @az_variable.az_struct_data_type.name %></q></h1>
+
+<%= form_for(@az_variable) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:form => f}) %>
+
+<fieldset class="validators">
+  <legend>Валидаторы</legend>
+    <% @validtors.each do |v| %>
+      <%= check_box_tag "validators[#{v.id}]", v.id %><%= v.name %><br/>
+    <% end %>
+</fieldset>
+<%= aligner_tag %>
+<p>
+  <%= f.submit t(:az_label_create) %>
+</p>
+<% end %>
+
+<%= link_to t(:az_label_back), :controller => 'az_struct_data_types', :action => 'edit', :id => @az_variable.az_struct_data_type.id %>
+  

@@ -1,0 +1,38 @@
+<h1>Список товаров</h1>
+
+<table class="table">
+  <tr>
+    <th>Товар в магазине</th>
+    <th>Тип товара</th>
+    <th>Товар в редакторе</th>
+    <th>Price</th>
+    <th>Куплен</th>
+    <th>Visible</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </tr>
+
+<% @az_store_items.each do |az_store_item| %>
+  <tr>
+    <td>
+      <%= link_to(h(az_store_item.item.name), az_store_item_path(az_store_item)) %>
+    </td>
+    <td><%=h az_store_item.item.class.get_model_name %></td>
+    <td>
+      <% url = {:controller => az_store_item.item.class.to_s.tableize, :action => 'show', :id => az_store_item.item.id } %>
+      <%= link_to(h(az_store_item.item.name), url) %>
+    </td>
+    <td><%=h az_store_item.price %></td>
+    <td><%=h az_store_item.az_purchases.size %></td>
+    <td><%=h az_store_item.visible %></td>
+    <td><%= link_to 'Show', az_store_item %></td>
+    <td><%= link_to 'Edit', edit_az_store_item_path(az_store_item) %></td>
+    <td><%= link_to 'Destroy', az_store_item, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Новый товар', new_az_store_item_path %>

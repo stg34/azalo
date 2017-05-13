@@ -1,0 +1,18 @@
+<h1>Редактирование "<%= @az_common.class.get_label %>"</h1>
+
+<%= form_for(@az_common, :builder => AzFormBuilder) do |f| %>
+  <%#= f.error_messages %>
+
+  <%= render( :partial => '/az_commons/new_edit', :locals => {:form => f}) %>
+  
+  <p>
+    <%= f.submit t(:az_label_save) %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_show), @az_common %> |
+<% if @az_common.az_base_project_id != nil%>
+  <%= link_to t(:az_label_back), :controller => 'az_projects', :action => 'edit', :id => @az_common.az_base_project_id %>
+<% else %>
+  <%= link_to t(:az_label_back), :controller => @az_common.class.to_s.pluralize.underscore, :action => 'index_user' %>
+<% end %>

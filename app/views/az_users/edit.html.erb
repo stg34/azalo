@@ -1,0 +1,27 @@
+<h1>Editing user: <%= h @az_user.login %></h1>
+<h2><%= h @az_user.email %></h2>
+<h2><%= h @az_user.name %> <%= h @az_user.lastname %></h2>
+
+<%= form_for(@az_user) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= wiki_syntax_help %><br />
+    <%= f.label :note %><br />
+    <%= f.text_area :note %>
+  </p>
+
+  <p>
+    <%= f.label :roles %><br />
+    <%= f.select :roles, (controller.authorization_engine.roles + (@az_user.roles || [])).uniq, {}, {:multiple => true} %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Список CEOs', :controller => :az_companies, :action => :index_ceo_note %><br/>
+
+<%= link_to "Список CEO##{@az_user.login}", :controller => :az_companies, :action => :index_ceo_note, :anchor => @az_user.login %><br/>
+
+<%= link_to 'Back', az_users_path %>

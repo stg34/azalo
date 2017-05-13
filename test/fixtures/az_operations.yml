@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+#one:
+#  name: MyString
+#  az_typed_page_id: 1
+#  copy_of: 1
+#  is_assignable: false
+#
+#two:
+#  name: MyString
+#  az_typed_page_id: 1
+#  copy_of: 1
+#  is_assignable: false

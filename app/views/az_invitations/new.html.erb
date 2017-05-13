@@ -1,0 +1,23 @@
+<h1>New az_invitation</h1>
+
+<%= form_for(@az_invitation, :builder => AzFormBuilder) do |f| %>
+  <%#= f.error_messages %>
+
+  <p>
+    <%= f.label :hash %><br />
+    <%= f.text_field :hash %>
+  </p>
+  <p>
+    <%= f.label :invitation_type %><br />
+    <%= f.text_field :invitation_type %>
+  </p>
+  <p>
+    <%= f.label :invitation_data %><br />
+    <%= f.text_field :invitation_data %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', az_invitations_path %>

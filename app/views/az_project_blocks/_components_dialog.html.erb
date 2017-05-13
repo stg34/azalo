@@ -1,0 +1,19 @@
+<h2>Компоненты из кладовки</h2>
+<div class="components-list-holder">
+  <table class="table">
+    <tbody>
+      <% components.each do |block| %>
+        <tr>
+          <td class="component-name">
+            <%= link_to(block.name, block) %>
+          </td>
+          <td class="add-component">
+            <%= submit_and_disable_tag2("+", :onclick=>"add_component_to_project(#{project.id}, #{block.id})") %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= submit_tag t(:az_label_close), :style=>'float: left', :onclick => 'Windows.closeAll(); return false;' %>

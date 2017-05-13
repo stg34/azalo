@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+#one:
+#  hash: MyString
+#  invitation_type: MyString
+#  invitation_data: 1
+#
+#two:
+#  hash: MyString
+#  invitation_type: MyString
+#  invitation_data: 1

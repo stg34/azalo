@@ -1,0 +1,33 @@
+<h1>Определения (<%= @az_definitions.size %>)</h1>
+
+<table class="table">
+  <tr>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th><%= t(:az_label_name) %></th>
+    <th>Определение</th>
+    <th>Пользователь</th>
+    <th><%= t(:az_label_project) %></th>
+    <th>Seed</th>
+    <th>.</th>
+    <th>.</th>
+    <th>.</th>
+  </tr>
+
+<% @az_definitions.each do |az_definition| %>
+  <tr>
+    <td><%=h az_definition.get_owner_name %></td>
+    <td><%=h az_definition.name %></td>
+    <td><%=h az_definition.definition %></td>
+    <td><%=h az_definition.az_user_id %></td>
+    <td><%=h az_definition.az_base_project_id %></td>
+    <td><%=h az_definition.seed %></td>
+    <td><%= link_to 'Show', az_definition %></td>
+    <td><%= link_to 'Edit', edit_az_definition_path(az_definition) %></td>
+    <td><%= link_to t(:az_label_delete), az_definition, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Новое определение', new_az_definition_path %>

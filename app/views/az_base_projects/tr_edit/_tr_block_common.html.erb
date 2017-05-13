@@ -1,0 +1,58 @@
+<% commons.each do |com| %>
+  <% controller = com.class.to_s.underscore.pluralize %>
+  <div style="border-right: 2px solid <%= Statuses::Statuses[com.status][:color] %> ">
+    <%= RedCloth.new(n2e com.description).to_html %>
+    <%= aligner_tag %>
+  </div>
+  
+    <div class="tr-edit-contols-holder">
+      <table style="float: right;">
+        <tr>
+          <% if permitted_to_edit %>
+          <td style="padding: 1px;">
+            <% alt_title = t(:az_label_edit_block_text, :block_name => h(com.name)) %>
+            <% edit_img = image_tag('tr-edit.png', :alt => alt_title, :title => alt_title)%>
+            <% url = "/#{controller}/description_text_dialog/#{com.id}" %>
+            <%= link_to(edit_img, "#", :onclick => "show_tr_text_edit_dialog('#{url}'); return false;" ) %>
+          </td>
+          <td style="padding: 1px;">
+            <% alt_title = t(:az_label_delete_block, :block_name => h(com.name)) %>
+            <% del_img = image_tag('tr-delete.png', :alt => alt_title, :title => alt_title) %>
+            <%= link_to_remote(del_img, :url => remove_common_a_path(:id => project.id, :common_id => com.id),
+              :complete => "update_commons_in_tr('#{common_class_name}')",
+              :confirm => t(:az_label_are_you_sure)) %>
+          </td>
+          <td style="padding: 1px;">
+            <% alt_title = t(:az_label_move_block_up, :block_name => h(com.name)) %>
+            <% up_img = image_tag('tr-up.png', :alt => alt_title, :title => alt_title) %>
+            <%# --- TODO Disabled after Rails 3 migration. Fix me. --- = az_link_to_remote(up_img, :url => {:controller => 'az_base_projects', :action => 'move_common_up_tr', :id => project.id, :common_id => com.id},
+              :complete => "update_commons_in_tr('#{common_class_name}')") %>
+          </td>
+          <td style="padding: 1px;">
+            <% alt_title = t(:az_label_move_block_down, :block_name => h(com.name)) %>
+            <% down_img = image_tag('tr-down.png', :alt => alt_title, :title => alt_title) %>
+            <%# --- TODO Disabled after Rails 3 migration. Fix me. ---= az_link_to_remote(down_img, :url => {:controller => 'az_base_projects', :action => 'move_common_down_tr', :id => project.id, :common_id => com.id},
+              :complete => "update_commons_in_tr('#{common_class_name}')") %>
+          </td>
+          <td style="padding: 1px;">
+            <% url = "/#{controller}/status_dialog/#{com.id}" %>
+            <% title = t(:az_label_block_status_in_spec, :status_name => Statuses::Statuses[com.status][:name]) %>
+            <% img = image_tag(Statuses::Statuses[com.status][:image], :alt => title, :title => title) %>
+            <%= link_to(img, "#", :onclick => "show_tr_status_dialog('#{url}'); return false;", :class => "tr-status-edit-link", :title => title) %>
+          </td>
+          <% end %>
+          <% if permitted_to_show %>
+          <td style="padding: 1px;">
+            <% title = t(:az_label_refresh) %>
+            <% refresh_img = image_tag('tr-refresh.png', :alt => title, :title => title) %>
+            <% img = image_tag(refresh_img, :alt => title, :title => title) %>
+            <%= link_to(refresh_img, "#", :onclick => "update_commons_in_tr('#{common_class_name}'); return false;", :class => "tr-status-edit-link", :title => title) %>
+          </td>
+          <% end %>
+        </tr>
+      </table>
+      <%= aligner_tag %>
+    </div>
+  
+  <%= aligner_tag %>
+<% end %>

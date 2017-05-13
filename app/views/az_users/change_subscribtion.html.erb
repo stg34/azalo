@@ -1,0 +1,7 @@
+<h1>Изменение состава подписки</h1>
+<%= form_for(@user, :url => {:controller => 'az_users', :action => 'change_subscribtion'}) do |f| %>
+  <%= render :partial => 'az_users/change_subscribtion', :locals => {:f => f} %>
+<% end %>
+
+<br/>
+<%= link_to t(:az_label_back), :controller => 'az_profiles', :action => 'index' %>

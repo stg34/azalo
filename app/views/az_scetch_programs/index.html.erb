@@ -1,0 +1,26 @@
+<h1>Список программ для создания скетчей</h1>
+
+<table class="table">
+  <tr>
+    <th>Иконка</th>
+    <th>Name</th>
+    <th>Url</th>
+    <th>Description</th>
+  </tr>
+
+<% @az_scetch_programs.each do |az_scetch_program| %>
+  <tr>
+    <td><%= image_tag(az_scetch_program.sp_icon.url) %></td>
+    <td><%=h az_scetch_program.name %></td>
+    <td><%=h az_scetch_program.url %></td>
+    <td><%=h az_scetch_program.description %></td>
+    <td><%= link_to 'Show', az_scetch_program %></td>
+    <td><%= link_to 'Edit', edit_az_scetch_program_path(az_scetch_program) %></td>
+    <td><%= link_to 'Destroy', az_scetch_program, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_scetch_program', new_az_scetch_program_path %>

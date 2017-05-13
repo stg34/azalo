@@ -1,0 +1,13 @@
+<p>
+  <b>Az balance transaction:</b>
+  <%=h @az_invoice.az_balance_transaction_id %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @az_invoice.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_az_invoice_path(@az_invoice) %> |
+<%= link_to 'Back', az_invoices_path %>

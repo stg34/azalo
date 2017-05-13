@@ -1,0 +1,103 @@
+<div class="tariffs-page">
+  
+    <div class="main-content">      
+      <div class="main-top-block">
+        <h1>Выбор тарифного плана</h1>
+        <%= aligner_tag %>
+      </div>
+      <%= aligner_tag %>
+      <div class="main-middle-block">
+        <div class="main-middle-block-content">
+            <table width="100%" class="table">
+              <tr>
+                <th>&nbsp;</th>
+                <% tariffs.each do |tariff| %>
+                  <th>
+                    <div class="name"><%= tariff.name %></div>
+                    <div class="price">
+                      <% if tariff.price != 0%>
+                        $<%= Integer(tariff.price) %>/месяц
+                      <% else %>
+                        Бесплатно
+                      <% end %>
+                      <br/><br/><%= link_to "Регистрация", {:controller => 'az_users', :action=>'new', :tariff => tariff.id}, :class=>'register' %>
+                    </div>
+                  </th>
+                <% end %>
+              </tr>
+              
+              <tr class="tr1st trlarge">
+                <td class="option">Количество приватных проектов</td>
+                <% tariffs.each do |tariff| %>
+                  <td>
+                    <small>
+                      <% if tariff.quota_private_projects == 0 %>
+                        Нет
+                      <% elsif tariff.quota_private_projects >= AzTariff.unlimited_value %>
+                        Неограничено
+                      <% else %>
+                        <%= tariff.quota_private_projects %>
+                      <% end %>
+                    </small>
+                  </td>
+                <% end %>
+              </tr>
+              
+              <tr class="tr1st trlarge">
+                <td class="option">Сотрудники</td>
+                <% tariffs.each do |tariff| %>
+                  <td><%= tariff.quota_employees == 0 ? "Нет" : tariff.quota_employees %></td>
+                <% end %>
+              </tr>
+
+              <tr>
+                <td class="option">Название студии, логотип и ссылка на сайт</td>
+
+                <% tariffs.each do |tariff| %>
+                  <% if tariff.show_logo_and_site %>
+                    <% if tariff.optimal %>
+                      <td class="optimal"><img src="/images/tick_big.gif" alt="Название веб-студии, логотип и ссылка на сайт" /></td>
+                    <% else %>
+                      <td class="optimal"><img src="/images/tick.gif" alt="Название веб-студии, логотип и ссылка на сайт" /></td>
+                    <% end %>
+                  <% else %>
+                    <td></td>
+                  <% end %>
+                <% end %>
+              </tr>             
+            </table>
+          <%= aligner_tag %>
+        </div>
+      </div>
+      <div class="main-middle-block-bottom-border"></div>
+
+      <%= aligner_tag %>
+      <div class="main-bottom-block">
+        <div class="left">
+          <h2>Оплату в какой форме вы принимаете?</h2>
+          На данный момент принимаются платежи по картам Visa, MasterCard, электронными деньгами, с помощью терминала.
+
+          
+        </div>
+        
+        <div class="right">
+          <h2>Я могу изменить тарифный план после регистрации?</h2>
+          Конечно! Вы сможете повысить или понизить тарифный план в любое время. Сделать это можно
+          просто в разделе вашего аккаунта «Мои данные»
+          <!--h2>Что такое «Гостевые ссылки»?</h2>
+
+          Зачастую при работе над проектом необходимо продемонстрировать работу стороннему человеку, как правило заказчику.
+          При этом не хочется его регистрировать в системе, но и не хочется открывать проект в публичный доступ. Для
+          решения этой проблемы и существуют "Гостевые ссылки". Они позволяют просматривать проект тому кто имеет
+          определенную "секретную" ссылку и время жизни этой ссылки ограничено.-->
+
+        </div>
+        <%= aligner_tag %>
+        <br/>
+      </div>
+
+    </div>
+    <%= aligner_tag %>
+
+  
+</div>

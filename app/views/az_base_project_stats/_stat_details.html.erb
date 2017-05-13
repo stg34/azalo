@@ -1,0 +1,37 @@
+<table class="project-stat-details">
+  <tr>
+    <th>Compon.</th>
+    <th>Pages</th>
+    <th>Pages words</th>
+    <th>Structs</th>
+    <th>Structs variables</th>
+    <th>Commons</th>
+    <th>Commons words</th>
+    <th>Definitions</th>
+    <th>Definitions words</th>
+    <th>Designs</th>
+    <th>Design sources</th>
+    <th>Images</th>
+    <th>Words</th>
+    <th>Disk usage</th>
+    <th>Quality</th>
+  </tr>
+  <tr>
+    <td><%=h stat.components_num %></td>
+    <td><%=h stat.pages_num %></td>
+    <td><%=h stat.pages_words_num %></td>
+    <td><%=h stat.structs_num %></td>
+    <td><%=h stat.structs_variables_num %></td>
+    <td><%=h stat.commons_num %></td>
+    <td><%=h stat.commons_words_num %></td>
+    <td><%=h stat.definitions_num %></td>
+    <td><%=h stat.definitions_words_num %></td>
+    <td><%=h stat.designs_num %></td>
+    <td><%=h stat.design_sources_num %></td>
+    <td><%=h stat.images_num %></td>
+    <td><%=h stat.words_num %></td>
+    <td><%=h stat.disk_usage %></td>
+    <td><%=h stat.quality.round(2) %></td>
+  </tr>
+</table>
+

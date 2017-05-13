@@ -1,0 +1,13 @@
+<% if logged_in? && !current_user.roles.include?(:visitor) %>
+  <% b = 0 %>
+  <% current_user.az_companies.each do |cmp| %>
+    <% if cmp.get_balance < 0 %>
+      <% b += 1 %>
+    <% end %>
+  <% end %>
+  <% if b > 0 %>
+    <div class="company-debt">
+      <%= link_to t(:az_label_debt_warning), :controller => 'az_profiles', :action => 'index' %>
+    </div>
+  <% end %>
+<% end %>

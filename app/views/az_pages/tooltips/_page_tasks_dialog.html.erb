@@ -1,0 +1,62 @@
+<% if page != nil %>
+  <!--h2 style="height: 40px; overflow: hidden; margin: 0">Список задач страницы &quot;<%= page.name %>&quot;</h2-->
+  <%= page_dialog_title("Список задач", page) %>
+<% else %>
+  <%= dialog_title("Список задач не связанных со страницами") %>
+  <!--h2 style="height: 40px; overflow: hidden; margin: 0">Список задач не связанных со страницами</h2-->
+<% end %>
+<div style="height: 180px; overflow: auto;">
+  <% if issues.size > 0 %>
+    <table class = 'page-tooltip table' style="width: 450px">
+      <tr>
+        <th class='task-name'><%= t(:az_label_name) %></th>
+        <th class='task-assigned'>Назначена</th>
+        <th class='task-complete'>Выполнение</th>
+      </tr>
+
+        <% tasks_time = 0 %>
+        <% tasks_time_done = 0 %>
+        <% issues.each do |issue| %>
+          <% estimated_hours = (issue['estimated_hours'] == nil ? 0 : Float(issue['estimated_hours'])) %>
+          <% tasks_time += estimated_hours %>
+          <% tasks_time_done += estimated_hours * (Float(issue['done_ratio'])/100.0) %>
+
+          <tr>
+            <td class='task-name'>
+              <a target="_blank" href="<%= az_tasks_url %><%= issue['id']%>"> <%= issue['subject'] %></a>
+            </td>
+            <td class='task-assigned'>
+              <%= logins_by_issues[issue['id']] %>
+            </td>
+            <td class='task-complete'>
+              <%= progress_bar(Integer(issue['done_ratio']), 80, 10, 2) %>
+            </td>
+          </tr>
+        <% end %>
+    </table>
+  <% else %>
+    <div style="font-size: 10px">
+      <h3>Нет задач</h3>
+    </div>
+  <% end %>
+
+</div>
+
+<%= aligner_tag %>
+<table>
+  <tr>
+    <td width="80%">
+      <%= submit_tag t(:az_label_close), :onclick => 'Windows.closeAll(); return false;' %>
+    </td>
+    <td>
+      <% permitted_to? :edit do %>
+        <% if page != nil %>
+          <a href="#" onclick="show_new_page_tasks_dialog('<%= page.id %>'); return false;"><%= t(:az_label_create_tasks) %></a>
+        <% else %>
+          <a href="#" onclick="show_new_project_tasks_dialog('<%= project.id %>'); return false;"><%= t(:az_label_create_tasks) %></a>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+</table>
+

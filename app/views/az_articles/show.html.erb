@@ -1,0 +1,8 @@
+<div class="main-top-block">
+  
+  <h1><%=h @az_article.title %></h1>
+
+  <%= RedCloth.new(n2e @az_article.text).to_html %>
+
+  <%= link_to 'Назад', articles_path %>
+</div>

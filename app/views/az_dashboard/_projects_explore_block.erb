@@ -1,0 +1,46 @@
+<table class="explore-projects">
+  <tr>
+    <th colspan="2">Название</th>
+    <th><%= t(:az_label_specification) %></th>
+    <th>Слов в ТЗ</th>
+    <th>Компонентов</th>
+    <th>Страниц</th>
+    <th>Изображений</th>
+    <th class="last">Автор</th>
+  </tr>
+<% projects.each do |prj| %>
+  <% stat = prj.stat %>
+  <% stat = prj.update_stats if prj.stat == nil %>
+  <tr>
+    <td class="favicon">
+      <%= image_tag(prj.favicon.url(:x16x16), :title => prj.name) %>
+    </td>
+    <td>
+      <%= link_to(prj.name, az_project_path(prj)) %>
+    </td>
+    <td>
+      <%= link_to(t(:az_label_specification), :controller=>'az_projects', :action => 'edit_tr', :id => prj.id) %>
+    </td>
+    <td>
+      <%= stat.words_num %>
+    </td>
+    <td>
+      <%= stat.components_num %>
+    </td>
+    <td>
+      <%= stat.pages_num %>
+    </td>
+    <td>
+      <%= stat.images_num %>
+    </td>
+    <td title="Автор проекта">
+      <%= prj.owner.name %>
+    </td>
+    <td class="last">
+      <% rating = prj.get_rating %>
+      <div class="projcet-rating-<%= rating %>" title="Рейтинг проекта <%= rating %>"></div>
+    </td>
+  </tr>
+<% end %>
+</table>
+

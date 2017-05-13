@@ -1,0 +1,28 @@
+<div class="piece-of-news-page">
+    <div class="main-content">
+      <div class="main-top-block">
+        <h1><%=h @az_news.title %></h1>
+        <div class="text"></div>
+        <%= aligner_tag %>
+      </div>
+      <%= aligner_tag %>
+      <div class="main-middle-block">
+        <div class="main-middle-block-content">
+          <div class="piece-of-news">
+            <p><%= @az_news.body %></p>
+            <p><b><%=h @az_news.created_at %></b></p>
+          </div>
+          <%= aligner_tag %>
+        </div>
+      </div>
+      <div class="main-middle-block-bottom-border"></div>
+
+      <%= render( :partial => '/layouts/carousel') %>
+
+      <%= aligner_tag %>
+
+    </div>
+
+    <%= aligner_tag %>
+
+</div>

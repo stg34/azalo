@@ -1,0 +1,24 @@
+
+  <%
+    #embedded_pages = page.get_embedded_pages1
+    designs = page.get_designs
+    #status_color = Statuses::Statuses[page.status][:color]
+    #style = "display: none;" if pages_collapsed(AzPage::Page_user)
+  %>
+
+
+  <% designs.each do |design| %>
+    <% alt = design.description %>
+    <% url_small = design.get_head_az_image.image.url(:small) %>
+    <% url_big = design.get_head_az_image.image.url(:big) %>
+    <% image = image_tag(url_small, :alt => alt) %>
+    <%= link_to(image, url_big, :rel => "lightbox[#{page.id}]", :title=>alt) %>
+    <%  %>
+  <% end %>
+    
+
+    
+
+  
+
+

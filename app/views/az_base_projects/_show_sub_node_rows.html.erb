@@ -1,0 +1,240 @@
+<% nodes.each do |node| -%>
+  <% path = node.get_path_string %>
+  <% page_type = node.main_page.page_type %>
+  <% if node.head_node %>
+    <% page_type_class = (page_type == AzPage::Page_user ? 'user ' : 'admin ') %>
+  <% else %>
+    <% page_type_class = '' %>
+  <% end %>
+  <tr class="structure-row link-<%= node.link.id %> page-<%= node.main_page.id %> <%= page_type_class %>">
+    <td valign="middle">
+      <div class="page">
+        <table>
+          <tbody>
+            <tr>
+              <td style="padding: 0; vertical-align: top;">
+                <%#= render( :partial => '/az_pages/page_icons', :locals => {:nodes => nodes, :node => node, :path => path}, :inline => true) %>
+
+
+
+
+
+
+
+
+                <div class="page-left-expand-collapse-icon page-folder">
+                  <%
+                  if is_node_collapsed(path)
+                    style1 = "";
+                    style2 = "display:none";
+                  else
+                    style1 = "display:none";
+                    style2 = "";
+                  end
+                  %>
+                  <%= image_tag('expand_fold.png', :alt => t(:az_label_expand_sub_tree), :title => t(:az_label_expand_sub_tree), :class => 'expand-icon', :style=>style1, :onclick=>"show_sub_tree(this)")%>
+                  <%= image_tag('collapse_fold.png', :alt => t(:az_label_collapse_sub_tree), :title => t(:az_label_collapse_sub_tree), :class => 'collapse-icon', :style=>style2, :onclick=>"hide_sub_tree(this)")%>
+                </div>
+                <%= aligner_tag %>
+                <div class="page-left-icons" <%= "style='display:none'" if is_node_collapsed(path) %>>
+
+                    <% permitted_to?(:edit) do %>
+
+                      <% if !node.main_page.embedded %>
+                        <% alt = t(:az_label_add_page_to_page) %>
+                        <div class="page-anchors">
+                          <%= image_tag('anchors.png', :alt => alt, :title => alt) %>
+                        </div>
+                        <% alt = t(:az_label_move_page_to_page) %>
+                        <div class="page-anchor">
+                          <%= image_tag('anchor.png', :alt => alt, :title => alt) %>
+                        </div>
+                      <% end %>
+
+                  <% end %>
+
+                  <%= aligner_tag %>
+                  <% if !node.main_page.root %>
+                    <div class="page-up-down">
+                      <% permitted_to?(:edit) do %>
+                          <% alt_u = t(:az_label_move_page_up)%>
+                          <% alt_d = t(:az_label_move_page_down) %>
+                          <%= link_to( image_tag('go_up.png'), '#', :onclick => "move_page_up(this); return false;", :alt => alt_u, :title => alt_u) %><br/>
+                          <%= link_to( image_tag('go_down.png'), '#', :onclick => "move_page_down(this); return false;", :alt => alt_d, :title => alt_d) %>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+              </td>
+              <td style="padding: 0; vertical-align: top;">
+                <%#= render( :partial => '/az_pages/page_box1', :locals => {:node => node, :project => @project, :path => path, :page_type => page_type}, :inline => true) %>
+
+
+
+
+
+
+
+
+
+
+
+                <% page = node.main_page %>
+                <% classes = "page-box " %>
+                <% classes += page.az_base_project.class == AzProjectBlock ? 'component ' : '' %>
+                <% classes += page.embedded ? 'embedded ' : '' %>
+                <% classes += "#{path} " %>
+
+                <div class="<%= classes %>" id="<%= path %>">
+                  <div class="content-holder">
+                    <div style="float: left; height: 16px;"></div>
+                      <div class="page_box_holder page_box_holder_<%= page.id %>" <%= "style='display:none'" if is_node_collapsed(path) %>>
+                        <%#= render( :partial => '/az_pages/page_box_content', :locals => {:page => page, :project => @project, :page_type => page_type}, :inline => true) %>
+
+
+
+
+
+
+                        <%
+                          show_type = @show_type
+                          if defined?(show_mode) && show_mode != nil
+                            show_type = show_mode
+                          end
+                        %>
+
+                        <% if show_type == :design %>
+                          <%= page_box_images(page) %>
+                        <% end %>
+
+                        <% if show_type == :data %>
+                          <%= page_box_data(page, @project, false) %>
+                        <% end %>
+
+                        <% if show_type == :components %>
+                          <%= page_box_components(page) %>
+                        <% end %>
+
+                        <% if show_type == :description %>
+                          <%= page_box_descriptions(page, @project) %>
+                        <% end %>
+
+                        <%= aligner_tag %>
+
+                        <% begin %>
+                          <% if update_dependent %>
+                            <% if show_type == :design %>
+                              <script type="text/javascript">
+                                <% page.design_recipients.each do |dr| %>
+                                  update_page_box(<%= dr.id %>);
+                                <% end %>
+                              </script>
+                            <% end %>
+                        <% end %>
+                        <% rescue %>
+                        <% end %>
+
+
+
+
+
+
+
+
+
+
+                      </div>
+                  </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </td>
+              <td style="padding: 0; vertical-align: top;">
+                <div class="page-menu" >
+                  <%#= render( :partial => '/az_pages/page_menu', :locals => {:node => node, :project => @project, :path => path}, :inline => true) %>
+
+
+
+                  
+
+
+
+                  <% page = node.main_page %>
+
+                  <% if current_user == nil %>
+                    <%= link_to(h(page.name), page, :class=>"page-name page-name-g") %>
+                  <% elsif !permitted_to?(:edit, @project) %>
+                    <%= link_to(h(page.name), page, :class=>"page-name page-name-g") %>
+                  <% else %>
+                    <% style = is_node_collapsed(path) ? '' : 'display:none' %>
+                    <%= link_to(h(page.name), page, :class=>"page-name page-name-c", :style=> style) %>
+
+                    <div <%= "style='display:none'" if is_node_collapsed(path) %> class="page-name-m">
+
+                      <%= content_tag(:span, h(page.name), :class=>"drops page-name") %>
+
+                      <ul class="page-menu licious" style="display:none; position: absolute">
+                        <li>
+                          <a href="#" onclick="show_new_sub_page_dialog('<%= page.id %>'); return false;"><%= t(:az_label_new_page) %></a>
+                        </li>
+                        <li>
+                          <%= link_to(t(:az_label_show), page) %>
+                        </li>
+                        <li>
+                          <a href="#" onclick="show_edit_page_dialog('<%= page.id %>'); return false;"><%= t(:az_label_edit) %></a>
+                        </li>
+                        <li>
+                          <%= link_to(t(:az_label_delete), '#', :onclick => "if (!confirm('#{t(:az_label_are_you_sure)}')) return false; remove_page(this); return false;") %>
+                        </li>
+                      </ul>
+                    </div>
+
+                  <% end %>
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </td>
+    <td>
+      <div class="sub-tree" <%= "style='display:none'" if is_node_collapsed(path) %> >
+        <%= render( :partial => '/az_base_projects/show_sub_nodes', :locals => {:nodes => node.get_children}, :inline => true) %>
+      </div>
+    </td>
+  </tr>
+<% end %>

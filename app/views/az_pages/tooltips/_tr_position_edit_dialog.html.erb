@@ -1,0 +1,14 @@
+<div id="tr-position-edit-page-dialog">
+  <% remote_form_for(page, :update => "tr-position-edit-page-dialog", :after => "", :before => "",
+                     :url => {:controller => 'az_pages', :action => 'update_tr_page_position', :id => page.id}) do |page_form| %>
+    <%= page_form.error_messages %>
+
+        <div  class="tr-position">
+          Положение в ТЗ<br />
+          <%= page_form.text_field :tr_position %>
+        </div>
+        <%= aligner_tag %>
+        <%= submit_and_disable_tag(page_form, t(:az_label_save)) %>
+        <%= page_form.submit t(:az_label_cancel), :onclick => 'Windows.closeAll(); return false;' %>
+  <% end %>
+</div>

@@ -1,0 +1,30 @@
+<div class="explore-content">
+
+  <% if @public_noteworthy_projects.size > 0 %>
+    <%= aligner_tag %>
+    <div class="info">
+      <h3>Хорошие проекты за неделю:</h3>
+      <%= render(:partial => "projects_explore_block", :locals => {:projects => @public_noteworthy_projects}) %>
+      <%= link_to("Все хорошие проекты", explore_noteworthy_path, :class => "explore-projects") %>
+    </div>
+  <% end %>
+
+  <% if @active_projects.size > 0 %>
+    <%= aligner_tag %>
+    <div class="info">
+      <h3>Активные проекты:</h3>
+      <%= render(:partial => "projects_explore_block", :locals => {:projects => @active_projects, :title => "Активные проекты"}) %>
+      <%= link_to("Все активные проекты", explore_active_path, :class => "explore-projects") %>
+    </div>
+  <% end %>
+
+  <% if @latest_projects.size > 0 %>
+    <%= aligner_tag %>
+    <div class="info">
+      <h3>Новые проекты:</h3>
+      <%= render(:partial => "projects_explore_block", :locals => {:projects => @latest_projects}) %>
+      <%= link_to("Все проекты", explore_all_path, :class => "explore-projects") %>
+    </div>
+  <% end %>
+
+</div>

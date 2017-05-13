@@ -1,0 +1,42 @@
+<script type="text/javascript">
+  window.showPopupWindow = function(window_type)
+  {
+    Windows.closeAll();
+    contentWin = new Window({className: "azalo", maximizable: false, closable: true, resizable: false, hideEffect:Element.hide, showEffect:Element.show, minWidth: 10, destroyOnClose: true, right: 0, onClose: function(){$(window_type).style.display = 'none';}   })
+    contentWin.setContent(window_type, true, true)
+    contentWin.showCenter();
+  }
+</script>
+
+<div style="float: left;" class="project-menu-0">
+  <% permitted_to? :edit do %>
+    <%= link_to t(:az_label_project_properties), :controller => 'az_projects', :action => 'edit', :id => @project.id %><br/>
+    <a href="#" onclick="show_participants_dialog(<%= @project.id %>);"><%= t(:az_label_participants) %></a><br/>
+    <%= link_to t(:az_label_show_to_customer), :controller => 'az_guest_links', :action => 'index_project', :id => @project.id %><br/>
+  <% end %>
+    
+  <%= link_to t(:az_label_specification), :controller=>'az_projects', :action => 'edit_tr', :id => @project.id %>
+  
+  <%= aligner_tag %>
+  <div class="view-switcher">
+    <span style="font-weight: bold"><%= t(:az_label_show_types) %>: </span><br/>
+    <%= link_to_unless(@show_type == :design,      t(:az_label_show_type_design),      :action => 'show', :id => @project.id) %> |
+    <%= link_to_unless(@show_type == :data,        t(:az_label_show_type_data),        :action => 'show', :id => @project.id, :show_type => :data) %> |
+    <%= link_to_unless(@show_type == :components,  t(:az_label_show_type_components),  :action => 'show', :id => @project.id, :show_type => :components) %> |
+    <%= link_to_unless(@show_type == :description, t(:az_label_show_type_description), :action => 'show', :id => @project.id, :show_type => :description) %>
+  </div>
+
+</div>
+
+<div class="project-menu">
+  <div class="project-info">
+    <%= aligner_tag %>
+  </div>
+  <%= aligner_tag %>
+</div>
+
+<hr/>
+<% if current_user != nil && current_user.roles.include?(:visitor) %>
+  <% company = @project.owner %>
+  <%= company_site_and_logo_for_visitor(company, true, true) %>
+<% end %>

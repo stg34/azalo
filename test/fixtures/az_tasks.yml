@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+#one:
+#  name: MyString
+#  estimated_time: 9.99
+#  az_base_data_rype_id: 1
+#  az_task_id: 1
+#
+#two:
+#  name: MyString
+#  estimated_time: 9.99
+#  az_base_data_rype_id: 1
+#  az_task_id: 1

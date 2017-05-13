@@ -1,0 +1,28 @@
+<div id="project-participants-holder">
+  <h2><%= t(:az_label_project_participants) %> <q><%= project.name %></q></h2>
+
+  <% remote_form_for(project, :url => {:action => 'change_members'}, :update => "project-participants-holder") do |f| %>
+  <div class="employees-roles-holder">
+    <table class="employees-roles table">
+      <tr>
+        <th>Работник
+        </th>
+        <th class="role">
+          Участник проекта
+        </th>
+      </tr>
+
+      <% employees.each do |employee| %>
+        <tr>
+          <th class="login"><%= employee.az_user.login %></th>
+            <td class="role">
+              <%= check_box_tag "employees[#{employee.id}]", employee.id, project.is_paricipant?(employee) %>
+            </td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+    <%= submit_tag t(:az_label_save) %>
+    <%= submit_tag t(:az_label_cancel), :onclick => 'Windows.closeAll(); return false;' %>
+  <% end %>
+</div>

@@ -1,0 +1,2 @@
+rake test:integration TEST=test/integration/user_walk_test.rb
+

@@ -1,0 +1,13 @@
+<h1>Новое "<%= @az_common.class.get_label %>"</h1>
+
+<%= form_for(@az_common, :builder => AzFormBuilder) do |f| %>
+  <%#= f.error_messages %>
+
+  <%= render( :partial => '/az_commons/new_edit', :locals => {:form => f}) %>
+
+  <p>
+    <%= f.submit t(:az_label_create) %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_back), :controller => @az_common.class.to_s.pluralize.underscore, :action => 'index_user' %>

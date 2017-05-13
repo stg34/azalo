@@ -1,0 +1,13 @@
+<div class="base-project-fork-page">
+  <h1>Клонирование проекта <q><%= h(@project.name) %></q></h1>
+ 
+  <p>
+    Это может занять некоторое время, подождите, пожалуйста.
+  </p>
+
+  <p>
+    По окончании процесса вы будете перенаправлены на страницу проекта.
+  </p>
+
+</div>
+<script>go_to_page('<%= real_fork_project_url(@project, @company)%>');</script>

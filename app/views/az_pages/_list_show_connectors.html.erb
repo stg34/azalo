@@ -1,0 +1,17 @@
+  <% page_num = 0 -%>
+  <% az_pages.each do |az_page| -%>
+    <% page_num += 1 -%>
+    <% if az_page.get_children.size > 0 -%>
+      <%= render :partial=> "az_pages/list_show_connectors", :locals => {:az_pages => az_page.get_children, :project_id=>nil, :parent_id => parent_id + "_" + page_num.to_s} %>
+    <% end -%>
+    <% if az_page.belongs_to_block_belongs_to_page? -%>
+      <% color = "rgb(234, 208, 188)" -%>
+    <% else -%>
+      <% color = "rgb(189, 219, 237)" -%>
+    <% end -%>
+    <% if az_page.parent_id != nil -%>
+      line_push("<%= parent_id %>", "<%= parent_id + "_" + page_num.to_s %>", "<%= color %>");
+    <% end -%>
+  <% end -%>
+
+

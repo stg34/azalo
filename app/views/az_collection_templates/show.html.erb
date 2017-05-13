@@ -1,0 +1,8 @@
+<p>
+  <b><%= t(:az_label_name) %>:</b>
+  <%=h @az_collection_template.name %>
+</p>
+
+
+<%= link_to t(:az_label_edit), edit_az_collection_template_path(@az_collection_template) %> |
+<%= link_to t(:az_label_back), az_collection_templates_path %>

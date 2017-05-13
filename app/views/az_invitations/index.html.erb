@@ -1,0 +1,24 @@
+<h1>Listing az_invitations</h1>
+
+<table>
+  <tr>
+    <th>Hash</th>
+    <th>Invitation type</th>
+    <th>Invitation data</th>
+  </tr>
+
+<% @az_invitations.each do |az_invitation| %>
+  <tr>
+    <td><%=h az_invitation.hash %></td>
+    <td><%=h az_invitation.invitation_type %></td>
+    <td><%=h az_invitation.invitation_data %></td>
+    <td><%= link_to 'Show', az_invitation %></td>
+    <td><%= link_to 'Edit', edit_az_invitation_path(az_invitation) %></td>
+    <td><%= link_to 'Destroy', az_invitation, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_invitation', new_az_invitation_path %>

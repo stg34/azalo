@@ -1,0 +1,59 @@
+<% if page != nil %>
+  <% project = page.get_project_over_block
+     task_name = task.get_name1(page)
+     task_description = task.get_description1(page)
+     dialog_title = "#{t(:az_label_create_task)} <q>#{task_name}</q>"
+     url = { :controller => 'az_pages', :action => 'create_page_task', :id => page.id}
+     form_for = page %>
+    <%= page_dialog_title(dialog_title, page) %>
+<% else %>
+  <% dialog_title = "#{t(:az_label_create_task)} <q>#{task.name}</q>"
+     task_name = task.name
+     task_description = task.description
+     url = { :controller => 'az_projects', :action => 'create_project_task', :id => project.id} %>
+    <%= dialog_title(dialog_title) %>
+<%= form_for = project %>
+<% end %>
+
+<div id="new-page-task-dialog-content">
+  <% remote_form_for(form_for, :url => url, :update => "new-page-task-dialog-content") do |page_form| %>
+    <%= page_form.error_messages %>
+    <div style="height: 370px; overflow: auto;">
+      <%= t(:az_label_assign) %><br/>
+      <select id="task_user_id" name="task[user_id]">
+        <% participants = project.az_participants.select{|p| p.az_rm_role == task.az_rm_role } %>
+        <% if participants.size == 0 %>
+          <option id="---" value="---">Нет <%= task.az_rm_role.name %>а.<%# TODO просклонять роли более красиво%></option>
+        <% end %>
+        <% participants.each do |participant| %>
+          <% user = participant.az_employee.az_user %>
+          <option id="<%= user.login %>" value="<%= participant.az_employee.id %>"><%= user.login %> (<%= user.name %> <%= user.lastname %>)</option>
+        <% end %>
+
+      </select><br/>
+
+      <%= hidden_field_tag "task[id]", task.id%>
+
+      <p>
+        <%= t(:az_label_estimated_time) %><br/>
+        <% if page != nil %>
+          <%= text_field_tag "task[time]", task.get_time(page), :style => 'width: 30px;' %>
+        <% else %>
+          <%= text_field_tag "task[time]", task.get_time(nil), :style => 'width: 30px;' %>
+        <% end %>
+      </p>
+      <p>
+        <%= t(:az_label_task_name) %><br/>
+        <%= text_field_tag "task[title]", task_name, :style => 'width: 250px;' %><br/>
+      </p>
+      <p>
+        <%= t(:az_label_description) %> <%= wiki_syntax_help %><br/>
+        <%= text_area_tag "task[description]", task_description, :style => 'width: 550px;' %><br/>
+      </p>
+
+    </div>
+    <%= submit_and_disable_tag(page_form, t(:az_label_create)) %>
+    <%= page_form.submit t(:az_label_cancel), :onclick => 'Windows.closeAll(); return false;' %>
+  <% end %>
+</div>
+

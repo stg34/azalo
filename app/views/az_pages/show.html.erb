@@ -1,0 +1,122 @@
+<h1>Страница <q><%=h @az_page.name %></q></h1>
+<%= aligner_tag %>
+<% design_count = 0 %>
+<div class="design-show">
+  <h2>Дизайн страницы</h2>
+  <% if @az_page.design_source != nil %>
+    <% designs = @az_page.design_source.get_all_designs %>
+    Дизайн страницы дублирует <%= link_to 'страницу "' + @az_page.design_source.name + '"', :id => @az_page.design_source.id%><br/><br/>
+  <% else %>
+    <% designs = @az_page.get_all_designs %>
+  <% end %>
+  <% designs.each do |design| %>
+    <% if design_count > 0 %>
+      <hr/>
+    <% end %>
+    <%= aligner_tag %>
+    <div class="description">
+      <%= design.description %>
+    </div>
+    <%= aligner_tag %>
+    <div class="head-image">
+      <% if design.az_images.size > 1 %>
+        <div class="image-caption"><h3>Текущий дизайн</h3></div>
+        <%= aligner_tag %>
+      <% end %>
+      <div class="image">
+        <% img = design.get_head_az_image %>
+        <div class="date"><%= img.created_at %></div>
+        <%= link_to image_tag(img.image.url(:medium)), img.image.url %>
+        <% if design.az_design_source != nil && design.az_design_source.source_file_name != nil %>
+          <%= aligner_tag %>
+          <%= link_to 'Скачать макет', design.az_design_source.source.url %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="tail-images">
+      <% if design.az_images.size > 1 %>
+        <div class="image-caption"><h3>История дизайнов</h3></div>
+      <% end %>
+      <% design.get_tail_az_images.reverse.each do |image| %>
+        <div class="image">
+          <div class="date"><%= image.created_at %></div>
+          <%= link_to image_tag(image.image.url(:small)), image.image.url %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= aligner_tag %>
+    <br/>
+    <% design_count += 1 %>
+  <% end %>
+</div>
+
+<div class="data-show">
+  <h2>Данные и операции на странице</h2>
+  <div class="data">
+
+    <% typed_pages = @az_page.az_typed_pages %>
+
+    <% if typed_pages.size > 0 %>
+
+    <% typed_pages.each do |typed_page| %>
+
+      <% tp = typed_page.az_base_data_type %>
+      <h3><%= tp.name %></h3>
+      <table class="table">
+      <tr>
+        <th>Переменная</th>
+        <th>Тип</th>
+      </tr>
+      <% tp.az_variables.each do |az_variable| %>
+        <tr>
+          <td><%=h az_variable.name %></td>
+          <td><%=h az_variable.az_base_data_type.name %></td>
+        </tr>
+      <% end %>
+      </table>
+
+      <h4>Операции</h4>
+      <% if typed_page.az_allowed_operations.size > 0 %>
+      <ul>
+        <% typed_page.az_allowed_operations.each do |op| %>
+          <li><%= op.az_operation.name %></li>
+        <% end %>
+      </ul>
+      <% else %>
+      <p>
+        <span class="no-data-text">Операции не заданы</span>
+      </p>
+      <% end %>
+
+    <% end %>
+
+    <% else %>
+      <span class="no-data-text">Данные для страницы не заданы</span>
+    <% end %>
+  </div>
+</div>
+
+<div class="description-show">
+  <h2><%= t(:az_label_page_title) %></h2>
+  <div class="title">
+    <% if @az_page.title != nil && @az_page.title != '' %>
+      <%= @az_page.title %>
+    <% else %>
+      <span class="no-data-text">Заголовок не задан</span>
+    <% end %>
+  </div>
+
+  <h2>Описание страницы</h2>
+  <div class="description">
+    <% if @az_page.description != nil && @az_page.description != '' %>
+      <%= RedCloth.new(n2e(@az_page.description)).to_html %>
+    <% else %>
+      <span class="no-data-text">Нет описания</span>
+    <% end %>
+  </div>
+</div>
+
+<% func_str = @az_page.get_project.class.to_s.underscore + '_path(@az_page.get_project)' -%>
+<%= link_to 'Назад к проекту', eval(func_str) %>

@@ -1,0 +1,32 @@
+<script type="text/javascript">
+  window.showPopupWindow = function(window_type)
+  {
+    contentWin = new Window({className: "azalo", maximizable: false, closable: true, resizable: false, hideEffect:Element.hide, showEffect:Element.show, minWidth: 10, destroyOnClose: true, right: 0, onClose: function(){$(window_type).style.display = 'none';}   })
+    contentWin.setContent(window_type, true, true)
+    contentWin.showCenter();
+  }
+</script>
+<div style="float: left;">
+
+  <% if current_user %>
+    <%= link_to(t(:az_label_component_properties), :controller => 'az_project_blocks', :action => 'edit', :id => @project.id) %>
+  <% end %>
+  <%= aligner_tag %>
+
+  <br/><%= link_to t(:az_label_specification), :controller=>'az_project_blocks', :action => 'edit_tr', :id => @project.id %>
+
+  <%= aligner_tag %>
+  
+  <div class="view-switcher">
+    <%= link_to_unless(@show_type == :design,      t(:az_label_show_type_design),      :action => 'show', :id => @project.id) %> |
+    <%= link_to_unless(@show_type == :data,        t(:az_label_show_type_data),        :action => 'show', :id => @project.id, :show_type => :data) %> |
+    <%= link_to_unless(@show_type == :components,  t(:az_label_show_type_components),  :action => 'show', :id => @project.id, :show_type => :components) %> |
+    <%= link_to_unless(@show_type == :description, t(:az_label_show_type_description), :action => 'show', :id => @project.id, :show_type => :description) %>
+  </div>
+</div>
+
+<div class="project-menu">  
+  <%= aligner_tag %>
+</div>
+
+<hr/>

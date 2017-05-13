@@ -1,0 +1,20 @@
+<h1>Editing az_register_confirmation</h1>
+
+<%= form_for(@az_register_confirmation) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </p>
+  <p>
+    <%= f.label :confirm_hash %><br />
+    <%= f.text_field :confirm_hash %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @az_register_confirmation %> |
+<%= link_to 'Back', az_register_confirmations_path %>

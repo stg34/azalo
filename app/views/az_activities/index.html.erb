@@ -1,0 +1,31 @@
+<h1>Общая активность</h1>
+<% action_names = {'c' => 'изменил'} %>
+<table class="table">
+  <tr>
+    <th>Когда</th>
+    <th>кто</th>
+    <th>сделал</th>
+    <th>что</th>
+    <th><%= t(:az_label_project) %></th>
+    <th><%= t(:az_label_project_owner) %></th>
+  </tr>
+
+<% @az_activities.each do |az_activity| %>
+  <% obj = eval(az_activity.model_name).find(az_activity.model_id) %>
+  <tr>
+    <td><%= l az_activity.created_at %></td>
+    <td><%= h az_activity.az_user.login %></td>
+    <td><%= action_names[az_activity.action] %></td>
+    <td><%= h az_activity.model_name %> <%=h obj.name %></td>
+
+    <td>
+      <% if az_activity.az_project %>
+        <%= h az_activity.az_project.name %>
+      <% end %>
+    </td>
+    <td><%= h az_activity.az_company.name %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />

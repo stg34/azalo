@@ -1,0 +1,2 @@
+module AzDesignsHelper
+end

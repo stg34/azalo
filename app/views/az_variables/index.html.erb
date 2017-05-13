@@ -1,0 +1,33 @@
+<h1>Список переменных</h1>
+
+<table class="table">
+  <tr>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th><%= t(:az_label_name) %></th>
+    <th>Тип</th>
+    <th>Структура</th>
+    <th>.</th>
+    <th>.</th>
+    <th>.</th>
+    <th>.</th>
+  </tr>
+
+<% @az_variables.each do |az_variable| %>
+  <% error = az_variable.az_base_data_type == nil %>
+  <% tr_class = (error ? "error" : "") %>
+  <tr class="<%= tr_class %>">
+    <td><%=h(az_variable.get_owner_name) %></td>
+    <td><%=h(az_variable.name) %></td>
+    <td><%= error ? "--- Error ---" : h(az_variable.az_base_data_type.name) %></td>
+    <td><%= error ? "--- Error ---" : link_to(az_variable.az_struct_data_type.name, edit_az_struct_data_type_path(az_variable.az_struct_data_type)) if az_variable.az_struct_data_type %></td>
+    <td><%= link_to t(:az_label_show), az_variable %></td>
+    <td><%= link_to t(:az_label_edit), edit_az_variable_path(az_variable) %></td>
+    <td><%= link_to('Копировать', copy_az_variable_path(az_variable)) %></td>
+    <td><%= link_to t(:az_label_delete), az_variable, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Новая переменная', new_az_variable_path %>

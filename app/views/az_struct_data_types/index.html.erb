@@ -1,0 +1,7 @@
+<% if current_user.roles.include?(:admin) %>
+
+  <h1>Список seed-структур</h1>
+  <%= render( :partial => 'structs_table', :locals => {:structs => @structs }) %>
+
+<% end %>
+  

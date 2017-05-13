@@ -1,0 +1,42 @@
+<h1>Редактировние проекта <q><%= @az_project_snippet.name %></q></h1>
+
+<fieldset class="common-block">
+    <legend>Общие положения</legend>
+    <%=link_to_function getHideLabel, visual_effect(:toggle_slide, 'commons_id', :duration => 1), :class => 'hide-show-switcher' %>
+    <div id='commons_id'><div>
+      <%= render( :partial => 'new_edit', :locals => {:button_caption => t(:az_label_save)}) %>
+    </div></div>
+</fieldset>
+
+
+<%= aligner_tag %>
+
+<%
+project_blocks = {
+  :az_pages =>          ['az_pages',         'Страницы']
+  }
+%>
+
+<% project_blocks.each do |key, val| %>
+  <fieldset>
+    <legend><%= val[1] %></legend>
+    <% link_id =  val[0] + '_id' %>
+    <%=link_to_function getHideLabel,
+                        visual_effect(:toggle_slide, link_id, :duration => 1, :afterFinish => 'function() {' + switchShowHideLabels('show_hide_' + link_id) + '}'),
+                        :id => 'show_hide_' + link_id,
+                        :class => 'hide-show-switcher' %>
+    <div id='<%= link_id %>'><div>
+
+    <% if eval('@az_project_snippet.' + val[0]).size > 0 %>
+    <%=  render :partial=> val[0] + "/list", :locals => {key => eval('@az_project_snippet.' + val[0]), :project_id => @az_project_snippet.id} %>
+    <% end %>
+    <%=  link_to('Новая страница', :controller => "az_pages", :action => "new", :project_id=>@az_project_snippet.id) %>
+
+    </div></div>
+  </fieldset>
+<% end %>
+
+
+
+
+<%= link_to t(:az_label_back), az_project_snippets_path %>

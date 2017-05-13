@@ -1,0 +1,190 @@
+<% if @project.instance_of?(AzProject) %>
+  <% common_classes_1 = [AzCommonsCommon,
+                         AzCommonsPurposeExploitation,
+                         AzCommonsPurposeFunctional] %>
+  <% common_classes_2 = [AzCommonsFunctionality] %>
+  <% common_classes_3 = [AzCommonsContentCreation,
+                         AzCommonsRequirementsHosting,
+                         AzCommonsRequirementsReliability,
+                         AzCommonsAcceptanceCondition] %>
+<% else %>
+  <% common_classes_1 = [] %>
+  <% common_classes_3 = [AzCommonsRequirementsHosting] %>
+  <% common_classes_2 = [AzCommonsFunctionality] %>
+<% end %>
+
+<% def show_commons(project_commons, commons, common_class_name, permitted_to_edit, permitted_to_show) %>
+  <tr>
+    <td >
+      <div id="<%= common_class_name %>">
+        <%= render :partial => '/az_base_projects/tr_edit/tr_block_common', :locals => {:project => @project,
+                                                                                        :commons => project_commons,
+                                                                                        :common_class_name => common_class_name,
+                                                                                        :permitted_to_edit => permitted_to_edit,
+                                                                                        :permitted_to_show => permitted_to_show} %>
+      </div>
+      <% if permitted_to_edit %>
+        <div class="tr-edit-new-common-holder">
+          <%= link_to(t(:az_label_create), "#", :onclick => "show_tr_new_common_dialog('#{common_class_name.tableize}', #{@project.owner_id}, #{@project.id}); return false;" ) %>
+        </div>
+      <% end %>
+    </td>
+    <td width="350" style="vertical-align: top; padding: 5px">
+      <%= render :partial => '/az_base_projects/tr_edit/add_commons', :locals => {:commons => commons, 
+                                                                                  :common_class_name => common_class_name,
+                                                                                  :permitted_to_edit => permitted_to_edit} %>
+    </td>
+  </tr>
+<% end %>
+
+
+<% content = Proc.new do %>
+  <!-- ======================================================================================================= -->
+  <% permitted_to_edit = permitted_to?(:edit, @project) %>
+  <% permitted_to_show = permitted_to?(:show, @project) %>
+
+  <%= crumbs(@project.get_crumbs_from_tr) %>
+  <br/>
+
+  <div class="tr-menu">
+    <% if true || @project.class == AzProject %>
+      <% permitted_to?(:edit, @project) do %>
+        <%= link_to(t(:az_label_download_spec_in_doc), {:action => 'tr_doc', :id => @project.id}, :confirm => t(:az_label_should_be_file_generated)) %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div id="tr-content">
+
+    <% common_classes_1.each do |common_class| %>
+      <div class="l2" onclick="Effect.ScrollTo('ct-<%= common_class.to_s.underscore.pluralize %>')"><%= common_class.get_label %></div>
+    <% end %>
+
+    <div class="l2" onclick="Effect.ScrollTo('ct-definitions')"><%= t(:az_label_definitions) %></div>
+    <div class="l2" onclick="Effect.ScrollTo('datatypes')"><%= t(:az_label_data_types_and_validators) %></div>
+
+    <% common_classes_2.each do |common_class| %>
+      <div class="l2" onclick="Effect.ScrollTo('ct-<%= common_class.to_s.underscore.pluralize %>')"><%= common_class.get_label %></div>
+    <% end %>
+
+    <div class="l2" onclick="Effect.ScrollTo('pages')"><%= t(:az_label_pages) %></div>
+    <% @public_pages.each do |page| %>
+      <% status_color = Statuses::Statuses[page.status][:color] %>
+      <% style = "style='border-right: solid 1px #{status_color}'" %>
+      <% title = page.name.mb_chars.size > 40 ? "title='#{page.name}'" : "" %>
+      <div class="l3" id="l3-<%= page.id %>" onclick="Effect.ScrollTo($$('.tr-page-text-<%= page.id %>')[0])" <%= title %> <%= style %>><%= page.name %></div>
+    <% end %>
+    <div class="l2" onclick="Effect.ScrollTo('adminpages')"><%= t(:az_label_admin_pages) %></div>
+    <% @admin_pages.each do |page| %>
+      <% status_color = Statuses::Statuses[page.status][:color] %>
+      <% style = "style='border-right: solid 1px #{status_color}'" %>
+      <% title = page.name.mb_chars.size > 40 ? "title='#{page.name}'" : "" %>
+      <div class="l3" id="l3-<%= page.id %>" onclick="Effect.ScrollTo($$('.tr-page-text-<%= page.id %>')[0])" <%= title %> <%= style %>><%= page.name %></div>
+    <% end %>
+
+    <% common_classes_3.each do |common_class| %>
+      <div class="l2" onclick="Effect.ScrollTo('ct-<%= common_class.to_s.underscore.pluralize %>')"><%= common_class.get_label %></div>
+    <% end %>
+
+  </div>
+
+  <div class="tr-edit">
+    <h1><%= t(:az_label_spec_for) %> <%= @project.class.get_model_name.downcase %> <q><%= h(@project.name) %></q></h1>
+
+    <table class="table tr-edit-table">
+      
+      <% common_classes_1.each do |common_class| %>
+        <% commons = @project.get_all_commons(common_class.to_s) %>
+        <tr>
+          <td colspan="2" class="tr-edit-table-caption" id="ct-<%= common_class.to_s.underscore.pluralize %>">
+            <h2><%= common_class.get_label %></h2>
+          </td>
+        </tr>
+        <% show_commons(commons, common_class.get_by_company(@project.owner), common_class.to_s.underscore.pluralize, permitted_to_edit, permitted_to_show) %>
+      <% end %>
+      
+
+      <%= render :partial => '/az_base_projects/tr_edit/definitions', :locals => {:definitions => @definitions, 
+                                                                                  :permitted_to_edit => permitted_to_edit,
+                                                                                  :permitted_to_show => permitted_to_show} %>
+
+      <tr>
+        <td colspan="2" class="tr-edit-table-caption" id="datatypes">
+          <h2><%= t(:az_label_data_types_and_validators) %></h2>
+        </td>
+      </tr>
+      <tr>
+        <td id="structs">
+          <%= render :partial => '/az_base_projects/tr_edit/data_types', :locals => {:project => @project,
+                                                                                     :data_types => @data_types,
+                                                                                     :validators => @validators,
+                                                                                     :permitted_to_edit => permitted_to_edit,
+                                                                                     :permitted_to_show => permitted_to_show} %>
+        </td>
+        <td>
+
+        </td>
+      </tr>
+
+      <% common_classes_2.each do |common_class| %>
+        <% commons = @project.get_all_commons(common_class.to_s) %>
+        <tr>
+          <td colspan="2" class="tr-edit-table-caption" id="ct-<%= common_class.to_s.underscore.pluralize %>">
+            <h2><%= common_class.get_label %></h2>
+          </td>
+        </tr>
+        <% show_commons(commons, common_class.get_by_company(@project.owner), common_class.to_s.underscore.pluralize, permitted_to_edit, permitted_to_show) %>
+      <% end %>
+
+      <tr>
+        <td colspan="2" class="tr-edit-table-caption" id="pages">
+          <h2><%= t(:az_label_pages) %></h2>
+          <% if permitted_to_edit %>
+            <%#= render :partial => '/az_base_projects/tr_edit/pages_controls', :locals => {:project => @project, :project_page_type => AzPage::Page_user, :controller => 'az_projects' } %>
+          <% end %>
+        </td>
+      </tr>
+      <%= render :partial => '/az_base_projects/tr_edit/pages', :locals => {:project => @project, :page_list => @public_pages, 
+                  :permitted_to_edit => permitted_to_edit,
+                  :permitted_to_show => permitted_to_show} %>
+      <tr>
+        <td colspan="2" class="tr-edit-table-caption" id="adminpages">
+          <h2><%= t(:az_label_admin_pages) %></h2>
+          <% if permitted_to_edit %>
+            <%#= render :partial => '/az_base_projects/tr_edit/pages_controls', :locals => {:project => @project, :project_page_type => AzPage::Page_admin, :controller => 'az_projects' } %>
+          <% end %>
+        </td>
+      </tr>
+      <%= render :partial => '/az_base_projects/tr_edit/pages', :locals => {:project => @project, :page_list => @admin_pages,
+                                                                            :permitted_to_edit => permitted_to_edit,
+                                                                            :permitted_to_show => permitted_to_show} %>
+
+
+      <% common_classes_3.each do |common_class| %>
+        <% commons = @project.get_all_commons(common_class.to_s) %>
+        <tr>
+          <td colspan="2" class="tr-edit-table-caption" id="ct-<%= common_class.to_s.underscore.pluralize %>">
+            <h2><%= common_class.get_label %></h2>
+          </td>
+        </tr>
+        <% show_commons(commons, common_class.get_by_company(@project.owner), common_class.to_s.underscore.pluralize, permitted_to_edit, permitted_to_show) %>
+      <% end %>
+
+    </table>
+
+  </div>
+  <script type="text/javascript">
+      window.onload = function () {
+          window.project_id = <%= @project.id %>;
+          window.project_type = '<%= @project.class.to_s.tableize %>';
+      };
+  </script>
+<% end %>
+
+<% if @project.cache %>
+  <% cache do %>
+    <% content.call %>
+  <% end %>
+<% else %>
+  <% content.call %>
+<% end %>

@@ -1,0 +1,29 @@
+<h1>Список языков</h1>
+
+<table class="table">
+  <tr>
+    <th>Flag</th>
+    <th>Name</th>
+    <th>Code</th>
+    <th>English name</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </tr>
+
+<% @az_languages.each do |az_language| %>
+  <tr>
+    <td><%= image_tag(az_language.lang_icon.url) %></td>
+    <td><%=h az_language.name %></td>
+    <td><%=h az_language.code %></td>
+    <td><%=h az_language.english_name %></td>
+    <td><%= link_to 'Show', az_language %></td>
+    <td><%= link_to 'Edit', edit_az_language_path(az_language) %></td>
+    <td><%= link_to 'Destroy', az_language, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_language', new_az_language_path %>

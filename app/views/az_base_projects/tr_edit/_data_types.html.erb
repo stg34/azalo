@@ -1,0 +1,94 @@
+<% controller = project.class.to_s.underscore.pluralize %>
+<% data_types_ids = data_types.collect{|p| p.id } %>
+<% data_types_positions = data_types_ids.join(';') %>
+<h3><%= t(:az_label_data_types) %></h3>
+<% data_types.each do |t| %>
+  <div style="border-right: 2px solid <%= Statuses::Statuses[t.status][:color] %> ">
+    <h4><%= h(t.name) %></h4>
+    <% if t.description != nil && t.description.size > 0 %>
+      <%= RedCloth.new(n2e t.description).to_html %>
+    <% end %>
+
+    <div id="variables-struct-id-<%= t.id %>">
+      <%= render :partial => '/az_struct_data_types/variables_list1', :locals => {:struct => t, :permitted_to_edit => permitted_to_edit} %>
+    </div>
+
+    <% used_collections = t.collections.select{|c| c.typed_pages.size > 0} %>
+    <% if used_collections.size > 0 %>
+      <h5><%= t(:az_label_no_data_type_lists) %></h5>
+      <% used_collections.each do |collection| %>
+        <h6><%= h(collection.name) %></h6>
+        <% if collection.description.size > 0 %>
+          <%= RedCloth.new(n2e collection.description).to_html %>
+        <% else %>
+          <p class="no-data-text"><%= t(:az_label_no_description) %></p>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  
+    <div class="tr-edit-contols-holder">
+      <table style="float: right;">
+        <tr>
+          <% if permitted_to_edit %>
+          <td style="padding: 1px;">
+            <% url = struct_move_up_tr_path(t) %>
+            <% title = t(:az_label_move_block_up, :block_name => h(t.name)) %>
+            <% img = image_tag('go_up.png', :alt => title, :title => title) %>
+            <%# --- TODO Disabled after Rails 3 migration. Fix me. --- az_form_remote_tag(:url => url, :complete => "update_structs_validatots_in_tr()", :html => {:id=>"move_up_str_form_#{t.id}"}, :eval_scripts => true) do %>
+              <%#= hidden_field_tag :positions, data_types_positions %>
+              <%#= link_to(img, '#', :onclick => "$('move_up_str_form_#{t.id}').onsubmit(); return false;" ) %>
+            <%# end %>
+          </td>
+          <td style="padding: 1px;">
+            <% url = struct_move_down_tr_path(t) %>
+            <% title = t(:az_label_move_block_down, :block_name => h(t.name)) %>
+            <% img = image_tag('go_down.png', :alt => title, :title => title) %>
+            <%# --- TODO Disabled after Rails 3 migration. Fix me. --- az_form_remote_tag(:url => url, :complete => "update_structs_validatots_in_tr()", :html => {:id=>"move_down_str_form_#{t.id}"}, :eval_scripts => true) do %>
+              <%#= hidden_field_tag :positions, data_types_positions %>
+              <%#= link_to(img, '#', :onclick => "$('move_down_str_form_#{t.id}').onsubmit(); return false;" ) %>
+            <%# end %>
+          </td>
+          <td style="padding: 1px;">
+            <% url = "/az_struct_data_types/status_dialog/#{t.id}" %>
+            <% title = t(:az_label_block_status_in_spec, :status_name => Statuses::Statuses[t.status][:name]) %>
+            <% img = image_tag(Statuses::Statuses[t.status][:image], :alt => title, :title => title) %>
+            <%= link_to(img, "#", :onclick => "show_tr_status_dialog('#{url}'); return false;", :class => "tr-status-edit-link", :title => title) %>
+          </td>
+          <% end %>
+          <% if permitted_to_show %>
+          <td style="padding: 1px;">
+            <% title = t(:az_label_refresh) %>
+            <% refresh_img = image_tag('tr-refresh.png', :alt => title, :title => title) %>
+            <% img = image_tag(refresh_img, :alt => title, :title => title) %>
+            <%= link_to(refresh_img, "#", :onclick => "update_structs_validatots_in_tr(); return false;", :class => "tr-status-edit-link", :title => title) %>
+          </td>
+          <% end %>
+        </tr>
+      </table>
+      <%= aligner_tag %>
+    </div>
+  
+  <%= aligner_tag %>
+
+<% end %>
+
+<h3><%= t(:az_label_validators) %></h3>
+
+<% val_num = 0 %>
+<% validators.each do |v| %>
+  <h4><%= v.name %></h4>
+  <p><%= v.description %></p>
+
+  <p>
+    <% if val_num == 0 %>
+      <%= t(:az_label_data_type_validation_error_first) %>:
+    <% else %>
+      <%= t(:az_label_data_type_validation_error_other) %>::
+    <% end %>
+    <em><strong><%= v.message %></strong></em>
+  </p>
+
+  <% val_num += 1 %>
+<% end %>

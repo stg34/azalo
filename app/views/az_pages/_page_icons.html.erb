@@ -1,0 +1,43 @@
+<div class="page-left-expand-collapse-icon page-folder">
+  <%
+  if is_node_collapsed(path)
+    style1 = "";
+    style2 = "display:none";
+  else
+    style1 = "display:none";
+    style2 = "";
+  end
+  %>
+  <%= image_tag('expand_fold.png', :alt => t(:az_label_expand_sub_tree), :title => t(:az_label_expand_sub_tree), :class => 'expand-icon', :style=>style1, :onclick=>"show_sub_tree(this)")%>
+  <%= image_tag('collapse_fold.png', :alt => t(:az_label_collapse_sub_tree), :title => t(:az_label_collapse_sub_tree), :class => 'collapse-icon', :style=>style2, :onclick=>"hide_sub_tree(this)")%>
+</div>
+<%= aligner_tag %>
+<div class="page-left-icons" <%= "style='display:none'" if is_node_collapsed(path) %>>
+  
+    <% permitted_to?(:edit) do %>
+
+      <% if !node.main_page.embedded %>
+        <% alt = t(:az_label_add_page_to_page) %>
+        <div class="page-anchors">
+          <%= image_tag('anchors.png', :alt => alt, :title => alt) %>
+        </div>
+        <% alt = t(:az_label_move_page_to_page) %>
+        <div class="page-anchor">
+          <%= image_tag('anchor.png', :alt => alt, :title => alt) %>
+        </div>
+      <% end %>
+    
+  <% end %>
+
+  <%= aligner_tag %>
+  <% if !node.main_page.root %>
+    <div class="page-up-down">
+      <% permitted_to?(:edit) do %>
+          <% alt_u = t(:az_label_move_page_up)%>
+          <% alt_d = t(:az_label_move_page_down) %>
+          <%= link_to( image_tag('go_up.png'), '#', :onclick => "move_page_up(this); return false;", :alt => alt_u, :title => alt_u) %><br/>
+          <%= link_to( image_tag('go_down.png'), '#', :onclick => "move_page_down(this); return false;", :alt => alt_d, :title => alt_d) %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

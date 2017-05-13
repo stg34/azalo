@@ -1,0 +1,35 @@
+body
+{
+  font-family: arial, tahoma;
+  font-size: 14px;
+  color: #666;
+}
+
+div.content
+{
+  width: 1000px;
+  border: 1px solid silver;
+  padding: 10px;
+}
+
+div.notabena,
+p.notabena
+{
+  border-left: 4px solid orange;
+  padding-left: 10px;
+}
+
+dt
+{
+  font-weight: bold;
+}
+
+dd
+{
+
+}
+
+a.index
+{
+  margin-top: 20px;
+}

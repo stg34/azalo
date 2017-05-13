@@ -1,0 +1,25 @@
+<% id = "_H_" + page.id.to_s %>
+<% classes = "page-image draggable-page " %>
+<% classes += "page_#{page.id} "%>
+<% classes += page.get_page_type == AzPage::Page_user ? 'user ' : 'admin ' %>
+<% classes += (page.is_full_double ? 'full_duplicate ' : '') %>
+
+<div class="<%= classes %>" id="<%= id %>">
+  
+    <div class="content-holder">
+      <div style="width: 50px;"></div>
+      <div style="float: left; height: 16px;"></div>
+      <div style="display: none;" class="page-id"><%= page.id %></div>
+      <div id="page-id-<%= page.id %>">
+        <div id="page_box_holder_<%=page.id %>" <%= "style='display:none'" if is_node_collapsed(page.id) %>>
+          <%= render( :partial => '/az_pages/page_box_content', :locals => {:page => page, :project => project}) %>
+        </div>
+      </div>
+    </div>
+
+  <script type="text/javascript">
+    parent_child_push("<%= parent_id %>", "<%= id %>", '<%= page.get_project.instance_of?(AzProjectBlock) ? "rgb(189, 219, 237)" : "rgb(255, 213, 170)" %>');
+  </script>
+
+</div>
+

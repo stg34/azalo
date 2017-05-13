@@ -1,0 +1,15 @@
+<fieldset class="definitions-block">
+  <legend><%= t(:az_label_definition) %></legend>
+  
+  <%= form_for(@project, :url => "/#{@project.class.to_s.underscore.pluralize}/change_definitions/" + @project.id.to_s) do |f| %>
+    <table class="table">
+      <% @definitions.each do |definition| %>
+      <tr>
+          <td><%= h(definition.name) %></td>
+          <td><%= check_box_tag 'definition_' + definition.id.to_s, definition.id.to_s, @project.az_definitions.include?(definition) %></td>
+      </tr>
+      <% end %>
+    </table>
+  <%= f.submit t(:az_label_save) %>
+  <% end %>
+</fieldset>

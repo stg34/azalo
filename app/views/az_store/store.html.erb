@@ -1,0 +1,59 @@
+<% cache do %>
+  <div class="store">
+    <h1><%= link_to(image_tag('rss.png'), {:controller => 'store', :action => 'rss'}, :class => 'store-rss', :title => 'Новинки в магазине технических заданий') %>Магазин технических заданий</h1>
+
+    <% items1 = [] %>
+    <% items2 = [] %>
+    <% project_items.each_with_index do |store_item, n| %>
+      <% if n % 2 == 0 %>
+        <% items1 << store_item %>
+      <% else %>
+        <% items2 << store_item %>
+      <% end %>
+    <% end %>
+    <% if project_items.size > 0 %>
+      <h2><%= t(:az_label_projects) %></h2>
+        <div class="column-1">
+          <% items1.each_with_index do |store_item, n| %>
+            <%= render( :partial => 'store_item', :locals => {:store_item => store_item}) %>
+          <% end %>
+
+        </div>
+        <div class="column-2">
+          <% items2.each_with_index do |store_item, n| %>
+            <%= render( :partial => 'store_item', :locals => {:store_item => store_item}) %>
+          <% end %>
+        </div>
+
+      <%= aligner_tag %>
+    <% end %>
+
+    <%= aligner_tag %>
+
+    <% items1 = [] %>
+    <% items2 = [] %>
+    <% component_items.each_with_index do |store_item, n| %>
+      <% if n % 2 == 0 %>
+        <% items1 << store_item %>
+      <% else %>
+        <% items2 << store_item %>
+      <% end %>
+    <% end %>
+    <% if component_items.size > 0 %>
+      <h2>Компоненты</h2>
+        <div class="column-1">
+          <% items1.each_with_index do |store_item, n| %>
+            <%= render( :partial => 'store_item', :locals => {:store_item => store_item}) %>
+          <% end %>
+
+        </div>
+        <div class="column-2">
+          <% items2.each_with_index do |store_item, n| %>
+            <%= render( :partial => 'store_item', :locals => {:store_item => store_item}) %>
+          <% end %>
+        </div>
+
+      <%= aligner_tag %>
+    <% end %>
+  </div>
+<% end %>

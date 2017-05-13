@@ -1,0 +1,56 @@
+<h1>Editing az_message</h1>
+
+<%= form_for(@az_message) do |f| %>
+  <%= f.error_messages %>
+
+<table>
+    <tr>
+      <td style="padding-right: 3px;">
+        <%= f.label :message_type %><br />
+        <%= f.text_field :message_type %>
+      </td>
+      <td style="padding-right: 3px;">
+        <%= f.label :email %><br />
+        <%= f.text_field :email %>
+      </td>
+      <td style="padding-right: 3px;">
+        <%= f.label :subject %><br />
+        <%= f.text_field :subject %>
+      </td>
+    </tr>
+  </table>
+
+  <p>
+    <%= f.label :message %><br />
+    <%= f.text_area :message %>
+  </p>
+
+  <p>
+    <%= f.label :note %><br />
+    <%= f.text_area :note %>
+  </p>
+
+  <table>
+    <tr>
+      <td style="padding-right: 3px;">
+        <%= f.label :status1 %><br />
+        <%= f.select :status1, @statuses1 %>
+      </td>
+      <td style="padding-right: 3px;">
+        <%= f.label :status2 %><br />
+        <%= f.select :status2, @statuses2 %>
+      </td>
+      <td style="padding-right: 3px;">
+        <%= f.label :status3 %><br />
+        <%= f.select :status3, @statuses3 %>
+      </td>
+    </tr>
+  </table>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_show), @az_message %><br />
+<%= link_to t(:az_label_back), az_messages_path %><br />

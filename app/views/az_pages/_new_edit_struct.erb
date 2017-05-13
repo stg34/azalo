@@ -1,0 +1,42 @@
+
+<!-- ======================================================================= -->
+<fieldset>
+  <legend>Информация на странице</legend>
+    <% az_page_types.each do |type| %>
+      <%= type.name %><br/>
+      <table class="table">
+        <tr>
+          <th>Название/Коллекция</th>
+          <th>Тип</th>
+          <th>.</th>
+          <th>.</th>
+        </tr>
+
+      <% if type.instance_of?(AzStructDataType) %>
+        <% type.az_variables.each do |var| %>
+          <tr>
+            <td><%= link_to(h(var.name), edit_az_variable_path(var)) %></td>
+            <td><%= h(var.az_base_data_type.name) %></td>
+            <td><%= t(:az_label_delete) %></td>
+            <td>.</td>
+          </tr>
+        <% end %>
+      <% end %>
+
+      <% if type.instance_of?(AzCollectionDataType) %>
+        <tr>
+          <td><%= type.name %></td>
+          <td>
+            <%= link_to(h(type.az_collection_template.name), edit_az_collection_template_path(type.az_collection_template)) %>
+            <%= link_to(h(type.az_base_data_type.name), edit_az_base_data_type_path(type.az_base_data_type)) %>
+          </td>
+          <td><%= t(:az_label_delete) %></td>
+          <td>.</td>
+        </tr>
+      <% end %>
+
+      </table>
+      <%= link_to 'Новая переменная', new_az_variable_path %>
+    <% end %>
+  </fieldset>
+<!-- ======================================================================= -->

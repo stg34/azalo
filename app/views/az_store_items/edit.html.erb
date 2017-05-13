@@ -1,0 +1,14 @@
+<h1>Редактирование товара</h1>
+
+<%= form_for(@az_store_item, :html => { :multipart => true }) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:f => f}) %>
+  
+  <p>
+    <%= f.submit t(:az_label_save) %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @az_store_item %> |
+<%= link_to 'К списку товаров', az_store_items_path %>

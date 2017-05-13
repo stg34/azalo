@@ -1,0 +1,13 @@
+<h1>Новая операция</h1>
+
+<%= form_for(@az_operation) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:form => f}) %>
+
+  <p>
+    <%= f.submit t(:az_label_create) %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_back), az_operations_path %>

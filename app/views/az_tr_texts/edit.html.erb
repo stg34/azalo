@@ -1,0 +1,14 @@
+<h1>Редактирование текста</h1>
+
+<%= form_for(@az_tr_text, :builder => AzFormBuilder) do |f| %>
+
+  <%= render( :partial => 'new_edit', :locals => {:f => f}) %>
+
+  <p>
+    <%= f.submit t(:az_label_save) %>
+  </p>
+
+<% end %>
+
+<%= link_to t(:az_label_show), @az_tr_text %> |
+<%= link_to t(:az_label_back), :action => :index_user %>

@@ -1,0 +1,78 @@
+<div id="new-page-task-dialog-content">
+  <% if page.root != true %>
+    <%= page_dialog_title(t(:az_label_create_tasks), page) %>
+    <% url = { :controller => 'az_pages', :action => 'create_page_tasks', :id => page.id} %>
+    <%= form_for = page %>
+    <% applicable_tasks = tasks.select{|t| t.is_task_applicable_to_page(page) } %>
+    <% project = page.get_project_over_block %>
+  <% else %>
+    <%= dialog_title("Создать задачи для проекта <q>#{project.name}</q>") %>
+    <% url = { :controller => 'az_projects', :action => 'create_project_tasks', :id => project.id} %>
+    <%= form_for = project %>
+    <% applicable_tasks = tasks.select{|t| t.is_task_applicable_to_project } %>
+  <% end %>
+
+  <% remote_form_for(form_for, :url => url, :update => "new-page-task-dialog-content", :after => "", :before => "") do |page_form| %>
+    <%= page_form.error_messages %>
+    <div style="height: 220px; overflow: auto;">
+      <table class="table">
+        <tr>
+          <th>Задача</th>
+          <th><%= t(:az_label_assign) %></th>
+          <th><%= t(:az_label_time) %></th>
+          <th>Создать</th>
+          <th>Расширено</th>
+          <th>Уже создана</th>
+        </tr>
+        <% applicable_tasks.each do |task| %>
+          <tr>
+            <td>
+              <%= task.get_name1(page) %>
+            </td>
+            <td>
+              <select id="az_task_user[<%= task.id %>]_employee_id" name="az_task_user[<%= task.id %>][employee_id]">
+                <% participants = project.az_participants.select{|p| p.az_rm_role == task.az_rm_role } %>
+                <% if participants.size == 0 %>
+                  <option id="---" value="---">Нет <%= task.az_rm_role.name %>а.<%# TODO просклонять роли более красиво%></option>
+                <% end %>
+                <% participants.each do |participant| %>
+                  <% user = participant.az_employee.az_user %>
+                  <option id="<%= user.login %>" value="<%= participant.az_employee.id %>"><%= user.login %> (<%= user.name %> <%= user.lastname %>)</option>
+                <% end %>
+              </select>
+            </td>
+            <td>
+              <% if page != nil %>
+                <% task_time =  task.get_time(page) %>
+              <% else %>
+                <% task_time =  task.get_time(nil) %>
+              <% end %>
+              <%= text_field_tag "az_task_user[#{task.id}][time]", task_time, :style => 'width: 30px;' %>
+            </td>
+            <td>
+              <% if participants.size == 0 %>
+                <%= check_box_tag "az_task_user[#{task.id}][create]", true %>
+              <% elsif created_task_ids.include?(task.id) || participants.size == 0 %>
+                <%= check_box_tag "az_task_user[#{task.id}][create]", true %>
+              <% else %>
+                <%= check_box_tag "az_task_user[#{task.id}][create]", true, :checked => true %>
+              <% end %>
+            </td>
+            <td>
+              <% if page != nil %>
+                <a href="#" onclick="show_new_page_task_dialog('<%= page.id %>', '<%= task.id %>'); return false;">Расширено</a><br/>
+              <% else %>
+                <a href="#" onclick="show_new_project_task_dialog('<%= project.id %>', '<%= task.id %>'); return false;">Расширено</a><br/>
+              <% end %>
+            </td>
+            <td>
+              <%= created_task_ids.include?(task.id) ? "Да" : "Нет" %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <%= submit_and_disable_tag(page_form, t(:az_label_create)) %>
+    <%= page_form.submit t(:az_label_cancel), :onclick => 'Windows.closeAll(); return false;' %>
+  <% end %>
+</div>

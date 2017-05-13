@@ -1,0 +1,22 @@
+<h1>Listing az_register_confirmations</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Confirm hash</th>
+  </tr>
+
+<% @az_register_confirmations.each do |az_register_confirmation| %>
+  <tr>
+    <td><%=h az_register_confirmation.user_id %></td>
+    <td><%=h az_register_confirmation.confirm_hash %></td>
+    <td><%= link_to 'Show', az_register_confirmation %></td>
+    <td><%= link_to 'Edit', edit_az_register_confirmation_path(az_register_confirmation) %></td>
+    <td><%= link_to 'Destroy', az_register_confirmation, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_register_confirmation', new_az_register_confirmation_path %>

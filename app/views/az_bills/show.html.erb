@@ -1,0 +1,28 @@
+<p>
+  <b>Invoice:</b>
+  <%=h @az_bill.invoice_id %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @az_bill.description %>
+</p>
+
+<p>
+  <b>Date from:</b>
+  <%=h @az_bill.date_from %>
+</p>
+
+<p>
+  <b>Date till:</b>
+  <%=h @az_bill.date_till %>
+</p>
+
+<p>
+  <b>Fee:</b>
+  <%=h @az_bill.fee %>
+</p>
+
+
+<%= link_to 'Edit', edit_az_bill_path(@az_bill) %> |
+<%= link_to 'Back', az_bills_path %>

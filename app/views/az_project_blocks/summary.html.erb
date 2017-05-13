@@ -1,0 +1,87 @@
+<% total_time = 0 %>
+
+<table class="table">
+  <tr>
+    <th>Страница проекта</th>
+    <th>Тип стр.</th>
+    <!--th>Структуры страницы</th-->
+    <th>Данные</th>
+    <th>Операции</th>
+    <th>Итого<br/>операции</th>
+    <th>Задачи</th>
+    <th>Итого задачи</th>
+  </tr>
+  <% @all_pages.each do |page| -%>
+    <tr>
+      <td>
+        <%#= page.az_project_blocks.size > 0 ? "<s>" : ""%>
+          <%= page.name %>
+        <%#= page.az_project_blocks.size > 0 ? "</s>" : ""%>
+      </td>
+      <td>
+        <%= page.get_page_type %>
+      </td>
+      <!--td style="background: #E5F4FA;">
+        <!-- Структуры страницы -- >
+        <% page.types.each do |type| %>
+          <%= type.name %><small>(<%= type.class.name %>)</small><br/>
+        <% end %>
+      </td-->
+      
+      <td>
+        <!-- Данные страницы -->
+        <%#= page_data_types_tag(page) %>
+      </td>
+      <td>
+        <% page.az_typed_pages.each do |tp| %>
+          <%# tp.az_typed_page_operations.each do |top| %>
+            <%#= top.az_operation_time.az_operation.name %> ...
+            <%#= top.az_operation_time.operation_time %><br/>
+          <%# end %>
+        <% end %>
+      </td>
+      <td>
+        <% total = page.get_operations_total_time %>
+        <% total_time += total %>
+        <%= total %>
+      </td>
+      <td>
+        <%# @tasks.each do |task| %>
+          <%# if task.is_task_applicable_to_page(page) %>
+            <i><%#= task.get_title(page) %></i><br/>
+            <pre><%#= task.get_description(page) %></pre><br/>
+            <%#= task.get_time(page) %>
+            <hr/>
+          <%# end %>
+        <%# end %>
+      </td>
+      <td>0.0</td>
+    </tr>
+  <% end %>
+
+  <tfoot>
+    <tr>
+      <td>Итого</td>
+      <td>&nbsp;</td>
+      <!--td>...</td-->
+      <td>...</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td><%= total_time %></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>Итого</td>
+      <td>&nbsp;</td>
+      <!--td>...</td-->
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td><%= total_time%></td>
+      <td>&nbsp;</td>
+    </tr>
+  </tfoot>
+
+</table>
+    
+	

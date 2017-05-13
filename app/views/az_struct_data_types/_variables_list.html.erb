@@ -1,0 +1,29 @@
+<table class="table">
+  <tr>
+    <th>Переменная</th>
+    <th>Тип</th>
+    <th>Валидаторы</th>
+    <th><%= t(:az_label_description) %></th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </tr>
+  <% struct.az_variables.each do |variable| %>
+    <tr>
+      <td><%= link_to(h(variable.name), "#", :onclick => "show_edit_variable_dialog(#{variable.id}); return false;") %></td>
+      <td><%=h variable.az_base_data_type.name %></td>
+      
+      <td><% variable.az_validators.each do |validator| %>
+            <%= link_to h(validator.name), :controller => 'az_validators', :action => 'edit', :id => validator.id %><br/>
+          <% end %>
+      </td>
+      <td><%= RedCloth.new(variable.description).to_html %></td>
+      <td><%= link_to( img_go_up,   :controller=>'az_variables', :action => 'move_up',   :id => variable.id) %></td>
+      <td><%= link_to( img_go_down, :controller=>'az_variables', :action => 'move_down', :id => variable.id) %></td>
+      <td>
+          <div style="display: none" id="var-scr-up-<%= variable.id %>"></div>
+          <%= link_to_remote t(:az_label_delete), :url => az_variable_path(variable), :confirm => t(:az_label_are_you_sure), :method => :delete, :update => "var-scr-up-#{variable.id}", :eval_scripts => true %>
+      </td>
+    </tr>
+  <% end %>
+</table>

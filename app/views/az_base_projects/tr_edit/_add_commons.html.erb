@@ -1,0 +1,13 @@
+<% if permitted_to_edit %>
+  <% commons.each do |c| %>
+    <table style="margin-bottom: 3px"><tr>
+        <td>
+          <% az_remote_form_for(@project, :url => add_common_a_path(:id => @project.id, :common_id => c.id),
+            :complete => "update_commons_in_tr('#{common_class_name}')") do %>
+            <%= submit_tag '&#8592;', {:class=>'add-common', :title => t(:az_label_add_to_specification)} %>
+          <% end %>
+        </td>
+        <td style="padding-left: 5px"><span><%= c.name %></span><br/></td>
+    </tr></table>
+  <% end %>
+<% end %>

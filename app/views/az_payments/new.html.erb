@@ -1,0 +1,21 @@
+<h1>Пополнить счет</h1>
+
+Пополнение счета на данный момент осуществляется с помощью карт Visa/Mastercard через систему Liqpay.<br/>
+
+<%= form_for(@az_payment, :builder => AzFormBuilder) do |f| %>
+  <p>
+    <%= f.hidden_field :az_company_id %>
+  </p>
+  <p>
+    Сумма USD<br />
+    <%= f.text_field :amount %>
+  </p>
+  <p>
+    <%= f.submit 'Оплатить' %>
+  </p>
+<% end %>
+
+<%= link_to 'Отказаться', az_profiles_path %>
+
+<br/><br/><br/>
+<%= image_tag "/images/mvl.png" %>

@@ -1,0 +1,13 @@
+<h1>Новый тип коллекций</h1>
+
+<%= form_for(@az_collection_template) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:form => f}) %>
+
+  <p>
+    <%= f.submit t(:az_label_create) %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_back), az_collection_templates_path %>

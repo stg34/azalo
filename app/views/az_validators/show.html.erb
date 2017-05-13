@@ -1,0 +1,21 @@
+<table>
+  <tr>
+    <td class="param"><p><%= t(:az_label_name) %>:</p></td>
+    <td class="value"><p><%=h @az_validator.name %></p></td>
+  </tr>
+  <tr>
+    <td class="param"><p>Описание:</p></td>
+    <td class="value"><%= RedCloth.new(@az_validator.description).to_html %></td>
+  </tr>
+  <tr>
+    <td class="param"><p>Сообщение:</p></td>
+    <td class="value"><%= RedCloth.new(@az_validator.message).to_html %></td>
+  </tr>
+</table>
+
+<%= link_to t(:az_label_edit), edit_az_validator_path(@az_validator) %> |
+<% if @az_validator.az_variable == nil %>
+  <%= link_to t(:az_label_back), '/validators' %>
+<% else %>
+  <%= link_to t(:az_label_back), :controller => 'az_variables', :action => 'edit', :id => @az_validator.az_variable.id %>
+<% end %>

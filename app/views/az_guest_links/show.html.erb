@@ -1,0 +1,16 @@
+<h1>Гостевая ссылка на проект "<%=h @az_guest_link.az_project.name %>"</h1>
+
+<p>
+  <b>Ссылка:</b>
+  <% guest_path = url_for :controller => 'az_projects', :action => 'guest_show', :hash_str => @az_guest_link.hash_str, :only_path => false %>
+  <%= link_to guest_path, guest_path %>
+</p>
+
+
+
+<p>
+  <b>Ссылка годна до:</b>
+  <%=h @az_guest_link.expired_at %>
+</p>
+
+<%= link_to t(:az_label_back), @az_guest_link.az_project %>

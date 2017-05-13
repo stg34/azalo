@@ -1,0 +1,64 @@
+<%
+
+titles = ["Схема сайта и дизайны",
+          "Структуры данных",
+          "Компоненты",
+          "Техническое задание",
+          "Задачи и управление проектами"]
+
+videos = ["Vf0PLgTwc9Q",
+          "pjjZRjcgt6Y",
+          "hZq4-XHLUc0",
+          "a44pjlO7UpQ",
+          "tKP6WtsCo_4"
+]
+
+begin
+  video_id = Integer(video_id) - 1
+rescue
+  video_id = 0
+end
+
+if video_id > 3 || video_id < 0
+  video_id = 0
+end
+
+video = videos[video_id]
+title = titles[video_id]
+%>
+
+<div class="main-page">
+  
+    <div class="main-content">
+      <div class="main-top-block">
+        <h1><%= title %></h1>
+        <div class="video">
+          <iframe width="560" height="349" src="http://www.youtube.com/embed/<%= video %>?rel=0&hd=1" frameborder="0" allowfullscreen></iframe>
+          <div class="aligner"></div>
+        </div>
+        <div class="text">
+          <!--h2>В уроке №1</h2>
+          <h3>Схема сайта</h3>
+          <ul>
+            <li>Как создать страницу</li>
+            <li>Переместить</li>
+          </ul>
+          <h3>Дизайны</h3>
+          <ul>
+            <li>Изображения</li>
+            <li>Исходники</li>
+            <li>История дизайнов</li>
+          </ul-->
+        </div>
+        <div class="aligner"></div>
+      </div>
+      <div class="aligner"></div>
+
+      <div class="main-middle-block-bottom-border"></div>
+
+      <%= render( :partial => '/layouts/carousel') %>
+
+    </div>
+    <%= aligner_tag %>
+  
+</div>

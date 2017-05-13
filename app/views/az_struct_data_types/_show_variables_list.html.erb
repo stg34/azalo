@@ -1,0 +1,20 @@
+<table class="table">
+  <tr>
+    <th>Переменная</th>
+    <th>Тип</th>
+    <th>Валидаторы</th>
+    <th><%= t(:az_label_description) %></th>
+  </tr>
+  <% struct.az_variables.each do |variable| %>
+    <tr>
+      <td><%= h(variable.name) %></td>
+      <td><%= h(variable.az_base_data_type.name) %></td>
+      
+      <td><% variable.az_validators.each do |validator| %>
+            <%=  h(validator.name) %><br/>
+          <% end %>
+      </td>
+      <td><%= RedCloth.new(variable.description).to_html %></td>
+    </tr>
+  <% end %>
+</table>

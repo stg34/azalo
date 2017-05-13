@@ -1,0 +1,2 @@
+module AzProjectStatUpdatesHelper
+end

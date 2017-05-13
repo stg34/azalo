@@ -1,0 +1,31 @@
+<h1>Новости</h1>
+
+<table class="table">
+  <tr>
+    <th><%= t(:az_label_name) %></th>
+    <th>Анонс</th>
+    <th>Текст</th>
+    <th>Отображать</th>
+    <th>Автор</th>
+    <th>.</th>
+    <th>.</th>
+    <th>.</th>
+  </tr>
+
+<% @az_news.each do |az_news| %>
+  <tr>
+    <td><%=h az_news.title %></td>
+    <td><%=h az_news.announce %></td>
+    <td><%=h az_news.body %></td>
+    <td><%=h az_news.visible %></td>
+    <td><%=h az_news.az_user.login %></td>
+    <td><%= link_to t(:az_label_show), az_news %></td>
+    <td><%= link_to t(:az_label_edit), edit_az_news_path(az_news) %></td>
+    <td><%= link_to t(:az_label_delete), az_news, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Добавить новость', :controller => 'az_news', :action=>'new' %>

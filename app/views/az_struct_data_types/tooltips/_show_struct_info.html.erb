@@ -1,0 +1,26 @@
+<div class="struct-info-box">
+<h2><%= az_struct_data_type.name %></h2>
+
+<table class="table">
+  <tr>
+    <th style="padding: 2px;">Переменная</th>
+    <th style="padding: 2px;">Тип</th>
+    <th style="padding: 2px;">Валидаторы</th>
+  </tr>
+
+  <% az_struct_data_type.az_variables.each do |az_variable| %>
+    <tr>
+      <td style="padding: 2px;"><%=h az_variable.name %></td>
+      <td style="padding: 2px;"><%=h az_variable.az_base_data_type.name %></td>
+      <td style="padding: 2px;">
+        <% az_variable.az_validators.each do |validator| %>
+          <%=h validator.name %><br/>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+
+<%= link_to t(:az_label_edit), edit_az_struct_data_type_path(az_struct_data_type) %>
+
+</div>

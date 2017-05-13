@@ -1,0 +1,9 @@
+<div class="user-bar">
+  <% if logged_in? && !current_user.roles.include?(:visitor) %>
+    <%= t(:az_menu_hello) %>, <b><%= h current_user.login %></b>.
+    <%= link_to t(:az_menu_logout), '/logout' %>
+  <% else %>
+    <%= link_to t(:az_menu_login), '/login' %>
+    <%= link_to t(:az_menu_register), "/tariffs" %>
+  <% end %>
+</div>

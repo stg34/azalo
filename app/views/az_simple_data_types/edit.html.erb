@@ -1,0 +1,14 @@
+<h1>Редактирование простого типа данных</h1>
+
+<%= form_for(@az_simple_data_type) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:form => f, :az_simple_data_type => @az_simple_data_type}) %>
+  
+  <p>
+    <%= f.submit t(:az_label_save) %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_show), @az_simple_data_type %> |
+<%= link_to t(:az_label_back), az_simple_data_types_path %>

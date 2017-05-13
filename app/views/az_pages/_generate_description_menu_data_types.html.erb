@@ -1,0 +1,22 @@
+<% text_types = texts.select{|t| t[:type].id != -1} %>
+<% text_no_types = texts.select{|t| t[:type].id == -1} %>
+
+<% if text_types.size > 1 %>
+  <% text_types.each do |text| %>
+    <li class='active'>
+      <a href='#' onclick="return false;" class='sub'><%= text[:type].name %></a>
+      <ul>
+        <%= render( :partial => '/az_pages/generate_description_menu_operations', 
+            :locals => {:page => page, :operations => text[:texts_by_operation], :data_type => text[:type]}) %>
+      </ul>
+    </li>
+  <% end %>
+<% elsif text_types.size == 1 %>
+  <%= render( :partial => '/az_pages/generate_description_menu_operations', 
+      :locals => {:page => page, :operations => text_types[0][:texts_by_operation], :data_type => text_types[0][:type]}) %>
+<% end %>
+
+<% text_no_types.each do |text| %>
+  <%= render( :partial => '/az_pages/generate_description_menu_operations', 
+      :locals => {:page => page, :operations => text[:texts_by_operation], :data_type => nil}) %>
+<% end %>

@@ -1,0 +1,2 @@
+class AzDebtPeriod < AzUsingPeriod
+end

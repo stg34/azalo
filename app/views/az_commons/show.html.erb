@@ -1,0 +1,22 @@
+<div class="commons-show">
+  <table>
+    <tr>
+      <td class="param"><p><%= t(:az_label_name) %>:</p></td>
+      <td class="value"><p><%=h @az_common.name %></p></td>
+    </tr>
+    <tr>
+      <td class="param"><p>Описание:</p></td>
+      <td class="value"><%= RedCloth.new(@az_common.description).to_html %></td>
+    </tr>
+  </table>
+
+  <% edit_str = 'edit_' + @az_common.class.to_s.underscore + '_path(@az_common)' -%>
+  <%= link_to t(:az_label_edit), eval(edit_str) %> |
+
+  <% controller = @az_common.class.to_s.pluralize.underscore %>
+  <% if @az_common.az_base_project_id == nil %>
+    <%= link_to t(:az_label_back), :controller => controller, :action => 'index_user' %>
+  <% else %>
+    <%= link_to t(:az_label_back), :controller => 'az_projects', :action => 'edit', :id => @az_common.az_base_project_id %>
+  <% end %>
+</div>

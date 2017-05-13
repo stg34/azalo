@@ -1,0 +1,16 @@
+<%= form_for(@az_project_block, :builder => AzFormBuilder) do |f| %>
+  <%#= f.error_messages %>
+
+  Название <%= required_field %><br/>
+  <%= f.text_field :name %><br/>
+
+  <%= f.hidden_field :owner_id %>
+  <br/>
+
+  <% if current_user != nil && current_user.roles.include?(:admin) %>
+    <%= f.label :seed %><br />
+    <%= f.check_box :seed %><br/>
+  <% end %>
+
+<%= f.submit button_caption %>
+<% end %>

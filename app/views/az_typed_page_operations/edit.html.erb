@@ -1,0 +1,20 @@
+<h1>Editing az_typed_page_operation</h1>
+
+<%= form_for(@az_typed_page_operation) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :az_operation_times_id %><br />
+    <%= f.text_field :az_operation_times_id %>
+  </p>
+  <p>
+    <%= f.label :az_typed_page_id %><br />
+    <%= f.text_field :az_typed_page_id %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @az_typed_page_operation %> |
+<%= link_to 'Back', az_typed_page_operations_path %>

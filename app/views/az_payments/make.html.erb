@@ -1,0 +1,7 @@
+
+<div class="page-header">
+  <h1>Пополнение счета</h1>
+</div>
+<p>Укажите сумму, на которую вы хотите пополнить счет</p>
+<%#= number_field_tag :payment_amount %>
+<%= interkassa_button(@ik_req, :title => 'Пополнить!') %>

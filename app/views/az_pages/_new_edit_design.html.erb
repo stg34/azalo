@@ -1,0 +1,68 @@
+<!-- =================================================================== -->
+<fieldset id="designs_id">
+  <legend><%= t(:az_label_designs) %></legend>
+
+      <% az_page_form.fields_for :az_designs do |az_design_form| %>
+      <fieldset>
+        <% if az_design_form.object.new_record? %>
+          <legend><%= t(:az_label_new_design) %></legend>
+        <% else %>
+          <legend><%= t(:az_label_design) %></legend>
+          <%= h az_design_form.object.description %><br/>
+
+          <% az_design_form.object.az_images.each do |az_image| %>
+            <% unless az_image.new_record? %>
+              <div class="old-image" style="background: white">
+                <%= az_image.created_at %><br/>
+                <%= image_tag az_image.image.url(:tiny) %>
+              </div>
+            <% end %>
+
+          <% end %>
+
+          <%= aligner_tag %>
+
+          <p>
+            <% if az_design_form.object.az_design_source.source_file_name != nil %>
+              <%= link_to "Скачать макет (" + az_design_form.object.az_design_source.source_file_name + ")", az_design_form.object.az_design_source.source.url %>
+            <%= az_design_form.object.design_source_content_type %>
+            <% end %>
+          </p>
+          <%= aligner_tag %>
+
+        <% end %>
+
+        <% link_id =  'designs_' + az_design_form.object.id.to_s %>
+
+        <div id="<%= link_id %>" style="display: none;">
+
+          <% az_design_form.fields_for :az_images do |az_image_form| %>
+            <% if az_image_form.object.new_record? %>
+              <fieldset>
+                <legend>Новое изображение</legend>
+                Файл (jpeg, до 5Mb)<br/>
+                <%= az_image_form.file_field :image %><br/>
+              </fieldset>
+            <% end %>
+          <% end %>
+
+          <%= t(:az_label_design_description) %><br/>
+          <p>
+            <%= az_design_form.text_area :description %>
+          </p>
+
+          <p>
+            Оригинал-макет (.psd, .ai, .cdr, ... до 10 Mb)<br/>
+            <%= az_design_form.file_field :design_source %>
+          </p>
+
+        </div>
+
+        <%= link_to_function getShowLabel,
+                visual_effect(:toggle_slide, link_id, :duration => 1, :afterFinish => 'function() {' + switchShowHideLabels('show_hide_' + link_id) + '}'),
+                :id => 'show_hide_' + link_id,
+                :class => 'hide-show-switcher' %>
+      </fieldset>
+    <% end %>
+</fieldset>
+<!-- =================================================================== -->

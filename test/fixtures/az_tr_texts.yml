@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+#one:
+#  owner_id: 1
+#  az_operation_id: 1
+#  name: MyString
+#  text: MyText
+#  data_type: MyString
+#  copy_of: 1
+#
+#two:
+#  owner_id: 1
+#  az_operation_id: 1
+#  name: MyString
+#  text: MyText
+#  data_type: MyString
+#  copy_of: 1

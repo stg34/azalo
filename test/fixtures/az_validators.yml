@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+#one:
+#  owner_id: 1
+#  az_variable_id: 1
+#  name: MyString
+#  description: MyText
+#  condition: MyText
+#  message: MyText
+#  copy_of: 1
+#  seed: false
+#
+#two:
+#  owner_id: 1
+#  az_variable_id: 1
+#  name: MyString
+#  description: MyText
+#  condition: MyText
+#  message: MyText
+#  copy_of: 1
+#  seed: false

@@ -1,0 +1,35 @@
+<div id="tooltip-content-new-project" style="display:none;">
+  <p>
+    <strong>Публичный доступ</strong> - любой может просматривать ваш проект или скопировать его себе.
+  </p>
+  <p>
+    <strong>Приватный доступ</strong> - доступ к проекту имеете только вы.<br/>
+    Доступно для пользователей платных тарифов.
+  </p>
+</div>
+
+<h1><%= t(:az_label_new_project) %></h1>
+
+<%= form_for(@project, :builder => AzFormBuilder) do |f| %>
+
+  <%= t(:az_label_name_of_new_project) %> <%= required_field %><br/>
+  <%= f.text_field :name %><br/>
+
+  <%= t_b %><%= t(:az_label_project_access) %><%= t_e("tooltip-data-new-project", "tooltip-content-new-project") %>
+
+  <% unless @project.owner.private_project_quota_reached
+    prj_access = [['Приватный', false], ['Публичный', true]]
+  else
+    prj_access = [['Публичный', true]]
+  end %>
+
+  <%= f.select :public_access, prj_access %><br/>
+
+  <%= f.hidden_field :owner_id %><br/>
+
+  <%= submit_and_disable_tag(f, t(:az_label_create)) %>
+
+<% end %>
+
+<br/>
+<%= link_to t(:az_label_back), {:controller => 'az_projects', :action => 'index_user'} %>

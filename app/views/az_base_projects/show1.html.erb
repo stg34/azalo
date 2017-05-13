@@ -1,0 +1,101 @@
+<% cache_content = Proc.new do %>
+
+  <% if @project.class == AzProject %>
+    <%= render( :partial => '/az_base_projects/project_top_box', :locals => { :project_panel_collapsed => project_panel_collapsed }) %>
+  <% end %>
+
+  <% if @project.class == AzProjectBlock %>
+    <%= render( :partial => '/az_base_projects/project_block_top_box') %>
+  <% end %>
+
+  <%= crumbs(@project.get_crumbs_to_parent) %>
+
+  <div id="holder" style="position: absolute;"></div>
+  <div class="hide-show-control-holder">
+    <% permitted_to? :edit do %>
+      <a href="#" onclick="show_hide_controls()" id="show-controls-link"><%= t(:az_label_hide_controls) %></a>
+      <a href="#" onclick="show_hide_controls()" id="hide-controls-link" style="display: none"><%= t(:az_label_show_controls) %></a>
+    <% end %>
+  </div>
+  <div class="public">
+
+    <% if @project.class == AzProject %>
+      <% if @project.favicon_file_name == nil %>
+        <% favicon_title = t(:az_label_favicon_is_not_loaded) %>
+      <% else %>
+        <% favicon_title = t(:az_label_favicon) %>
+      <% end %>
+      <div class="project-fav-icon-holder"><%= image_tag(@project.favicon.url(:x16x16), :title => favicon_title) %></div>
+    <% end %>
+
+    <%# store_label = "" %>
+    <%# if @project.store_item %>
+      <%# store_label = "<sup style='font-size: 10px; font-weight: normal'>#{link_to('Store', @project.store_item)}</sup>" %>
+    <%# end %>
+    <div class="project-name-holder">
+      <h1>
+        <% if (current_user && !current_user.my_works.include?(@project.owner)) || !current_user %>
+          <%= @project.owner.name %> / 
+        <% end %>
+        <%= @project.name %><%#= store_label %>
+        <% if current_user && current_user.can_clone?(@project) && !current_user.my_works.include?(@project.owner) %>
+          <% if current_user.az_companies.size == 1 %>
+            <%= link_to 'Клонировать!', fork_project_path(@project, current_user.az_companies[0]), :class => 'clone-button', :title => 'Создает копию для вас' %>
+          <% else %> 
+            <%= link_to 'Клонировать!', '#', :onclick => "show_select_company_dialog2('item_type', #{@project.id})", :class => 'clone-button', :title => 'Создает копию для вас' %>
+          <% end %>
+        <% end %>
+      </h1>
+    </div>
+    <%= aligner_tag %>
+
+    <table id="structure-table">
+      <tr>
+        <td>
+          <%= render( :partial => '/az_base_projects/show_root_node', :locals => {:nodes => [@project_tree.root], :parent_links => []}) %>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+
+  <% if permitted_to?(:edit, @project) && (@show_type == :data || @show_type == :components && @project.instance_of?(AzProject)) %>
+
+    <div id="right-block">
+      <% if @show_type == :data %>
+        <%= render( :partial => '/az_base_projects/data_right_box') %>
+      <% end %>
+
+      <% if @show_type == :components && @project.instance_of?(AzProject) %>
+        <%= render( :partial => '/az_base_projects/project_right_box') %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= aligner_tag %>
+
+  <script type="text/javascript">
+      window.onload = function () {
+          window.show_mode = '<%= @show_type.to_s %>';
+          window.project_id = <%= @project.id %>;
+          window.project_type = '<%= @project.class.to_s.tableize %>';
+          add_draggables_and_dropables();
+          update_page_type_and_move_controls();
+          init_droplicious_menu();
+          draw_connectors();
+      };
+  </script>
+
+  <% if @project.class.to_s == 'AzProject' %>
+    <span class="azalo-generated"><%= t(:az_label_generated_by_azalo_net) %> <%= l(Time.now) %></span> <% if @project.cache %>Cached<% end %>
+  <% end %>
+
+<% end %>
+
+<% if @project.cache %>
+  <% cache :controller => params[:controller], :action => params[:action], :id => params[:id], :show_type => params[:show_type] do %>
+    <% cache_content.call %>
+  <% end %>
+<% else %>
+  <% cache_content.call %>
+<% end %>

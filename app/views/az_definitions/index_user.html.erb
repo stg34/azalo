@@ -1,0 +1,56 @@
+<% is_admin = current_user.roles.include?(:admin) %>
+<% @my_companies.each do |company| %>
+
+  <%= item_list_header("Список определений", company, @my_companies.size > 1) %>
+
+  <table class="table">
+    <tr>
+      <th><%= t(:az_label_name) %></th>
+      <th>Определение</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <% if is_admin %>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      <% end %>
+    </tr>
+
+  <% @definitions[company].each do |definition| %>
+    <tr>
+      <td><%=h definition.name %></td>
+      <td><%= RedCloth.new(n2e definition.definition).to_html %></td>
+      <td>
+        <%= link_to( img_go_up, :controller => "az_definitions", :action => 'move_up', :id => definition.id) %>
+      </td>
+      <td>
+        <%= link_to( img_go_down, :controller => "az_definitions", :action => 'move_down', :id => definition.id) %>
+      </td>
+      <td><%= link_to t(:az_label_edit), edit_az_definition_path(definition) %></td>
+      <td><%= link_to t(:az_label_delete), definition, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+      <% if is_admin %>
+        <td class="admin"><%= boolean_to_img(definition.seed) %></td>
+        <td class="admin">
+          <% if definition.seed %>
+            <%= link_to 'Обновить всем', :controller=>'az_services', :action => 'update_definitions_from_seed', :id => definition.id %>
+          <% else %>
+            &nbsp;
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+  </table>
+
+  <br />
+
+  <%= link_to 'Новое определение', :controller=>'az_definitions', :action => 'new', :owner_id => company.id %>
+
+<% end %>
+
+<% if is_admin %>
+  <p>
+    <%= link_to 'Обновить все сиды', :controller=>'az_services', :action => 'update_definitions_from_seed', :id => 0 %>
+  </p>
+<% end %>

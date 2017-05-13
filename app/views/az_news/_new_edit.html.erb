@@ -1,0 +1,21 @@
+<p>
+  <%= t(:az_label_name) %><br />
+  <%= form.text_field :title %>
+</p>
+<p>
+  Анонс<br />
+  <%= form.text_area :announce %>
+</p>
+<p>
+  Текст<br />
+  <%= form.text_area :body %>
+</p>
+<p>
+  Создана<br />
+  <%= form.datetime_select :created_at %>
+</p>
+
+<p>
+  Показывать<br />
+  <%= form.check_box :visible %>
+</p>

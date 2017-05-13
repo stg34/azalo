@@ -1,0 +1,37 @@
+<div id="new-edit-page-dialog" class="dialog">
+
+  <%= form_for(page, remote: true, :update => "new-edit-page-dialog", :builder => AzDialogFormBuilder) do |page_form| %>
+    <%= page_form.error_messages %>
+
+    <div class="dialog-form-content">
+      <%= page_form.label(:name, "Название страницы (обязательно)", :class => "dialog_label") %>
+      <%= page_form.text_field :name %>
+    
+      <div style="height: 20px; padding-bottom: 10px">
+        <% if page.can_be_set_page_type? %>
+          <div class="page-type">
+            <%= page_form.check_box :page_type %>Админка
+          </div>
+        <% end %>
+        <% if page.can_be_embedded? %>
+          <div class="page-type">
+            <%= page_form.check_box :embedded %>Внедренная страница
+          </div>
+        <% end %>
+      </div>
+      
+    </div>
+
+    <div class="dialog-form-buttons">
+
+      <%= page_form.hidden_field :az_base_project_id %>
+      <%= page_form.hidden_field :parent_id, :value => parent_page_id %>
+
+      <%= submit_and_disable_tag(page_form, t(:az_label_save)) %>
+      <%= page_form.submit t(:az_label_cancel), :onclick => 'Windows.closeAll(); return false;' %>
+
+    </div>
+  <% end %>
+  
+</div>
+<%= aligner_tag %>

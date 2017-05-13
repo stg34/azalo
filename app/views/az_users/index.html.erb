@@ -1,0 +1,84 @@
+<h1>Пользователи</h1>
+
+<div class="digg_pagination">
+  <%= will_paginate @az_users %>
+</div>
+
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th>Login/email</th>
+    <th>Roles</th>
+    <th>Работники</th>
+    <th><%= t(:az_label_projects) %></th>
+    <th>Компоненты</th>
+    <th>Структуры</th>
+    <th>Определения</th>
+    <th>Общее</th>
+  </tr>
+<% for az_user in @az_users %>
+  <tr>
+    <td><%= az_user.id %></td>
+    <td><b><%= link_to az_user.login, edit_az_user_path(az_user) %></b><br/><%= h az_user.email %></td>
+    <td><%= h az_user.roles.map(&:to_s) * ',' if az_user.roles %></td>
+    <td>
+      <% az_user.az_companies.each do |company| %>
+        <% company.az_employees.each do |az_employee| %>
+          <%= az_employee.az_user.login %><br/>
+        <% end %>
+      <% end %>
+    </td>
+    <td>
+      <% az_user.az_companies.each do |company| %>
+        <% projects = AzProject.get_by_company(company) %>
+        <table class="table" style="margin: 2px;">
+          <% projects.each do |project| %>
+            <tr>
+              <td><%= link_to project.name, project %></td>
+              <td>
+                Блоки в проекте
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    </td>
+    <td>
+      <%# az_user.az_companies.each do |company| %>
+        <%# blocks = AzProjectBlock.get_by_company(company) %>
+        <%# blocks.each do |block| %>
+          <%#= link_to block.name, block %><br/>
+        <%# end %>
+      <%# end %>
+    </td>
+    <td>
+      <%# az_user.az_companies.each do |company| %>
+        <%# structs = AzStructDataType.get_by_company(company) %>
+        <%# structs.each do |struct| %>
+          <%#= link_to struct.name, struct %><br/>
+        <%# end %>
+      <%# end %>
+    </td>
+    <td>
+      <%# az_user.az_companies.each do |company| %>
+        <%# definitions = AzDefinition.get_by_company(company) %>
+        <%# definitions.each do |definition| %>
+          <%#= link_to definition.name, definition %><br/>
+        <%# end %>
+      <%# end %>
+    </td>
+    <td>
+      <%# az_user.az_companies.each do |company| %>
+        <%# commons = AzCommon.get_by_company(company) %>
+        <%# commons.each do |common| %>
+          <%#= link_to common.name, common %><br/>
+        <%# end %>
+      <%# end %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<div class="digg_pagination">
+  <%= will_paginate @az_users %>
+</div>

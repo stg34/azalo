@@ -1,0 +1,60 @@
+<p>
+  <%= t(:az_label_name) %><br />
+  <%= f.text_field :name %>
+</p>
+
+<p>
+  Цена<br />
+  <%= f.text_field :price %>
+</p>
+
+<p>
+  Дисковая квота<br />
+  <%= f.text_field :quota_disk %>
+</p>
+
+<p>
+  Макс. активных проектов<br />
+  <%= f.text_field :quota_active_projects %>
+</p>
+
+<p>
+  Макс. публичных проектов<br />
+  <%= f.text_field :quota_public_projects %>
+</p>
+
+<p>
+  Макс. приватных проектов<br />
+  <%= f.text_field :quota_private_projects %>
+</p>
+
+<p>
+  Макс. страниц на проект<br />
+</p>
+
+<p>
+  Макс. сотрудников (без ceo)<br />
+  <%= f.text_field :quota_employees %>
+</p>
+
+
+<p>
+  <%= f.label 'Тип' %><br />
+  <%= f.select(:tariff_type, @tariff_types) %>
+</p>
+
+<p>
+  Оптимальный<br />
+  <%= f.check_box :optimal %>
+</p>
+
+<p>
+  Лого и ссылка на сайт<br />
+  <%= f.check_box :show_logo_and_site %>
+</p>
+
+
+<p>
+  <%= f.label :position %><br />
+  <%= f.text_field :position %>
+</p>

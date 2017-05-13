@@ -1,0 +1,24 @@
+<h1>Список статей</h1>
+
+<table class="table">
+  <tr>
+    <th>Title</th>
+    <th>Announce</th>
+    <th>Visible</th>
+  </tr>
+
+<% @az_articles.each do |az_article| %>
+  <tr>
+    <td><%=h az_article.title %></td>
+    <td><%=h az_article.announce %></td>
+    <td><%=h az_article.visible %></td>
+    <td><%= link_to 'Show', az_article %></td>
+    <td><%= link_to 'Edit', edit_az_article_path(az_article) %></td>
+    <td><%= link_to 'Destroy', az_article, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Новая статья', new_az_article_path %>

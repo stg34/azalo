@@ -1,0 +1,12 @@
+<h1>Editing az_design_source</h1>
+
+<%= form_for(@az_design_source) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @az_design_source %> |
+<%= link_to 'Back', az_design_sources_path %>

@@ -1,0 +1,18 @@
+<% if projects.size > 0 %>
+  <%= aligner_tag %>
+  <div class="info">
+    <h3><%= title %></h3>
+    <table class="info-projects">
+    <% projects.each do |prj| %>
+      <tr>
+        <td><%= link_to(prj.name, az_project_path(prj)) %></td>
+        <td class="owner" title="Автор проекта"><%= prj.owner.name %></td>
+      </tr>
+    <% end %>
+    </table>
+
+    <%= link_to("Что еще есть на Azalo", {:controller => 'az_dashboard', :action => 'explore'}, :class => "explore-azalo") %>
+
+  </div>
+<% end %>
+

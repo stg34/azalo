@@ -1,0 +1,2 @@
+module AzRegisterConfirmationsHelper
+end

@@ -1,0 +1,7 @@
+<div class="">
+  <h2>Укажите компанию, которой должен быть добавлен проект</h2>
+  <br/>
+  <% current_user.az_companies.each do |cmp| %>
+    <%= link_to cmp.name, fork_project_path(@project, cmp), :title => 'Создает копию для вас' %><br/><br/>
+  <% end %>
+</div>

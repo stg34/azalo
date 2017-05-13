@@ -1,0 +1,145 @@
+
+  <div class="store-item">
+    <% item = @az_store_item.item %>
+
+    <h1><%=h item.name %></h1>
+
+    <div class="store-item-scheme">
+      <%= image_tag(@az_store_item.scheme.url(:big)) %>
+    </div>
+    <div class="store-item-description">
+      <%= RedCloth.new(n2e @az_store_item.description).to_html %>
+    </div>
+
+    <%= aligner_tag %>
+    <h2 class="scetches">Эскизы страниц</h2>
+    <div class="store-item-scetches-preview">
+      <% @az_store_item.az_store_item_scetches.each do |scetch| %>
+        <div class="store-item-scetch-preview">
+          <div class="store-item-scetch-preview-title"><%= scetch.title %></div>
+          <div class="store-item-scetch-preview-image">
+            <% img = image_tag(scetch.scetch.url(:small), :alt => scetch.alt) %>
+            <%= link_to(img, scetch.scetch.url(:big), :rel => "lightbox[1]", :title=>scetch.alt) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+
+    <%= aligner_tag %>
+    <h2 class="info">Информация</h2>
+
+    <%= aligner_tag %>
+    <% components = item.components %>
+    <% if components.size > 0 %>
+      <div class="store-item-components">
+        <b>Компоненты:</b>
+        <ul>
+          <% components.each do |component| %>
+            <li><%= component.name %></li>
+          <% end %>
+        </ul>
+      </div>
+      <%= aligner_tag %>
+    <% end %>
+
+    <% if @public_pages.size > 0 %>
+      <div class="store-item-pages">
+        <b>Старницы публичной части:</b>
+        <ul>
+          <% @public_pages.each do |page| %>
+            <li><%= page.name %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <% if @admin_pages.size > 0 %>
+      <div class="store-item-pages">
+        <b>Старницы административной части:</b><br/>
+        <ul>
+          <% @admin_pages.each do |page| %>
+            <li><%= page.name %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= aligner_tag %>
+    <% definitions = item.get_all_definitions %>
+    <div class="store-item-definitions">
+      <% if definitions.size > 0 %>
+        <b><%= t(:az_label_definitions) %>:</b>
+        <ul>
+          <% definitions.each do |definition| %>
+            <li><%= definition.name %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+
+    <div class="store-item-data-types">
+      <% data_types = item.get_data_types %>
+      <% struct_data_types = data_types.select{|dt| dt.class == AzStructDataType } %>
+      <% if struct_data_types.size > 0 %>
+        <b>Типы данных:</b>
+        <ul>
+          <% struct_data_types.each do |dt| %>
+            <li><%= dt.name %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+
+    <%= aligner_tag %>
+
+    <div class="store-item-scetch-program">
+      <%= image_tag(@az_store_item.az_scetch_program.sp_icon.url(:x32)) %>
+      <div class="store-item-scetch-program-descr">Эскизы в формате <%= link_to @az_store_item.az_scetch_program.name, @az_store_item.az_scetch_program.url %></div>
+      <%= aligner_tag %>
+    </div>
+
+    <div class="store-item-language">
+      <%= image_tag(@az_store_item.az_language.lang_icon.url(:x32)) %>
+      <div class="store-item-language-descr">Язык технического задания: <%= @az_store_item.az_language.name.downcase %></div>
+      <%= aligner_tag %>
+    </div>
+
+    <%= aligner_tag %>
+
+    <div class="store-item-price">
+      <span class="store-item-price-value"><%= @az_store_item.price %></span>
+      <span class="store-item-price-currency">$</span>
+      <%= aligner_tag %>
+    </div>
+
+    <div class="store-item-buy">
+
+      <% if current_user %>
+        <% if current_user.az_companies.size == 1 %>
+          <% cmp = current_user.az_companies[0] %>
+          <% not_enough_money = cmp.get_balance < @az_store_item.price %>
+
+          <% if not_enough_money %>
+
+            <%#= link_to 'Недостаточно денег', make_payment_path(:company_id => cmp.id) %>
+            <%= submit_tag('Купить', :onclick => "show_not_enough_money_dialog(#{@az_store_item.id});") %>
+
+          <% else %>
+
+            <%= form_for(@az_store_item, :url => {:action => 'buy', :id => @az_store_item, :company_id => cmp}) do |f| %>
+              <%= f.submit 'Купить', :confirm => t(:az_label_are_you_sure) %>
+            <% end %>
+
+          <% end %>
+
+        <% else %>
+          <%= submit_tag('Купить', :onclick => "show_select_company_dialog(#{@az_store_item.id});") %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%= aligner_tag %>
+
+    <%= link_to 'В магазин', store_path %>
+  </div>

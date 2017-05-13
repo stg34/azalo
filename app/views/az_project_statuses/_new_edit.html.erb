@@ -1,0 +1,16 @@
+<p>
+  <%= f.label :name %><br />
+  <%= f.text_field :name %>
+</p>
+<p>
+  <%= f.label :description %><br />
+  <%= f.text_area :description %>
+</p>
+<p>
+  <%= f.label :state %><br />
+  <%= f.select(:state, AzProjectStatus::ProjectStatus_states) %>
+</p>
+<p>
+  <%= f.label :position %><br />
+  <%= f.text_field :position %>
+</p>

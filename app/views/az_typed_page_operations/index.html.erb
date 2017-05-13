@@ -1,0 +1,24 @@
+<h1>Listing az_typed_page_operations</h1>
+
+<table class="table">
+  <tr>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th>Az operation time</th>
+    <th>Az typed page</th>
+  </tr>
+
+<% @az_typed_page_operations.each do |az_typed_page_operation| %>
+  <tr>
+    <td><%=h az_typed_page_operation.get_owner_name %></td>
+    <td><%=h az_typed_page_operation.az_operation_time_id %></td>
+    <td><%=h az_typed_page_operation.az_typed_page_id %></td>
+    <td><%= link_to 'Show', az_typed_page_operation %></td>
+    <td><%= link_to 'Edit', edit_az_typed_page_operation_path(az_typed_page_operation) %></td>
+    <td><%= link_to 'Destroy', az_typed_page_operation, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_typed_page_operation', new_az_typed_page_operation_path %>

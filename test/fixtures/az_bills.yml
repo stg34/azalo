@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+#one:
+#  az_invoice_id: 1
+#  description: MyText
+#  date_from: 2012-02-04 12:26:27
+#  date_till: 2012-02-04 12:26:27
+#  fee: 9.99
+#
+#two:
+#  az_invoice_id: 2
+#  description: MyText
+#  date_from: 2012-02-04 12:26:27
+#  date_till: 2012-02-04 12:26:27
+#  fee: 9.99

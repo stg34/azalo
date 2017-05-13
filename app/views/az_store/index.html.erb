@@ -1,0 +1,18 @@
+<h1>Listing az_stores</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @az_stores.each do |az_store| %>
+  <tr>
+    <td><%= link_to 'Show', az_store %></td>
+    <td><%= link_to 'Edit', edit_az_store_path(az_store) %></td>
+    <td><%= link_to 'Destroy', az_store, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_store', new_az_store_path %>

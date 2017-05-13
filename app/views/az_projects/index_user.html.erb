@@ -1,0 +1,107 @@
+<% project_limit_exceed_message = t(:az_label_project_limit_exceed_message) %>
+
+<% is_admin = current_user.roles.include?(:admin) %>
+<% @my_companies.each do |company| %>
+  <% permitted_to_manage_projects = permitted_to?(:manage_projects) %>
+
+  <%= item_list_header(t(:az_label_project_list), company, @my_companies.size > 1) %>
+
+  <% if @projects[company].empty? %>
+  <h3>Нет проектов</h3>
+  Вы можете создать <%= link_to_if(permitted_to_manage_projects, 'новый', :controller=>'az_projects', :action => 'new', :owner_id => company.id) %>, 
+  поискать среди <%= link_to 'проектов пользователей', explore_path %> или помотреть в <%= link_to 'магазине', store_path %>
+  <br/><br/>
+  <% else %>
+
+    <table id="projects-list" class="table">
+      <tr>
+        <th>&nbsp;</th>
+        <th><%= t(:az_label_project_name) %></th>
+        <th><%= t(:az_label_specification) %></th>
+        <th><%= t(:az_label_project_status) %></th>
+        <th>Доступ</th>
+        <th><%= t(:az_label_project_created_at) %></th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <% if is_admin %>
+          <th>seed</th>
+          <th>&nbsp;</th>
+        <% end %>
+      </tr>
+
+    <% @projects[company].each do |project| %>
+      <% permitted_to_edit = permitted_to?(:edit, project) %>
+      <% can_be_project_access_changed = (project.public_access == false) || !company.private_project_quota_exceeded %>
+      <%# private_project_on_free_tariff = company.private_project_quota_exceeded && project.public_access == false %>
+      <% copy_enabled = true %>
+       <% warning = "Для бесплатного тарифа недоступны приватные проекты. Вы можете, либо изменить доступ к этому проекту на публичный, либо перейти на один из платных тарифов." %>
+      <tr class="project-state-<%= project.az_project_status.state %>">
+        <td><%= image_tag(project.favicon.url(:x16x16)) %></td>
+        <td>
+          <%# if private_project_on_free_tariff %>
+            <%#= link_to(h(project.name), az_project_path(project.id), :onclick => "show_text_dialog('#{warning}'); return false;") %>
+          <%# else %>
+            <%= link_to_if(permitted_to_edit, h(project.name), az_project_path(project.id)) %>
+          <%# end %>
+        </td>
+        <td>
+          <%# if private_project_on_free_tariff %>
+            <%#= link_to(t(:az_label_specification), {:controller=>'az_projects', :action => 'edit_tr', :id => project.id}, :onclick => "show_text_dialog('#{warning}'); return false;") %>
+          <%# else %>
+            <%= link_to_if(permitted_to_edit, t(:az_label_specification), :controller=>'az_projects', :action => 'edit_tr', :id => project.id) %>
+          <%# end %>
+          
+        </td>
+        <td>
+          <% stn = h(project.az_project_status.name) %>
+          <% title = "#{t(:az_label_project_status)}: #{stn}" %>
+          <%= link_to_if(permitted_to_manage_projects, stn, "#", :onclick => "show_project_status_dialog(#{project.id}); return false;", :title => title) %>
+        </td>
+        <td>
+          <%= project_access_icon(project) %>
+          <% if can_be_project_access_changed %>
+            <%= link_to_if(permitted_to_manage_projects, "Изменить", "#", :onclick => "show_project_access_dialog(#{project.id}); return false;") %>
+          <% else %>
+            <%= link_to_if(permitted_to_manage_projects, "Изменить", "#", :onclick => "show_project_access_dialog_warning(); return false;") %>
+          <% end %>
+        </td>
+        <td><%= l(project.created_at) %></td>
+        <td>
+          <%# if private_project_on_free_tariff %>
+            <%#= link_to_if(copy_enabled, t(:az_label_copy), {:controller=>'az_projects', :action => 'copy', :id => project.id, :owner_id => company.id}, :onclick => "show_text_dialog('#{warning}'); return false;") %>
+          <%# else %>
+            <%= link_to_if(copy_enabled, t(:az_label_copy), {:controller=>'az_projects', :action => 'copy', :id => project.id, :owner_id => company.id}, :confirm => t(:az_label_are_you_sure)) %>
+          <%# end %>
+        </td>
+        <td><%= link_to_if(permitted_to_manage_projects, t(:az_label_delete), az_project_path(project), :confirm => t(:az_label_are_you_sure_may_take_a_while), :method => :delete) %></td>
+        <td>
+          <%= link_to_if(permitted_to_manage_projects, img_go_up,   :controller=>'az_projects', :action => 'move_up',   :id => project.id) %>
+          <%= link_to_if(permitted_to_manage_projects, img_go_down, :controller=>'az_projects', :action => 'move_down', :id => project.id) %>
+        </td>
+        <% if is_admin %>
+          <td class="admin"><%= boolean_to_img(project.seed) %></td>
+          <td class="admin">
+            <% if project.seed %>
+              <%= link_to(t(:az_label_update_seed_to_all), :controller=>'az_services', :action => 'update_az_project_from_seed', :id => project.id) %>
+            <% else %>
+              &nbsp;
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+    </table>
+  <% end %>
+
+  <br/>
+  
+  <%= link_to_if(permitted_to_manage_projects, t(:az_label_new_website), :controller=>'az_projects', :action => 'new', :owner_id => company.id) %>
+  
+    
+<% end %>
+
+<br/>
+
+
+  

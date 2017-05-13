@@ -1,0 +1,21 @@
+<div class="uploader-content">
+  <p>Изображение (.jpg, .png, .gif. До 2 Mb):</p>
+
+  <% style_form = "" %>
+  <% style_message = "" %>
+  <% style_form = "display: none" if @image.errors.size > 0 %>
+  <% style_message = "display: none" if @image.errors.size <= 0 %>
+
+
+  <%= form_for(@image, :html => { :multipart => true }) do |f| %>
+    <div id="message-div" style="<%= style_message %>" >
+      <%= f.error_messages %>
+      <%= link_to "Повторить попытку", "#", :onclick => '$("message-div").hide(); $("form-div").show(); return false;', :style=>"font-size: 10px;" %>
+    </div>
+    <div id="form-div" style="<%= style_form %>">
+      <%= f.file_field :image %><br/>
+      <%= submit_and_disable_tag(f, 'Загрузить') %>
+      <%= f.hidden_field :az_design_id, :value => @image.az_design_id %>
+    </div>
+  <% end %>
+</div>

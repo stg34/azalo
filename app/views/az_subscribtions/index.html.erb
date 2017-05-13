@@ -1,0 +1,22 @@
+<h1>Listing az_subscribtions</h1>
+
+<table>
+  <tr>
+    <th>Az user</th>
+    <th>Az subscribtion category</th>
+  </tr>
+
+<% @az_subscribtions.each do |az_subscribtion| %>
+  <tr>
+    <td><%=h az_subscribtion.az_user_id %></td>
+    <td><%=h az_subscribtion.az_subscribtion_category_id %></td>
+    <td><%= link_to 'Show', az_subscribtion %></td>
+    <td><%= link_to 'Edit', edit_az_subscribtion_path(az_subscribtion) %></td>
+    <td><%= link_to 'Destroy', az_subscribtion, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_subscribtion', new_az_subscribtion_path %>

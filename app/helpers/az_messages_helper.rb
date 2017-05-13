@@ -1,0 +1,2 @@
+module AzMessagesHelper
+end

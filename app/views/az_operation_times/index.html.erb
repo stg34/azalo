@@ -1,0 +1,35 @@
+<h1>Список "время операции"</h1>
+
+
+<table class="table">
+  <tr>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th>Az base data type</th>
+    <% @az_operations.each do |az_operation| %>
+      <th><%=h az_operation.name %></th>
+    <% end %>
+  </tr>
+
+<% @simple_data_types.each do |sdt| %>
+  <tr>
+    <td>.</td>
+    <td><%=h sdt.name %>(<%= sdt.id %>)</td>
+    <% @az_operations.each do |az_operation| %>
+      <td>
+        <% t = 0 %>
+        <% t = sdt[az_operation].operation_time if sdt[az_operation] %>
+
+        <%= form_for(AzOperationTime.new) do |f| %>
+          <%= f.text_field 'operation_time', {:value => t, :size=>2, :class=>'ids_input'} %>
+          <%= f.hidden_field 'az_operation_id', {:value => az_operation.id, :size=>2, :class=>'ids_input'} %>
+          <%= f.hidden_field 'az_base_data_type_id', {:value => sdt.id, :size=>2, :class=>'ids_input'} %>
+          <%= f.submit 'Ok', {:style=>'font-size: 10px; margin:0; padding: 2px;'} %>
+        <% end %>
+
+      </td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Новое время для операции', new_az_operation_time_path %>

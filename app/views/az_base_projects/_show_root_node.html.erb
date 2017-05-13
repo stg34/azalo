@@ -1,0 +1,36 @@
+<table class="structure-table">
+  <tbody>
+    <% nodes.each do |node| -%>
+      <tr class="structure-row page-<%= node.main_page.id %>">
+        <td valign="middle">
+          <div class="page">
+            <table>
+              <tbody>
+                <tr>
+                  <td style="padding: 0; vertical-align: top;">
+                    <div class="page-up-down"></div>
+                  </td>
+                  <td style="padding: 0; vertical-align: top;">
+                    <%= render( :partial => '/az_pages/root_page_box', :locals => {:node => node, :project => @project, :path => node.get_path_string}) %>
+                  </td>
+                  <td style="padding: 0; vertical-align: top;">
+                    <div class="page-info" id="page-info-<%= node.main_page.id %>"></div>
+                    <div class="root-page-menu" >
+                      <a href="#" onclick="show_new_sub_page_dialog('<%= node.main_page.id %>'); return false;"><%= t(:az_label_new_page) %></a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </td>
+        <td>
+          <div class="sub-tree">
+            <%= render( :partial => '/az_base_projects/show_sub_nodes', :locals => {:nodes => node.get_children, :parent_links => [], :page_type => nil}) %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

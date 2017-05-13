@@ -1,0 +1,29 @@
+<%= crumbs(@az_struct_data_type.get_crumbs_to_parent) %>
+
+<h1>Редактирование структуры <q><%= h @az_struct_data_type.name %></q></h1>
+
+<%#= @az_struct_data_type.variables_of_this_type.size %>
+
+<%= form_for(@az_struct_data_type, :builder => AzFormBuilder) do |f| %>
+  <%#= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:form => f}) %>
+
+  <%#= link_to('Новая переменная', :controller => "az_variables", :action => "new", :az_struct_data_type_id=>@az_struct_data_type.id) %><br/>
+  <%= link_to('Новая переменная', "#", :onclick => "show_new_variable_dialog(#{@az_struct_data_type.id}); return false;") %><br/>
+
+  <p>
+    <%= f.submit t(:az_label_save) %>
+  </p>
+
+<% end %>
+
+<%= back_link_for_data_type(@az_struct_data_type) %>
+
+<% if @az_struct_data_type.az_base_project != nil %>
+  <%= form_for(@az_struct_data_type, :url => copy_struct_to_stock_path(:id => @az_struct_data_type.id)) do |f| %>
+    <p>
+      <%= f.submit('Копировать в кладовку', :style=>'width: 200px') %>
+    </p>
+  <% end %>
+<% end %>

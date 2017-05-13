@@ -1,0 +1,90 @@
+<script type="text/javascript">
+  var lines = [];
+  var ddx = 0;
+  var ddy = 0;
+
+  TooltipManager.init("tooltip", {url: "tooltip_ajax.html", options: {method: 'get'}}, {className: 'spread', width: '400', showEffect: Element.show, hideEffect: Element.hide});
+</script>
+
+<div id="holder" style="position: absolute;"></div>
+<div class="public">
+<h1><%= @project.name %></h1>
+
+<% def foo(pages) %>
+  <table class="structure-table">
+    <% pages.each do |page| -%>
+    
+    <tr>
+      <td valign="middle">
+         <div class="page">
+          <div class="page-image" id="page_<%= page.id %>">
+            <%= page_image_with_tooltip(page) %>
+          </div>
+          <div class="page-info">&nbsp;
+            <div class="name"><%=h page.name %></div>
+            <%= aligner_tag %>
+          </div>
+        </div>
+      </td>
+      <td>
+        <% if page.get_children.size > 0 -%>
+        <%= foo(page.get_children) %>
+        <% end -%>
+      </td>
+    </tr>
+    
+  <% end %>
+  </table>
+<% return %>
+<% end %>
+    
+<table id="structure-table">
+  <tr>
+    <td>
+      <% foo(@project.az_pages) %>
+    </td>
+  </tr>
+</table>
+
+</div>
+
+<%= aligner_tag %>
+<%= link_to t(:az_label_back), az_project_snippets_path %>
+
+<script type="text/javascript">
+
+    <% if @project.az_pages.size > 0 %>
+      <%= render :partial=> "az_pages/list_show_connectors", :locals => {:az_pages => @project.az_pages, :project_id => @project.id} %>
+    <% end %>
+
+</script>
+
+<script type="text/javascript">
+    window.onload = function () {
+        
+        var table = $("structure-table");
+        var r = Raphael(0, 0, table.getWidth()+table.cumulativeOffset()[1], table.getHeight()+table.cumulativeOffset()[1]),
+
+        discattr = {fill: "#fff", stroke: "none"};
+        
+        function curve(x, y, ax, ay, bx, by, zx, zy, color) {
+            var path = [["M", x, y], ["C", ax, ay, bx, by, zx, zy]],
+                curve = r.path(path).attr({stroke: color || Raphael.getColor(), "stroke-width": 2, "stroke-linecap": "round"}),
+                c = r.set();
+        }
+
+        var dx = 50
+        
+        for (var i =0; i < lines.length; i++){
+          x1 = lines[i][0]+3
+          y1 = lines[i][1]
+          x2 = lines[i][2]-3
+          y2 = lines[i][3]
+          curve(x1, y1, x1+dx, y1, x2-dx, y2, x2, y2, "rgb(255, 170, 85)");
+        }
+
+    };
+</script>
+
+
+	

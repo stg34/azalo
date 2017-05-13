@@ -1,0 +1,11 @@
+<div id="tr-status-edit-dialog">
+  <% remote_form_for(entity, :update => "tr-status-edit-dialog", :url => update_url) do |form| %>
+    <div  class="page-status">
+      <%= t(:az_label_status_in_spec) %>:<br/>
+      <%= form.select :status, statuses %>
+    </div>
+    <%= aligner_tag %>
+    <%= submit_and_disable_tag(form, t(:az_label_save)) %>
+    <%= form.submit t(:az_label_cancel), :onclick => 'Windows.closeAll(); return false;' %>
+  <% end %>
+</div>

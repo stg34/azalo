@@ -1,0 +1,26 @@
+<tr>
+    <td colspan="2" class="tr-edit-table-caption" id="ct-definitions">
+      <h2><%= t(:az_label_definitions) %></h2>
+    </td>
+  </tr>
+<tr>
+  <td>
+    <div id="definitions">
+      <%= render :partial => '/az_base_projects/tr_edit/tr_block_definitions', :locals => {:project => @project,
+                                                                                         :definitions => @definitions,
+                                                                                         :permitted_to_edit => permitted_to_edit,
+                                                                                         :permitted_to_show => permitted_to_show} %>
+    </div>
+    <% if permitted_to_edit %>
+      <div class="tr-edit-new-definition-holder">
+        <%= link_to(t(:az_label_create), "#", :onclick => "show_tr_new_definition_dialog(#{@project.owner_id}, #{@project.id}); return false;" ) %>
+      </div>
+    <% end %>
+  </td>
+  <td  style="vertical-align: top; padding: 5px">
+    <% definitions = AzDefinition.get_by_company(@project.owner) %>
+    <%= render :partial => '/az_base_projects/tr_edit/add_definitions', :locals => {:definitions => definitions, 
+                                                                                    :permitted_to_edit => permitted_to_edit,
+                                                                                    :permitted_to_show => permitted_to_show} %>
+  </td>
+</tr>

@@ -1,0 +1,16 @@
+<div class="base-project-edit-commons-page">
+  <h1><%= t(:az_label_project_editing) %> <q><%= h(@project.name) %></q></h1>
+
+  <%= crumbs(@project.get_crumbs_from_project_edit) %>
+  
+  <fieldset class="common-block">
+      <legend><%= t(:az_label_commons) %></legend>
+      <div id='commons_id'><div>
+        <%= render( :partial => '/az_base_projects/new_edit', :locals => {:button_caption => t(:az_label_save), :project => @project}) %>
+      </div></div>
+  </fieldset>
+
+  <%= aligner_tag %>
+
+  <%= link_to t(:az_label_back), @project %>
+</div>

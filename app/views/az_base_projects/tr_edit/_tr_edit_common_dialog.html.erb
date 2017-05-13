@@ -1,0 +1,24 @@
+<div class="tr-common-edit-dialog" id="tr-common-edit-dialog-content">
+  <% remote_form_for(common, :url => url,
+                             :update => "tr-common-edit-dialog-container",
+                             :builder => AzDialogFormBuilder) do |form| %>
+      <p>
+        <%= t(:az_label_name) %>
+        <%= form.text_field :name %>
+      </p>
+
+      <p>
+        <%= t(:az_label_description) %>&nbsp;&nbsp;&nbsp;<%= wiki_syntax_help %>
+        <%= form.text_area :description, :class=>'description' %>
+      </p>
+      <%= aligner_tag %>
+      <br/>
+      <%= aligner_tag %>
+      <%= form.hidden_field :az_base_project_id %>
+    <%= submit_and_disable_tag(form, t(:az_label_save), :style=>'float: left') %>
+    <%= form.submit t(:az_label_cancel), :style=>'float: left', :onclick => 'Windows.closeAll(); return false;' %>
+
+  <% end %>
+
+  <%= aligner_tag %>
+</div>

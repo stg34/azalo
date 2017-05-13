@@ -1,0 +1,49 @@
+<div id="tooltip-content-data-types-1" style="display:none;">
+  <%= t(:az_tooltip_component) %>
+</div>
+
+<div style="text-align: center;"><%= t_b %><%= t(:az_label_components_drag_n_drop) %>.<%= t_e("tooltip-data-types-1", "tooltip-content-data-types-1") %>  </div>
+
+<div id="connected-componets-holder">
+  <table class="connected-componet-holder">
+    <% @block_list.each_with_index do |block, j| %>
+    <tr>
+      <th id="component-control-<%= block.id %>" class="component-controls" onclick="expand_component_roots(this);">
+        <%= image_tag('collapse-component-roots.png', :alt => '', :title => '', :class=>"collapse-controls", :style => "display: none;") %>
+        <%= image_tag('expand-component-roots.png', :alt => '', :title => '', :class => "expand-controls") %>
+      </th>
+      <th>
+        <%= link_to(block.name, block, :style => 'padding-left: 4px;') %>
+      </th>
+      <th>
+        <%= form_for(block, :url => "/az_projects/remove_component/#{@project.id}/#{block.id}") do |f| %>
+          <%= f.submit "X", :class =>"remove-component", :confirm => t(:az_label_are_you_sure_may_take_a_while) %>
+        <% end %>
+      </th>
+    </tr>
+    <tr class="component-heads" style="display: none;">
+      <td colspan="3">
+        <% roots = block.get_root_pages -%>
+        <% roots.each_with_index do |root, i| %>
+          <div  class="<%= 'last' if i == roots.size - 1 && j != @block_list.size - 1 %>">
+            <div class="component-root-anchor component-root-<%= root.id %>">
+              <% title = t(:az_title_add_component_to_page) %>
+              <%= image_tag('anchors.png', :alt => title, :title => title, :class => "component-head-anchor component-head-#{root.id}") %>
+              <% root_classes = root.embedded == true ? "embedded-root-component " : "regular-root-component "%>
+              <% root_classes += root.page_type == AzPage::Page_admin ? "admin-root-component " : ""%>
+              <div class="<%= root_classes %>"><%= root.name %></div>
+            </div>
+            <%= aligner_tag %>
+          </div>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+
+<%= aligner_tag %>
+<%= link_to t(:az_label_add_component), '#', :onclick => "show_components_dialog(#{@project.id}); return false;", :style => 'padding-left: 10px;' %>
+<br/><br/>
+<%= link_to t(:az_label_new_component), {:controller=>'az_project_blocks', :action => 'new', :owner_id => @project.owner.id}, :style => 'padding-left: 10px;' %>
+<%= aligner_tag %>

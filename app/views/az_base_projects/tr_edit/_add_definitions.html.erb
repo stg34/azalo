@@ -1,0 +1,13 @@
+<% if permitted_to_edit %>
+  <% definitions.each do |d| %>
+    <table style="margin-bottom: 3px"><tr>
+      <td>
+        <% az_remote_form_for(@project, :url => add_definition_a_path(:id => @project.id, :definition_id => d.id),
+          :complete => "update_definitions_in_tr()") do %>
+          <%= submit_tag '&#8592;', {:class=>'add-common', :title => t(:az_label_add_to_specification)} %>
+        <% end %>
+      </td>
+      <td style="padding-left: 5px"><span><%= d.name %></span><br/></td>
+    </tr></table>
+  <% end %>
+<% end %>

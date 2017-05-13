@@ -1,0 +1,13 @@
+<p>
+  <b>Az user:</b>
+  <%=h @az_subscribtion.az_user_id %>
+</p>
+
+<p>
+  <b>Az subscribtion category:</b>
+  <%=h @az_subscribtion.az_subscribtion_category_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_az_subscribtion_path(@az_subscribtion) %> |
+<%= link_to 'Back', az_subscribtions_path %>

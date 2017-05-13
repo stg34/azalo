@@ -1,0 +1,3 @@
+InvitationMailer#invitation_to_company
+
+Find me in app/views/invitation_mailer/invitation_to_company.erb

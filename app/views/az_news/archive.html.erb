@@ -1,0 +1,52 @@
+<div class="all-news-page">
+    <div class="main-content">      
+      <div class="main-top-block">
+        <h1>Архив новостей</h1>
+        <div class="text"></div>
+        <%= aligner_tag %>
+      </div>
+      <%= aligner_tag %>
+      <div class="main-middle-block">
+        <div class="main-middle-block-content">
+          <div class="months">
+            <% years = @news_by_month.collect{|k, v| k } %>
+            <% years.reverse! %>
+            <% years.each do |y| %>
+              <div class="year"><%= y %></div>
+              <% @news_by_month[y].each do |m| %>
+                <div class="month"><%= link_to_unless_current l(Time.mktime(y, m), :format => "%B"), "/news_archive/#{y}/#{m}" %></div>
+              <% end %>
+            <% end %>
+              
+          </div>
+
+          <div class="news">
+            <% i = 0 %>
+            <% @last_y_m.sort{|a, b| b.created_at <=> a.created_at}.each do |news| %>
+              <div class="piece-of-news <%= "bordered" if i < @last_y_m.size - 1 %>">
+                <h2><%= news.title %></h2>
+                <div class="announce">
+                  <a href="/news/<%= news.id %>"><%= news.announce %></a>
+                </div>
+                <div class="date">
+                  <%= news.created_at %>
+                </div>
+              </div>
+              <% i += 1 %>
+            <% end %>
+            <div style="float: left; height: 160px;"></div>
+            <%= aligner_tag %>
+          </div>
+          <%= aligner_tag %>
+        </div>
+      </div>
+      <div class="main-middle-block-bottom-border"></div>
+      
+      <%= render( :partial => '/layouts/carousel') %>
+
+      <%= aligner_tag %>
+
+    </div>
+    <%= aligner_tag %>
+  
+</div>

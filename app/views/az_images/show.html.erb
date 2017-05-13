@@ -1,0 +1,6 @@
+<p>
+Изображение <b><%= @image.image_file_name %></b> <%= number_to_human_size(@image.image_file_size) %>
+<br/>
+<%= (link_to t(:az_label_delete), destroy_image_by_rnd_path(-@image.az_design_id), :confirm => t(:az_label_are_you_sure), :method => :delete) %>
+</p>
+

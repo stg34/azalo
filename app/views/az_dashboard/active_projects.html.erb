@@ -1,0 +1,48 @@
+<h1>Активные проекты</h1>
+<h2>За последние 24 часа</h2>
+
+<table class="table">
+  <tr>
+    <th><%= t(:az_label_project) %></th>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th>count</th>
+  </tr>
+
+<% @az_activities_last_day.each do |az_activity| %>
+  <tr>
+    <td>
+      <% if az_activity.az_project %>
+        <%= h az_activity.az_project.name %>
+      <% end %>
+    </td>
+    <td><%= h az_activity.az_company.name %></td>
+    <td><%= h az_activity.cnt %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<h2>За последние 7 дней</h2>
+
+<table class="table">
+  <tr>
+    <th><%= t(:az_label_project) %></th>
+    <th><%= t(:az_label_project_owner) %></th>
+    <th>count</th>
+  </tr>
+
+<% @az_activities_last_week.each do |az_activity| %>
+  <tr>
+    <td>
+      <% if az_activity.az_project %>
+        <%= h az_activity.az_project.name %>
+      <% end %>
+    </td>
+    <td><%= h az_activity.az_company.name %></td>
+    <td><%= h az_activity.cnt %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />

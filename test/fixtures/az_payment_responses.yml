@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+#one:
+#  az_payment_id:
+#  status: MyString
+#  response: MyText
+#  transaction_id: MyString
+#
+#two:
+#  az_payment_id:
+#  status: MyString
+#  response: MyText
+#  transaction_id: MyString

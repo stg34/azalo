@@ -1,0 +1,76 @@
+<table class="table" id="system-settings-table">
+  <tr>
+    <td>
+      <%= link_to 'Коллекции', az_collection_templates_path %><br/>
+      <hr/>
+      <%= link_to 'Базовые типы', az_base_data_types_path %><br/>
+      <%= link_to 'Простые типы', az_simple_data_types_path %><br/>
+      <%= link_to 'Инстанц. коллекции', az_collection_data_types_path %><br/>
+      <%= link_to 'Структуры', az_struct_data_types_path %><br/>
+      <hr/>
+      <%= link_to 'Переменные', az_variables_path %><br/>
+      <%= link_to 'Операции', az_operations_path %><br/>
+      <%= link_to 'Время операций', az_operation_times_path %><br/>
+      <hr/>
+      <%= link_to t(:az_label_definitions), az_definitions_path %><br/>
+      <hr/>
+      <%= link_to 'Гостевые ссылки', az_guest_links_path %><br/>
+      <hr/>
+      <%= link_to 'Новости', :controller => 'az_news', :action => 'index' %><br/>
+      <%= link_to 'Статьи', :controller => 'az_articles', :action => 'index' %><br/>
+    </td>
+    <td>
+      
+      <%= link_to 'Страницы', az_pages_path %><br/>
+      <%= link_to 'Типы страниц (структуры)', az_page_types_path %><br/>
+      <%= link_to 'Тип. страницы', az_typed_pages_path %><br/>
+      <%= link_to 'Операции тип. страниц', az_typed_page_operations_path %><br/>
+      <%= link_to 'Операции тип. страниц 2 (разрешенные операции)', az_allowed_operations_path %><br/>
+
+      <%= link_to 'az_page_az_page_type', az_page_az_page_types_path %><br/>
+      <%= link_to 'az_page_az_task', az_page_az_tasks_path %><br/>
+      <hr/>
+      <%= link_to 'Дизайны', az_designs_path %><br/>
+      <%= link_to 'Изображения', az_images_path %><br/>
+      <hr/>
+      <%= link_to 'Контакты', az_contacts_path %><br/>
+      <%= link_to 'Пользователи', az_users_path %><br/>
+      <%= link_to 'Компании', az_companies_path %><br/>
+      <%= link_to 'Работники', az_employees_path %><br/>
+      <%= link_to 'Участники', az_participants_path %><br/>
+      
+      <hr/>
+      <%= link_to 'Компоненты', az_project_blocks_path %><br/>
+      <%= link_to 'Проекты', az_projects_path %><br/>
+      <%= link_to 'Активные проекты', :controller => 'az_activities', :action => 'active_projects' %><br/>
+      <%= link_to 'Магазин', az_store_items_path %><br/>
+      <%= link_to 'Покупки', az_purchases_path %><br/>
+    </td>
+    <td>
+        <b><%= link_to 'Всё общее', '/az_commons' %></b><br/>
+        <%= link_to 'Общие положения', '/az_commons_commons' %><br/>
+        <%= link_to 'Эксплуатационные назначения', '/az_commons_purpose_exploitations' %><br/>
+        <%= link_to 'Функциональные назначения', '/az_commons_purpose_functionals' %><br/>
+        <%= link_to 'Требования к хостингу', '/az_commons_requirements_hosting' %><br/>
+        <%= link_to 'Требования к надежности', '/az_commons_requirements_reliability' %><br/>
+        <%= link_to 'Условия сдачи и приемки работы', '/az_commons_acceptance_conditions' %><br/>
+        <%= link_to 'Наполнение сайта', '/az_commons_content_creation' %><br/>
+        <hr/>
+        <%= link_to 'Сообщения', '/az_messages', :action=>'index' %><br/>
+    </td>
+    <td>
+        <%= link_to 'Seeds', :controller=>'az_settings', :action=>'seeds' %><br/>
+        <hr/>
+        <%= link_to 'Тарифы', :controller=>'az_tariffs', :action=>'index' %><br/>
+        <%= link_to 'Тестовые периоды', az_test_periods_path %><br/>
+        <%= link_to 'Предупреждения о долге', az_warning_periods_path %><br/>
+        <%= link_to 'Платежи', :controller=>'az_balance_transactions', :action=>'index' %><br/>
+        <hr/>
+        <%= link_to 'Языки', :controller=>'az_languages', :action=>'index' %><br/>
+        <%= link_to 'Скетч-программы', :controller=>'az_scetch_programs', :action=>'index' %><br/>
+        <%= link_to 'Статусы', az_project_statuses_path %><br/>
+    </td>
+  </tr>
+</table>
+
+<%= link_to 'Конфигурация', :controller=>'az_settings', :action=>'configuration' %><br/>

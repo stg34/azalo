@@ -1,0 +1,27 @@
+<h1>Тип страницы <q><%=h @az_page_type.name %></q></h1>
+
+<table class="table">
+  <tr>
+    <th>
+      Атрибут
+    </th>
+    <th>
+      Тип
+    </th>
+  </tr>
+<% @az_page_type.az_attributes.each do |attribute| -%>
+  <tr>
+    <td>
+      <%= link_to attribute.name,  edit_az_attribute_path(attribute)%>
+    </td>
+    <td>
+      <%= attribute.az_data_type.name if attribute.az_data_type%>
+    </td>
+  </tr>
+<% end -%>
+</table>
+
+<%= link_to('Новый атрибут', :controller => "az_attributes", :action => "new", :az_page_type_id=>@az_page_type.id) %><br/><br/><br/>
+
+<%= link_to t(:az_label_edit), edit_az_page_type_path(@az_page_type) %> |
+<%= link_to t(:az_label_back), az_page_types_path %>

@@ -1,0 +1,39 @@
+<h1>Тарифы</h1>
+
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th><%= t(:az_label_name) %></th>
+    <th>Стоимость</th>
+    <th>Акт. пр.</th>
+    <th>Приатных. пр.</th>
+    <th>Место на диске</th>
+    <th>Сотрудников</th>
+    <th>Тип</th>
+    <th>Порядок</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </tr>
+
+<% @az_tariffs.each do |tariff| %>
+  <tr>
+    <td><%=h tariff.id %></td>
+    <td><%=h tariff.name %></td>
+    <td><%=h tariff.price %></td>
+    <td><%=h tariff.quota_active_projects %></td>
+    <td><%=h tariff.quota_private_projects %></td>
+    <td><%= number_to_human_size(tariff.quota_disk) %></td>
+    <td><%= tariff.quota_employees %></td>
+    <td><%= AzTariff.tariff_type_name_by_id(tariff.tariff_type) %></td>
+    <td><%= tariff.position %></td>
+    <td><%= link_to t(:az_label_show), tariff %></td>
+    <td><%= link_to 'Изменить', edit_az_tariff_path(tariff) %></td>
+    <td><%= link_to t(:az_label_delete), tariff, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Новый тариф', new_az_tariff_path %>

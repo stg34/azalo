@@ -1,0 +1,41 @@
+<h1>Список дизайнов</h1>
+
+<div class="digg_pagination">
+  <%= will_paginate @designs %>
+</div>
+
+<table class="table">
+  <tr>
+    <th><%= t(:az_label_date) %></th>
+    <th><%= t(:az_label_project) %></th>
+    <th>ID</th>
+    
+  </tr>
+
+<% @designs.each do |design| %>
+  <tr>
+    <td><%= h design.created_at %></td>
+    <td>
+      <% design.az_images.reverse.each do |image| %>
+        <% url_small = image.image.url(:small) %>
+        <% url_big = image.image.url(:big) %>
+        <% img = image_tag(url_small) %>
+        <%= link_to(img, url_big, :rel => "lightbox[#{design.id}]") %>
+      <% end %>
+    </td>
+    
+    <td>
+      <% if design.az_page %>
+        <% prj = design.az_page.get_project_over_block %>
+        <%= link_to(h(prj.name), az_project_path(prj.id)) %>
+      <% end %>
+    </td>
+    <td><%#= link_to 'Show', image %></td>
+  </tr>
+<% end %>
+</table>
+
+<div class="digg_pagination">
+  <%= will_paginate @designs %>
+</div>
+

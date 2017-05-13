@@ -1,0 +1,6 @@
+<p>
+Исходник <b><%= @source.source_file_name %></b> <%= number_to_human_size(@source.source_file_size) %>
+<br/>
+<%= (link_to t(:az_label_delete), destroy_source_by_rnd_path(-@source.az_design_id), :confirm => t(:az_label_are_you_sure), :method => :delete) %>
+</p>
+

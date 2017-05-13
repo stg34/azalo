@@ -1,0 +1,17 @@
+<h1>Новая гостевая ссылка для проекта "<%= @az_base_project.name %>"</h1>
+
+<%= form_for(@az_guest_link) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:form => f}) %>
+
+  <p>
+    Ссылка перестанет действовать через указанный срок
+  </p>
+
+  <p>
+    <%= submit_and_disable_tag(f, t(:az_label_save)) %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_back), :controller => 'az_guest_links', :action => 'index_project', :id=>@az_base_project.id %>

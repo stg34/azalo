@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+#one:
+#  hash_str: MyString
+#  az_base_project_id: 1
+#  expired_at: 2010-12-10 20:10:40
+#
+#two:
+#  hash_str: MyString
+#  az_base_project_id: 1
+#  expired_at: 2010-12-10 20:10:40

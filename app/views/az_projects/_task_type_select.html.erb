@@ -1,0 +1,19 @@
+<div id="task-type-select-container">
+  <div id="task-type-select-content">
+    <% remote_form_for(@project, :url => { :controller => 'az_projects', :action => 'set_show_task_types', :id => @project.id},
+                         :update => "task-type-select-container") do |project_form| %>
+
+      <fieldset class="participatnts-block">
+        <legend><%= t(:az_label_task_filter) %></legend>
+        <h1><%= t(:az_label_roles) %></h1>
+        <% @roles.each do |role| %>
+          <%= check_box_tag("show_task[#{role.id}]", role.id, @selected_role_ids.include?(role.id))%>
+          <%= role.name %><br/>
+        <% end %>
+      </fieldset>
+
+      <%= submit_and_disable_tag(project_form, t(:az_label_set_task_filter)) %>
+      <%= project_form.submit(t(:az_label_cancel), :onclick => 'Windows.closeAll(); return false;')%>
+    <% end %>
+  </div>
+</div>

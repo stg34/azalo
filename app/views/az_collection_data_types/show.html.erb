@@ -1,0 +1,19 @@
+<%= crumbs(@az_collection_data_type.get_crumbs_to_parent) %>
+
+<p>
+  <b><%= t(:az_label_name) %>:</b>
+  <%=h @az_collection_data_type.name %>
+</p>
+
+<p>
+  <b>Тип:</b>
+  <%=h @az_collection_data_type.az_base_data_type.name %>
+</p>
+
+<p>
+  <b>Коллекция:</b>
+  <%=h @az_collection_data_type.az_collection_template.name %>
+</p>
+
+
+<%= link_to t(:az_label_edit), edit_az_collection_data_type_path(@az_collection_data_type) %>

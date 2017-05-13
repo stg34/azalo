@@ -1,0 +1,82 @@
+<%= height = Paperclip::Geometry.parse(page.get_main_design.get_head_az_image.image.options.styles[:medium].geometry).height %>
+<%= width = Paperclip::Geometry.parse(page.get_main_design.get_head_az_image.image.options.styles[:medium].geometry).width %>
+<% #height = Paperclip::Geometry.parse(page.get_main_design.get_head_az_image.image.options.styles[:medium]).height -%>
+<% #width = Paperclip::Geometry.parse(page.get_main_design.get_head_az_image.image.options.styles[:medium]).width -%>
+
+<div class="designs-dialog">
+  <h3 id="design_dialog_design_description"></h3>
+  <div style="float: left; width: <%= width-%>px; height: <%=height-%>px" id="design_dialog_medium_image">
+  </div>
+
+  <% add_design_link = link_to_if(permitted_to?(:edit, page), t(:az_label_add_design), "#", :onclick => "show_new_design_dialog('#{page.id}'); return false;") %>
+
+  <% all_designs = page.get_all_designs  %>
+  <% all_designs_count = page.get_all_designs_count %>
+
+  <% if all_designs_count > 1 %>
+    <div style="float: left">
+      <div id="vertical_carousel" class="vertical_carousel">
+        <div class="previous_button"></div>
+        <div class="container">
+          <ul>
+            <% all_designs.each do |design| -%>
+              <li id="diz-<%= design.id %>"><%= image_tag(design.get_head_az_image.image.url(:tiny)) -%></li>
+            <% end -%>
+          </ul>
+        </div>
+        <div class="next_button"></div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      new UI.Carousel("vertical_carousel", {direction: "vertical", scrollInc: 2});
+    </script>
+  <% end %>
+
+  <% def hidden_design(design, design_description, image, page) %>
+    <% design_id = design == nil ? 0 : design.id %>
+    <div style="display: none" id="hidden-diz-image-<%= design_id %>">
+      <%= link_to image_tag(image.url(:medium)), image.url -%>
+    </div>
+    <div style="display: none" id="hidden-diz-description-<%= design_id %>">
+      <%= design_description %>
+    </div>
+
+    <div style="display: none" id="hidden-diz-update-link-<%= design_id %>">
+      <% if design_id != nil && design_id != 0 %>
+        <%= link_to_if(permitted_to?(:edit, page), t(:az_label_update_design), "#", :onclick => "show_update_design_dialog('#{design_id}'); return false;") %><br/>
+        <% if permitted_to?(:edit, page) %>
+          <%= link_to(t(:az_label_delete), '#', :onclick => "if(!confirm('#{t(:az_label_are_you_sure)}')) return false; destroy_design(#{design_id}, #{page.id}); Windows.closeAll(); return false;") %>
+        <% else %>
+          <%= t(:az_label_delete) %>
+        <% end %>
+      <% end %>
+    </div>
+    <% return %>
+  <% end %>
+
+  <% all_designs.each do |design| -%>
+    <% hidden_design(design, design.description + " (#{page.name})", design.get_head_az_image.image, page) %>
+  <% end %>
+  <% hidden_design(nil, "#{t(:az_label_design_is_not_added)} (#{page.name})", page.get_main_design.get_head_az_image.image, page) %>
+
+  <%= aligner_tag %>
+
+  <div id="add-design-link-container"><%= add_design_link %></div>
+  <div id="update-remove-design-link-container"></div>
+
+  <script type="text/javascript">
+    <% if all_designs_count > 1 %>
+      <% all_designs.each do |design| %>
+        $("diz-<%= design.id %>").observe('click', update_image_in_designs_dialog_by_event);
+      <% end %>
+    <% end %>
+    <% if all_designs_count > 0 %>
+      update_image_in_designs_dialog_by_id("<%= page.get_all_designs[0].id %>");
+    <% else %>
+      update_image_in_designs_dialog_by_id("0");
+    <% end %>
+  </script>
+</div>
+
+<%= aligner_tag %>
+<%= submit_tag t(:az_label_close), :style=>'float: left', :onclick => 'Windows.closeAll(); return false;' %>

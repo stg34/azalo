@@ -1,0 +1,2 @@
+module AzSettingsHelper
+end

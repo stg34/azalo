@@ -1,0 +1,22 @@
+<p>
+  Название <%= required_field %><br />
+  <%= form.text_field :name %>
+</p>
+<p>
+  Текст определения <%= required_field %>&nbsp;&nbsp;&nbsp;<%= wiki_syntax_help %><br />
+  <%= form.text_area :definition %>
+</p>
+
+<!--p>
+  Статус<br />
+  <%#= form.select :status, @statuses %>
+</p-->
+
+<% if current_user.roles.include?(:admin) %>
+  <%= form.label :seed %><br />
+  <%= form.check_box :seed %>
+<% end %>
+
+<%= form.hidden_field :az_user_id %>
+<%= form.hidden_field :az_base_project_id %>
+

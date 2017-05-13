@@ -1,0 +1,39 @@
+<div class="feedback-page">
+    <div class="main-content">
+      <div class="main-top-block">
+
+        <h1>Обратная связь</h1>
+
+        <span class="contact-label">Вы можете написать в поддержку:</span> <span class="contact-skype">support@azalo.net</span><br/>
+        <span class="contact-label">Или оставить сообщение с помощью формы ниже:</span><br/>
+
+        <%= form_for(@az_message, :builder => AzFormBuilder) do |f| %>
+          <%#= f.error_messages %>
+
+          <%= f.hidden_field :message_type, :value => 0 %>
+        
+          <p>
+            Ваш email<br />
+            <%= f.text_field :email %>
+          </p>
+          <p>
+            Тема сообщения<br />
+            <%= f.text_field :subject %>
+          </p>
+          <p>
+            Сообщение<br />
+            <%= f.text_area :message %>
+          </p>
+
+          <p>
+            Все поля обязательны для заполнения
+          </p>
+
+          <p>
+            <%= f.submit 'Отправить' %>
+          </p>
+        <% end %>
+
+    </div>
+  </div>
+</div>

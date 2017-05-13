@@ -1,0 +1,31 @@
+<h1>New az_company</h1>
+
+<%= form_for(@az_company) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :ceo_id %> (id)<br />
+    <%= f.text_field :ceo_id %>
+  </p>
+
+  <p>
+    <%= f.label :wo_ceo_co_create, 'Создать без CEO' %><br />
+    <%= f.check_box :wo_ceo_co_create %>
+  </p>
+
+  <p>
+    <%= f.label :create_default_content_co_create, 'Создать дефолтный контент' %><br />
+    <%= f.check_box :create_default_content_co_create %>
+  </p>
+
+
+  <p>
+    <%= f.submit t(:az_label_create) %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', az_companies_path %>

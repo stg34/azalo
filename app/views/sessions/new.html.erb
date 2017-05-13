@@ -1,0 +1,25 @@
+<div class="login-page">
+  <div class="login-block">
+    <h2>Вход</h2>
+
+    <%= form_tag session_path do -%>
+    <p>Логин<br />
+    <%= text_field_tag 'login', @login %></p>
+
+    <p>Пароль<br/>
+    <%= password_field_tag 'password', nil %></p>
+    
+    <!-- Uncomment this if you want this functionality
+    <p><%#= label_tag 'remember_me', 'Remember me' %>
+    <%#= check_box_tag 'remember_me', '1', @remember_me %></p>
+    -->
+
+    <p><%= submit_tag 'Войти'%></p>
+    <% end -%>
+  </div>
+
+  <%= link_to 'Восстановление пароля', {:controller => 'az_users', :action => 'recover_password'}, :class => 'recover-password-link' %>
+
+  
+</div>
+

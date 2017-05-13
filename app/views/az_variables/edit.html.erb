@@ -1,0 +1,27 @@
+<%= crumbs(@az_variable.get_crumbs_to_parent) %>
+
+<div id="edit-variable">
+  <h1>Редактирование переменной
+    <%  if @az_variable.az_struct_data_type %>
+    из структуры <q><%=@az_variable.az_struct_data_type.name%></q>
+    <% end %>
+  </h1>
+
+  <%= form_for(@az_variable) do |f| %>
+    <%= f.error_messages %>
+
+    <%= render( :partial => 'new_edit', :locals => {:form => f}) %>
+
+    <p>
+      <%= f.submit t(:az_label_save) %>
+    </p>
+  <% end %>
+
+  <div id="variable-validators-holder">
+    <%= render( :partial => 'validators', :locals => {:variable => @az_variable}) %>
+  </div>
+  
+  <%= aligner_tag %>
+
+  <%= link_to t(:az_label_back), :controller => 'az_struct_data_types', :action => 'edit', :id => @az_variable.az_struct_data_type.id %>
+</div>

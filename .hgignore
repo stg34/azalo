@@ -1,0 +1,8 @@
+# use glob syntax.
+syntax: glob
+.idea/*
+tmp/*
+log/*
+public/system/*
+public/system.bak/*
+public/images/captchas/*

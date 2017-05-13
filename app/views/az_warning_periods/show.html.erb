@@ -1,0 +1,23 @@
+<p>
+  <b>Az company:</b>
+  <%=h @az_warning_period.az_company_id %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%=h @az_warning_period.type %>
+</p>
+
+<p>
+  <b>Ends at:</b>
+  <%=h @az_warning_period.ends_at %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%=h @az_warning_period.state %>
+</p>
+
+
+<%= link_to 'Edit', edit_az_warning_period_path(@az_warning_period) %> |
+<%= link_to 'Back', az_warning_periods_path %>

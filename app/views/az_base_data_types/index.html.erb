@@ -1,0 +1,29 @@
+<h1>Список базовах типов данных</h1>
+
+<table class="table">
+  <tr>
+    <th>Owner</th>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Az base data type</th>
+    <th>.</th>
+    <th>.</th>
+    <th>.</th>
+  </tr>
+
+<% @az_base_data_types.each do |az_base_data_type| %>
+  <tr>
+    <td><%=h az_base_data_type.get_owner_name %></td>
+    <td><%=h az_base_data_type.name %></td>
+    <td><%=h az_base_data_type.type %></td>
+    <td><%=h az_base_data_type.az_base_data_type_id %></td>
+    <td><%= link_to 'Show', az_base_data_type %></td>
+    <td><%= link_to 'Edit', edit_az_base_data_type_path(az_base_data_type) %></td>
+    <td><%= link_to 'Destroy', az_base_data_type, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_base_data_type', new_az_base_data_type_path %>

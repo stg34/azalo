@@ -1,0 +1,62 @@
+<% if @project.instance_of?(AzProject) -%>
+  <% common_classes_1 = [AzCommonsCommon,
+                         AzCommonsPurposeExploitation,
+                         AzCommonsPurposeFunctional] -%>
+  <% common_classes_2 = [AzCommonsFunctionality] -%>
+  <% common_classes_3 = [AzCommonsContentCreation,
+                         AzCommonsRequirementsHosting,
+                         AzCommonsRequirementsReliability,
+                         AzCommonsAcceptanceCondition] -%>
+<% else -%>
+  <% common_classes_1 = [] -%>
+  <% common_classes_2 = [AzCommonsFunctionality] -%>
+  <% common_classes_3 = [AzCommonsRequirementsHosting] -%>
+<% end -%>
+
+<% permitted_to_edit = false -%>
+<% permitted_to_show = false -%>
+
+<% def show_commons(project_commons, commons, common_class_name, permitted_to_edit, permitted_to_show) -%>
+  
+    <%= render :partial => '/az_base_projects/tr_edit/tr_block_common_md', :locals => {:project => @project,
+                                                                                  :commons => project_commons,
+                                                                                  :common_class_name => common_class_name,
+                                                                                  :permitted_to_edit => permitted_to_edit,
+                                                                                  :permitted_to_show => permitted_to_show} %>
+<% end -%>
+h1. <%= t(:az_label_spec_for) %> <%= @project.class.get_model_name.downcase %> <%= h(@project.name) %>
+  
+<%= time.strftime('%Y.%m.%d %H.%M.%S') %>
+    
+    <% common_classes_1.each do |common_class| -%>
+      <% commons = @project.get_all_commons(common_class.to_s) -%>
+h2. <%= common_class.get_label %>
+
+      <% show_commons(commons, common_class.get_by_company(@project.owner), common_class.to_s.underscore.pluralize, permitted_to_edit, permitted_to_show) %>
+    <% end -%>
+    <%#= render :partial => '/az_base_projects/tr_edit/pure_definitions', :locals => {:definitions => @definitions} %>
+h2. <%= t(:az_label_data_types_and_validators) %>
+    <%= render :partial => '/az_base_projects/tr_edit/data_types_md', :locals => {:project => @project,
+                                                                               :data_types => @data_types,
+                                                                               :validators => @validators,
+                                                                               :permitted_to_edit => permitted_to_edit,
+                                                                               :permitted_to_show => permitted_to_show} %>
+
+    <% common_classes_2.each do |common_class| -%>
+      <% commons = @project.get_all_commons(common_class.to_s) -%>
+h2. <%= common_class.get_label %>
+      <% show_commons(commons, common_class.get_by_company(@project.owner), common_class.to_s.underscore.pluralize, permitted_to_edit, permitted_to_show) %>
+    <% end -%>
+
+h2. <%= t(:az_label_pages) %>
+    <%#= render :partial => '/az_base_projects/tr_edit/pure_pages', :locals => {:project => @project, :page_list => @public_pages} %>
+
+h2. <%= t(:az_label_admin_pages) %>
+    <%#= render :partial => '/az_base_projects/tr_edit/pure_pages', :locals => {:project => @project, :page_list => @admin_pages} %>
+    
+    <% common_classes_3.each do |common_class| -%>
+      <% commons = @project.get_all_commons(common_class.to_s) -%>
+h2. <%= common_class.get_label %>
+      <% show_commons(commons, common_class.get_by_company(@project.owner), common_class.to_s.underscore.pluralize, permitted_to_edit, permitted_to_show) %>
+    <% end -%>
+ 

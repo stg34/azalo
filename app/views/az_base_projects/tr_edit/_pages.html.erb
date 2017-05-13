@@ -1,0 +1,104 @@
+<% page_list.each do |page| %>
+  <tr>
+    <td class="public-pages tr-page-text tr-page-text-<%= page.id %>">
+      <%#= render :partial => '/az_base_projects/tr_edit/page', :locals => {:page => page, :permitted_to_edit => permitted_to_edit, :permitted_to_show => permitted_to_show} %>
+
+      <%
+        embedded_pages = page.get_embedded_pages1
+        designs = page.get_designs
+        status_color = Statuses::Statuses[page.status][:color]
+        style = "display: none;" if pages_collapsed(AzPage::Page_user)
+      %>
+
+      <div class="tr-status-block" style="border-right: solid 2px <%= status_color %> ">
+
+        <h3><%= h(page.name) %></h3>
+
+        <%= aligner_tag %>
+
+        <div class="tr-page-description">
+          <%= RedCloth.new(n2e(page.description)).to_html %>
+        </div>
+
+        <% if embedded_pages.size > 0 && permitted_to_edit %>
+          <div style="text-align: right; border-bottom: 1px dotted silver;">
+            <% alt_title = t(:az_label_edit_page_description, :page_name => h(page.name)) %>
+            <% img = image_tag('tr-edit.png', :alt => alt_title, :title => alt_title) %>
+            <%= link_to(img, "#", :onclick => "show_tr_description_dialog(#{page.id}); return false;") %>
+          </div>
+        <% end %>
+
+
+        <% embedded_pages.each do |p| %>
+          <div class="tr-page-description">
+            <%= RedCloth.new(n2e(p.description)).to_html %>
+          </div>
+          <% if permitted_to_edit %>
+            <div style="text-align: right; border-bottom: 1px dotted silver;">
+              <% alt_title = t(:az_label_edit_page_description_from_component, :page_name => h(page.name), :component_name => p.get_project.name) %>
+              <% img = image_tag('tr-edit.png', :alt => alt_title, :title => alt_title) %>
+              <%= link_to(img, "#", :onclick => "show_tr_description_dialog_wo_title(#{p.id}, #{page.id}); return false;") %>
+            </div>
+          <% end %>
+        <% end %>
+
+
+        <%= aligner_tag %>
+        <div class="tr-page-title">
+          <strong><%= t(:az_label_page_title) %>:</strong> <%= page.title %>
+        </div>
+
+
+          <div class="tr-edit-contols-holder">
+            <table style="float: right;">
+              <tr>
+                <% if permitted_to_edit %>
+                <td style="padding: 1px;">
+                  <% if embedded_pages.size == 0 %>
+                    <% alt_title = t(:az_label_edit_page_description, :page_name => h(page.name)) %>
+                    <% img = image_tag('tr-edit.png', :alt => alt_title, :title => alt_title) %>
+                    <%= link_to(img, "#", :onclick => "show_tr_description_dialog(#{page.id}); return false;") %>
+                  <% end %>
+                </td>
+                <td style="padding: 1px;">
+                  <% alt_title = t(:az_label_block_status_in_spec, :status_name => Statuses::Statuses[page.status][:name]) %>
+                  <% img = image_tag(Statuses::Statuses[page.status][:image], :alt => alt_title, :title => alt_title) %>
+                  <%= link_to(img, "#", :onclick => "show_tr_page_status_dialog(#{page.id}); return false;", :class => "tr-status-edit-link", :title => alt_title) %>
+                </td>
+                <% end %>
+                <% if permitted_to_show %>
+                <td style="padding: 1px;">
+                  <% title = t(:az_label_refresh) %>
+                  <% refresh_img = image_tag('tr-refresh.png', :alt => title, :title => title) %>
+                  <% img = image_tag(refresh_img, :alt => title, :title => title) %>
+                  <%= link_to(refresh_img, "#", :onclick => "update_tr_page(#{page.id}); return false;", :class => "tr-status-edit-link", :title => title) %>
+                </td>
+                <% end %>
+                <td style="padding: 1px;">
+                </td>
+              </tr>
+            </table>
+
+            <%= aligner_tag %>
+          </div>
+
+
+      </div>
+    </td>
+    <td class="tr-page-design">
+      <%#= render :partial => '/az_base_projects/tr_edit/page_designs', :locals => {:page => page, :permitted_to_edit => permitted_to_edit,} %>
+
+      <% designs = page.get_designs %>
+      <% designs.each do |design| %>
+        <% alt = design.description %>
+        <% url_small = design.get_head_az_image.image.url(:small) %>
+        <% url_big = design.get_head_az_image.image.url(:big) %>
+        <% image = image_tag(url_small, :alt => alt) %>
+        <%= link_to(image, url_big, :rel => "lightbox[#{page.id}]", :title=>alt) %>
+        <%  %>
+      <% end %>
+
+    </td>
+  </tr>
+<% end %>
+

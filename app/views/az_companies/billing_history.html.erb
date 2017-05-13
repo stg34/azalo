@@ -1,0 +1,30 @@
+<h1>История платежей</h1>
+
+<% if balance_transactions.size == 0 %>
+  Нет платежей<br/>
+<% else %>
+
+  <div class="digg_pagination">
+    <%= will_paginate balance_transactions %>
+  </div>
+
+  <table class="table">
+    <tr>
+      <th><%= t(:az_label_date) %></th>
+      <th>Сумма</th>
+      <th>Примечание</th>
+    </tr>
+    <% for transaction in balance_transactions %>
+      <tr>
+        <td><%= transaction.created_at %></td>
+        <td><%= transaction.amount %></td>
+        <td><%= transaction.description %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <div class="digg_pagination">
+    <%= will_paginate balance_transactions %>
+  </div>
+<% end %>
+<%= link_to t(:az_label_back), az_profiles_path %>

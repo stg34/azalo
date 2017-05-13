@@ -1,0 +1,47 @@
+<h1>New az_base_project_stat</h1>
+
+<%= form_for(@az_base_project_stat) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :az_base_project_id %><br />
+    <%= f.text_field :az_base_project_id %>
+  </p>
+  <p>
+    <%= f.label :components_num %><br />
+    <%= f.text_field :components_num %>
+  </p>
+  <p>
+    <%= f.label :pages_num %><br />
+    <%= f.text_field :pages_num %>
+  </p>
+  <p>
+    <%= f.label :design_sources_num %><br />
+    <%= f.text_field :design_sources_num %>
+  </p>
+  <p>
+    <%= f.label :designs_num %><br />
+    <%= f.text_field :designs_num %>
+  </p>
+  <p>
+    <%= f.label :images_num %><br />
+    <%= f.text_field :images_num %>
+  </p>
+  <p>
+    <%= f.label :words_num %><br />
+    <%= f.text_field :words_num %>
+  </p>
+  <p>
+    <%= f.label :disk_usage %><br />
+    <%= f.text_field :disk_usage %>
+  </p>
+  <p>
+    <%= f.label :version %><br />
+    <%= f.text_field :version %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', az_base_project_stats_path %>

@@ -1,0 +1,68 @@
+
+<% action_names = {'u' => {:img => '/images/edit.png', :alt => 'Редактирование'},
+                   'c' => {:img => '/images/new.png', :alt => 'Создание'},
+                   'd' => {:img => '/images/delete.png', :alt => 'Удаление'}} %>
+
+<h1>Активность по проекту <q><%= h(project.name) %></q></h1>
+
+<% if activities.size == 0 %>
+  <h2>Нет активности</h2>
+<% else %>
+  <table class="table activity">
+    <tr>
+      <th><%= t(:az_label_time) %></th>
+      <th>Пользователь</th>
+      <th>&nbsp;</th>
+      <th>Что изменено</th>
+    </tr>
+  <% activities.each do |az_activity| %>
+    <% model_class = eval(az_activity.model_name) %>
+    <tr>
+      <td><%= l az_activity.created_at %></td>
+      <td><%= h az_activity.az_user.login %></td>
+      <% a = action_names[az_activity.action] %>
+      <td><%= image_tag(a[:img], :alt => a[:alt], :title => a[:alt]) %></td>
+      <td style="padding-top: 4px; padding-bottom: 4px;">
+        <span class="activity-model-name"><%= model_class.get_model_name %>:</span> <span class="activity-object-name">&quot;<%= h az_activity.object_name %>&quot;</span>
+
+        <% if az_activity.action == 'u' && az_activity.az_activity_fields.size > 0%>
+          <br/>
+
+          <table>
+          <% az_activity.az_activity_fields.each do |f| %>
+            <tr>
+              <td class="activity-field"><p><%= f.field.gsub('_', ' ') %>:</p></td>
+              <td>
+                <table><tr>
+                  <td class="activity-old-value">
+                    <% if f.old_value == nil || f.old_value == '' %>
+                      <p><i>Пусто</i></p>
+                    <% else %>
+                      <%= RedCloth.new(n2e f.old_value).to_html %>
+                    <% end %>
+                  </td>
+                  <td class="activity-new-old-separator"><p><%= image_tag('/images/arrow-right.png') %></p></td>
+                  <td class="activity-new-value">
+                    <% if f.new_value == nil || f.new_value == '' %>
+                      <p><i>Пусто</i></p>
+                    <% else %>
+                      <%= RedCloth.new(n2e f.new_value).to_html %>
+                    <% end %>
+                  </td>
+                </tr></table>
+              </td>
+            </tr>
+          <% end %>
+          </table>
+          
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+<% end %>
+
+<div class="digg_pagination">
+  <%= will_paginate(activities, :next_label => t(:az_label_paginate_forward), :previous_label => t(:az_label_paginate_back)) %>
+</div>
+<br />

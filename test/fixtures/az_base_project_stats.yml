@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  az_base_project_id: 1
+  components_num: 1
+  pages_num: 1
+  design_sources_num: 1
+  designs_num: 1
+  images_num: 1
+  words_num: 1
+  disk_usage: 1
+  version: 1
+
+two:
+  az_base_project_id: 1
+  components_num: 1
+  pages_num: 1
+  design_sources_num: 1
+  designs_num: 1
+  images_num: 1
+  words_num: 1
+  disk_usage: 1
+  version: 1

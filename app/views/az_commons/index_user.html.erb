@@ -1,0 +1,58 @@
+<% is_admin = current_user.roles.include?(:admin) %>
+<% @my_companies.each do |company| %>
+
+  <%= item_list_header(@commons_class.get_label, company, @my_companies.size > 1) %>
+
+  <table class="table">
+    <tr>
+      <th><%= t(:az_label_name) %></th>
+      <th><%= t(:az_label_description) %></th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <% if is_admin %>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      <% end %>
+    </tr>
+
+  <% @commons[company].each do |az_common| %>
+    <% controller = az_common.class.to_s.underscore.pluralize %>
+    <% edit_str = 'edit_' + az_common.class.to_s.underscore + '_path(az_common)' -%>
+    <tr>
+      <td><%=h az_common.name %></td>
+      <td><div class="common-description"><%= RedCloth.new(az_common.description).to_html %></div></td>
+      <td>
+        <%= link_to( img_go_up, :controller => controller, :action => 'move_up', :id => az_common.id) %>
+      </td>
+      <td>
+        <%= link_to( img_go_down, :controller => controller, :action => 'move_down', :id => az_common.id) %>
+      </td>
+      <td><%= link_to t(:az_label_edit), eval(edit_str) %></td>
+      <td><%= link_to t(:az_label_delete), az_common, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+      <% if is_admin %>
+        <td class="admin"><%= boolean_to_img(az_common.seed) %></td>
+        <td class="admin">
+          <% if az_common.seed %>
+            <%= link_to 'Обновить всем', :controller=>'az_services', :action => 'update_az_common_from_seed', :id => az_common.id %>
+          <% else %>
+            &nbsp;
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+  </table>
+
+  <br />
+
+  <%= link_to 'Новая запись', :controller => @commons_class.name.to_s.pluralize.underscore, :action => 'new', :owner_id => company.id %>
+
+<% end %>
+
+<% if is_admin %>
+  <p>
+    <%= link_to 'Обновить все сиды', :controller=>'az_services', :action => 'update_az_common_from_seed', :id => 0 %>
+  </p>
+<% end %>

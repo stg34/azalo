@@ -1,0 +1,8 @@
+Добрый день, <%= @company_ceo_name %>
+За компанией "<%= @company_name %>" образовался долг. На счету <%= @company_balance %>$.
+
+Посмотреть историю платежей можно тут: https://azalo.net/az_companies/billing_history/<%= @company_id %>
+
+Погасите, пожалуйста, долг до <%= l @warning_period_ends_at %>, иначе аккаунт будет заблокирован.
+
+Если у вас есть вопросы, обращайтесь по адресу support@azalo.net

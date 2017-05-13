@@ -1,0 +1,31 @@
+<h1>Список (<%= @az_commons.size %>)</h1>
+
+<table class="table">
+  <tr>
+    <th>Id</th>
+    <th>Owner</th>
+    <th>Az base project</th>
+    <th>Seed</th>
+    <th>Description</th>
+    <th>.</th>
+    <th>.</th>
+    <th>.</th>
+  </tr>
+
+<% @az_commons.each do |az_common| %>
+  <tr>
+    <td><%=h az_common.id %></td>
+    <td><%=h az_common.owner_id %></td>
+    <td><%=h az_common.az_base_project_id %></td>
+    <td><%=h az_common.seed %></td>
+    <td><%=h az_common.description %></td>
+    <td><%= link_to t(:az_label_show), az_common %></td>
+    <td><%= link_to t(:az_label_edit), edit_az_common_path(az_common) %></td>
+    <td><%= link_to t(:az_label_delete), az_common, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New common', new_az_common_path %>

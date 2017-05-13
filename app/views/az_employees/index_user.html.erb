@@ -1,0 +1,95 @@
+
+
+  <% @me.az_companies.each do |company| %>
+    <%= item_list_header("Работники и приглашения", company, @me.az_companies.size > 1) %>
+    <h2>Работники</h2>
+    <table class="table">
+      <tr>
+        <th>#</th>
+        <th>Логин</th>
+        <th>Имя</th>
+        <th>email</th>
+        <th>Участвует в проектах</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+      <% company.az_employees.each_with_index do |employee, n| %>
+        <tr <%= 'class="employees-disabled"' if employee.disabled %> >
+          <td><%= n + 1 %></td>
+          <td><%= h employee.az_user.login %></td>
+          <td><%= h employee.az_user.name %> <%= h employee.az_user.lastname %></td>
+          <td><%= h employee.az_user.email %></td>
+          <td><%= employee.projects.collect{|p| [p.name, p.id]}.collect{|name_id| link_to(name_id[0], az_project_url(name_id[1]))}.join(', ') %></td>
+          <td>
+            <% if company.ceo.id != employee.az_user.id %>
+              <% if employee.disabled %>
+                <% if company.employee_quota_reached %>
+                  <%= link_to 'Возобновить', "#", :onclick => 'alert("Достигнуто максимальное количесвто работников для вашего тарифного плана."); return false;' %>
+                <% else %>
+                  <%= link_to 'Возобновить', :action => 'enable', :id => employee.id %>
+                <% end %>
+                
+              <% else %>
+                <%= link_to 'Приостановить', :action => 'disable', :id => employee.id %>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <% if company.ceo.id != employee.az_user.id %>
+              <%= link_to 'Уволить', {:action => 'dismiss', :id => employee.id}, :confirm => t(:az_label_are_you_sure) %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <br/>
+  
+    <h2>Приглашения ко мне на работу</h2>
+    <p>
+      У меня пригашений к себе на работу: <%= company.available_invitations %> шт.
+    </p>
+    <p>
+      <%= link_to_if (company.available_invitations > 0), 'Пригласить на работу в "' + company.name + '"', :controller => 'az_invitations', :action => 'invite_to_company', :owner_id => company.id %><br/>
+    </p>
+
+    <h3>Отправленные приглашения</h3>
+    <% not_accepted_invitations = company.invitations %>
+    <% if not_accepted_invitations.size == 0 %>
+      Нет отправленных приглашений<br/>
+    <% else %>
+      <table class="table">
+        <tr>
+          <th>#</th>
+          <th>email</th>
+          <th>Секретный код</th>
+          <th>Принято/Отклонено</th>
+          <th><%= t(:az_label_delete) %></th>
+        </tr>
+        <% not_accepted_invitations.each_with_index do |inv, n| %>
+          <tr>
+            <td><%= n + 1 %></td>
+            <td><%= h inv.email %></td>
+            <td><%= h inv.hash_str if inv.user_id == nil %></td>
+            <td>
+                <% if inv.rejected == true %>
+                  Отклонено
+                <% elsif inv.rejected == false %>
+                  <% if !company.get_employees.collect{|e| e.az_user}.include?(inv.az_user) %>
+                    Уволен
+                  <% else %>
+                    Принято
+                  <% end %>
+                <% end %>
+            </td>
+            <td>
+              <% if inv.rejected == nil %>
+              <%= link_to t(:az_label_delete), {:controller => 'az_invitations', :action => 'delete_invitation', :id => inv.id}, :confirm => t(:az_label_are_you_sure), :method => :delete %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+        
+    <% end %>
+ 

@@ -1,0 +1,18 @@
+<div id="project-status-edit-dialog">
+  <% complete_str = "Windows.closeAll(); reload_page();" %>
+  <% remote_form_for(project,
+            :success => complete_str,
+            :update => 'project-status-edit-dialog',
+            :url => {:controller => 'az_projects', :action => 'update_status', :id => project.id}) do |form| %>
+    <%#= form.error_messages %>
+    <div  class="project-status">
+      <%= t(:az_label_project_status) %><br/>
+      <%= form.select :az_project_status_id, statuses %>
+    </div>
+
+    <%= aligner_tag %>
+    <br/><br/>
+    <%= submit_and_disable_tag(form, t(:az_label_save)) %>
+    <%= form.submit t(:az_label_cancel), :onclick => 'Windows.closeAll(); return false;' %>
+  <% end %>
+</div>

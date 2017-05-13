@@ -1,0 +1,29 @@
+<h1>Список скетчей товаров</h1>
+
+<table class="table">
+  <tr>
+    <th>Image</th>
+    <th>Az store item</th>
+    <th>Alt</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </tr>
+
+<% @az_store_item_scetches.each do |item_scetch| %>
+  <tr>
+    <td><%= image_tag(item_scetch.scetch.url(:tiny)) %></td>
+    <td><%=h item_scetch.az_store_item.id %>
+      <%=h item_scetch.az_store_item.item.name %>
+    </td>
+    <td><%=h item_scetch.alt %></td>
+    <td><%= link_to 'Show', item_scetch %></td>
+    <td><%= link_to 'Edit', edit_az_store_item_scetch_path(item_scetch) %></td>
+    <td><%= link_to 'Destroy', item_scetch, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_store_item_scetch', new_az_store_item_scetch_path %>

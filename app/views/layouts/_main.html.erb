@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+  <head>
+    <%= render( :partial => '/layouts/head') %>
+  </head>
+
+<body>
+  <div id="spinner-holder" style="display: none;"></div>
+  <div id="oplog-holder">
+    <a href="#" onclick="$('oplog').toggle(); return false;">log</a>
+    <div id="oplog" style="display: none;">
+    </div>
+  </div>
+  <div <%= "id='index-page'" if layout == 'index' %> >
+
+  <% if false && is_browser_ie && (session[:hide_warnings] == nil || !(session[:hide_warnings] && session[:hide_warnings][1])) %>
+  <div id="warning-message-1">
+    <div class="warning-message">
+      <% browsers = [['safari',  'safari.gif',  'http://www.apple.com/safari/'],
+                     ['chrome',  'chrome.gif',  'http://www.google.com/chrome/'],
+                     ['firefox', 'firefox.gif', 'http://www.firefox.com/'],
+                     ['opera',   'opera.gif',   'http://www.opera.com/']] %>
+      <% remote_form_for(AzUser, :url => {:controller => 'az_users', :action => 'hide_warning_message', :id => '1'}, :update => "warning-message-1", :after => "", :before => "") do |warn_form| %>
+        <table style="display: inline"><tr>
+            <td>
+              <%= t(:az_label_use_modern_browser) %>
+            </td>
+            <td>
+              <% browsers.shuffle! %>
+              <% browsers.each do |browser| %>
+                <%= link_to image_tag('browser_icons/' + browser[1], :alt => browser[0]), browser[2] %>
+              <% end %>
+            </td>
+            <td>
+              <%= warn_form.submit t(:az_label_close) %>
+            </td>
+          </tr></table>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+  <div class="top-menu">
+    <table width="100%"><tr>
+      <td class='logo-holder'>
+        <a href ="/" id="logo"><%= image_tag('azalo.gif', :alt => 'Azalo') %></a>
+      </td>
+      <td valign="middle">
+
+  <% if logged_in? && !current_user.roles.include?(:visitor) %>
+    <div class="menu">
+      <%= link_to t(:az_menu_projects), '/projects' %>
+      <%= link_to t(:az_menu_repository), '/settings' %>
+      <%= link_to t(:az_menu_explore), explore_path %>
+      <%= link_to t(:az_menu_store), store_path %>
+      <%= link_to t(:az_menu_profile), '/profile' %>
+      <%= link_to t(:az_menu_feedback), '/feedback' %>
+      <% if current_user.roles.include?(:admin) %>
+        <%= link_to t(:az_menu_system_settings), az_settings_path %>
+        <%= link_to t(:az_menu_service), az_services_path %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="menu">
+      <%= link_to t(:az_menu_explore), explore_path %>
+      <%= link_to t(:az_menu_feedback), '/feedback' %>
+    </div>
+  <% end %>
+
+
+  <% if layout == 'index' %>
+    <%= render( :partial => '/layouts/hello_index') %>
+  <% else %>
+    <%= render( :partial => '/layouts/hello_main') %>
+  <% end %>
+  <%= aligner_tag %>
+  </td></tr></table>
+</div>
+
+<div class="preloader">
+  <%= image_tag('anchor.png')%>
+  <%= image_tag('anchors.png')%>
+
+  <%= image_tag('collapse_fold.png')%>
+  <%= image_tag('expand_fold.png')%>
+  <img alt="pre" src="/images/collapse_fold.png" />
+  <img alt="pre" src="/images/expand_fold.png" />
+
+  <%= image_tag('go_up.png')%>
+  <%= image_tag('go_down.png')%>
+  <%= image_tag('anchor.png') %>
+
+  <img alt="pre" src="/stylesheets/themes/spread/top-middle.gif" />
+  <img alt="pre" src="/stylesheets/themes/spread/right-top.gif" />
+  <img alt="pre" src="/stylesheets/themes/spread/left-top.gif" />
+  <img alt="pre" src="/stylesheets/themes/spread/frame-right.gif" />
+  <img alt="pre" src="/stylesheets/themes/spread/frame-left.gif" />
+  <img alt="pre" src="/stylesheets/themes/spread/button-min-focus.gif" />
+  <img alt="pre" src="/stylesheets/themes/spread/button-max-focus.gif" />
+  <img alt="pre" src="/stylesheets/themes/spread/button-close-focus.gif" />
+  <img alt="pre" src="/stylesheets/themes/spread/bottom-right-c.gif" />
+  <img alt="pre" src="/stylesheets/themes/spread/bottom-middle.gif" />
+  <img alt="pre" src="/stylesheets/themes/spread/bottom-left-c.gif" />
+</div>
+
+<% if layout == 'index' %>
+  <hr/>
+<% end %>
+
+<div class="content">
+
+<div class="flash-message <%= 'w960px' if layout == 'index' %>"><%= flash[:notice] %></div>
+
+<% if layout == 'main' %>
+  <%= render( :partial => '/layouts/debt_warning') %>
+<% end %>
+
+<%= yield %>
+
+</div>
+<hr/>
+  <div class="main-counters-block">
+    <div class="copyright">
+      Copyright © 2010-2013
+    </div>
+    <div class="links">
+      <a href ="/license_agreement.html" style="color:#D2691E; text-decoration: underline"><%= t(:az_label_license_agreement) %></a>
+    </div>
+    <%= aligner_tag %>
+  </div>
+</div>
+
+  <script type="text/javascript">
+    var reformalOptions = {
+        project_id: 64700,
+        project_host: "azalo.net",
+        tab_orientation: "bottom-left",
+        tab_indent: "0px",
+        tab_bg_color: "#728fa8",
+        tab_border_color: "#FFFFFF",
+        tab_image_url: "http://tab.reformal.ru/T9GC0LfRi9Cy0Ysg0Lgg0L%252FRgNC10LTQu9C%252B0LbQtdC90LjRjw==/FFFFFF/58699c1c3ec304bef9d3001bc3b1e852/bottom-left/0/tab.png",
+        tab_border_width: 1
+    };
+
+    (function() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript'; script.async = true;
+        script.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'media.reformal.ru/widgets/v3/reformal.js';
+        document.getElementsByTagName('head')[0].appendChild(script);
+    })();
+  </script><noscript><a href="http://reformal.ru"><img src="http://media.reformal.ru/reformal.png" /></a><a href="http://azalo.net">Oтзывы и предложения для azalo.net</a></noscript>
+
+</body>
+</html>

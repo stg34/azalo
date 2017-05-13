@@ -1,0 +1,30 @@
+<% page = node.main_page %>
+
+<% if current_user == nil %>
+  <%= link_to(h(page.name), page, :class=>"page-name page-name-g") %>
+<% else %>
+
+  <% style = is_node_collapsed(path) ? '' : 'display:none' %>
+  <%= link_to(h(page.name), page, :class=>"page-name page-name-c", :style=> style) %>
+
+  <div <%= "style='display:none'" if is_node_collapsed(path) %> class="page-name-m">
+
+    <%= content_tag(:span, h(page.name), :class=>"drops page-name") %>
+
+    <ul class="page-menu licious" style="display:none; position: absolute">
+      <li>
+        <a href="#" onclick="show_new_sub_page_dialog('<%= page.id %>'); return false;"><%= t(:az_label_new_page) %></a>
+      </li>
+      <li>
+        <%= link_to(t(:az_label_show), page) %>
+      </li>
+      <li>
+        <a href="#" onclick="show_edit_page_dialog('<%= page.id %>'); return false;"><%= t(:az_label_edit) %></a>
+      </li>
+      <li>
+        <%= link_to(t(:az_label_delete), '#', :onclick => "if (!confirm('#{t(:az_label_are_you_sure)}')) return false; remove_page(this); return false;") %>
+      </li>
+    </ul>
+  </div>
+
+<% end %>

@@ -1,0 +1,38 @@
+<div id="new-edit-variable-dialog" class="dialog">
+
+  <h2>Новая переменная структуры <q><%= @az_variable.az_struct_data_type.name %></q></h2>
+
+  <% remote_form_for(@az_variable, :update => "new-edit-variable-dialog-container", 
+                                   :after => "",
+                                   :before => "",
+                                   :builder => AzDialogFormBuilder) do |f| %>
+    <%#= f.error_messages %>
+
+    <table>
+      <tr>
+        <td style="vertical-align: top; padding-left: 10px;">
+          <%= render( :partial => 'new_edit', :locals => {:form => f}) %>
+        </td>
+        <td style="vertical-align: top; padding-left: 30px; padding-top: 12px;">
+            Валидаторы
+            <div style="overflow: auto; height: 200px; background-color: #FFFFEC; border: 1px solid silver; width: 250px;">
+              <% @validtors.each do |v| %>
+                <% if checked_validators.include?(v.id) %>
+                  <%= check_box_tag "validators[#{v.id}]", v.id, :checked => 'checked' %><%= v.name %><br/>
+                <% else %>
+                  <%= check_box_tag "validators[#{v.id}]", v.id %><%= v.name %><br/>
+                <% end %>
+              <% end %>
+            </div>
+        </td>
+      </tr>
+    </table>
+
+  <%= aligner_tag %>
+  <p>
+    <%= f.submit t(:az_label_create) %>
+    <%= f.submit t(:az_label_close), :onclick => 'Windows.closeAll(); return false;' %>
+  </p>
+  <% end %>
+  <%= aligner_tag %>
+</div>

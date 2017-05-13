@@ -1,0 +1,17 @@
+<p>
+  <%= t(:az_label_name) %><br />
+  <%= form.text_field :name %>
+</p>
+
+<p>
+  Описание<br />
+  <%= form.text_area :description %>
+</p>
+
+<%= form.hidden_field :owner_id %>
+
+<p style="display: none;">
+  Тип коллекции<br />
+  <%= form.select(:az_collection_template_id, @collection_templates.collect {|p| [ p.name, p.id ] } ) %>
+</p>
+

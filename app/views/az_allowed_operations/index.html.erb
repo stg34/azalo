@@ -1,0 +1,27 @@
+<h1>Список разрешенных операций</h1>
+
+<table class="table">
+  <tr>
+    <th>Owner</th>
+    <th>Az typed page</th>
+    <th>Az operation</th>
+    <th>.</th>
+    <th>.</th>
+    <th>.</th>
+  </tr>
+
+<% @az_allowed_operations.each do |az_allowed_operation| %>
+  <tr>
+    <td><%=h az_allowed_operation.get_owner_name %></td>
+    <td><%=h az_allowed_operation.az_typed_page_id %></td>
+    <td><%=h az_allowed_operation.get_operation_name %> (<%=h az_allowed_operation.az_operation_id %>)</td>
+    <td><%= link_to 'Show', az_allowed_operation %></td>
+    <td><%= link_to 'Edit', edit_az_allowed_operation_path(az_allowed_operation) %></td>
+    <td><%= link_to 'Destroy', az_allowed_operation, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_allowed_operation', new_az_allowed_operation_path %>

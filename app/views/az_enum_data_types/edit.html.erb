@@ -1,0 +1,17 @@
+  <h1>Редактирование структуры <q><%= h @az_struct_data_type.name %></q></h1>
+
+<%= form_for(@az_struct_data_type) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:form => f}) %>
+
+  <%= link_to('Новая переменная', :controller => "az_variables", :action => "new", :az_struct_data_type_id=>@az_struct_data_type.id) %><br/>
+
+  <p>
+    <%= f.submit t(:az_label_save) %>
+  </p>
+
+<% end %>
+
+<%= back_link_for_data_type(@az_struct_data_type) %>
+

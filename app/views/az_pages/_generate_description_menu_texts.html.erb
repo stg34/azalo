@@ -1,0 +1,22 @@
+
+<% tr_texts.each do |tr_text| %>
+  <li>
+    
+      
+      <% message = '' %>
+      <% data_type_id = data_type ? data_type.id : -1 %>
+      <% az_remote_form_for(page,
+                :url => {:controller => 'az_pages', :action => 'get_page_description1', :id => page.id, :tr_text_id => tr_text.id, :data_type_id => data_type_id},
+                :update => "description-page-textarea-1",
+                :complete => "$('description-page-textarea').value+=('\\n>>>\\n' + $('description-page-textarea-1').innerHTML + '\\n<<<\\n');") do |page_form| %>
+    <a href='#' onclick ="$(this).up('form').onsubmit(); return false;"><%= tr_text.name %></a>
+        <% if message != '' %>
+          <% onclick =  "alert('#{message}'); return false;" %>
+        <% else %>
+          <% onclick =  "" %>
+        <% end %>
+        <%#= page_form.submit "Сгенерировать текст!", :style=>'float: right; width: 200px;', :disabled => !permitted_to?(:edit, page), :onclick => onclick %>
+      <% end %>
+    
+  </li>
+<% end %>

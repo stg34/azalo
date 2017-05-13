@@ -1,0 +1,17 @@
+<h1>Новый контакт</h1>
+
+<%= form_for @az_contact do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label 'Логин' %><br />
+    <%= f.text_field :login %>
+  </p>
+
+  <p>
+    <%= f.submit 'Добавить' %>
+  </p>
+
+<% end %>
+
+<%= link_to t(:az_label_back), az_contacts_path %>

@@ -1,0 +1,10 @@
++ ./az_tasks/index_user.html.erb
++ ./az_definitions/index_user.html.erb
++ ./az_validators/index_user.html.erb
+- ./az_contacts/index_user.html.erb
+- ./az_enum_data_types/index_user.html.erb
++ ./az_employees/index_user.html.erb
++ ./az_struct_data_types/index_user.html.erb
++ ./az_project_blocks/index_user.html.erb
++  ./az_projects/index_user.html.erb
++  ./az_commons/index_user.html.erb

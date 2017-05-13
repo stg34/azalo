@@ -1,0 +1,13 @@
+<p>
+  <b>Name:</b>
+  <%=h @az_tariff.name %>
+</p>
+
+<p>
+  <b>Cost:</b>
+  <%=h @az_tariff.price %>
+</p>
+
+
+<%= link_to 'Edit', edit_az_tariff_path(@az_tariff) %> |
+<%= link_to 'Back', az_tariffs_path %>

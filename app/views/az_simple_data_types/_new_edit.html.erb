@@ -1,0 +1,30 @@
+<p>
+  <%= t(:az_label_name) %><br />
+  <%= form.text_field :name %>
+</p>
+<p>
+  owner_id<br />
+  <%= form.text_field :owner_id %>
+</p>
+
+<table class="table">
+  <tr>
+    <th>
+      Операция
+    </th>
+    <th>
+      Время
+    </th>
+  </tr>
+  <% az_simple_data_type.az_operation_times.each do |ot| %>
+  <tr>
+    <td>
+    <%= link_to ot.az_operation.name, edit_az_operation_path(ot.az_operation) %>
+    </td>
+    <td>
+    <%= ot.operation_time %>
+    </td>
+  </tr>
+<% end %>
+</table>
+

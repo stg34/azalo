@@ -1,0 +1,82 @@
+<p>
+    <%= f.label :announce %>&nbsp;&nbsp;&nbsp;<%= wiki_syntax_help %><br />
+    <%= f.text_area :announce %>
+  </p>
+
+  <p>
+    <%= f.label :description %>&nbsp;&nbsp;&nbsp;<%= wiki_syntax_help %><br />
+    <%= f.text_area :description %>
+  </p>
+
+  <p>
+    <%= f.file_field :scheme %><br/>
+  </p>
+
+  <p>
+    <%= f.label :item_type %><br />
+    <%= f.text_field :item_type %>
+  </p>
+
+  <p>
+    <%= f.label :item_id %><br />
+    <%= f.text_field :item_id %>
+  </p>
+
+  <p>
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+  </p>
+
+  <p>
+    <%= f.label :visible %><br />
+    <%= f.check_box :visible %>
+  </p>
+
+  <p>
+    <% languages = @languages.collect{|l| [l.name, l.id]} %>
+    <%= f.label :az_language %><br />
+    <%= f.select(:az_language_id, languages) %>
+  </p>
+
+  <p>
+    <% scetch_programs = @scetch_programs.collect{|sp| [sp.name, sp.id]} %>
+    <%= f.label :az_scetch_program %><br />
+    <%= f.select(:az_scetch_program_id, scetch_programs) %>
+  </p>
+
+<% f.fields_for :az_store_item_scetches do |item_scetches_form| %>
+  <hr/>
+
+  <table>
+    <tr>
+      <td>
+        <p>
+          <%= item_scetches_form.label :alt %>
+          <%= item_scetches_form.text_field :alt %>
+        </p>
+
+        <p>
+          <%= item_scetches_form.label :title %><br />
+          <%= item_scetches_form.text_field :title %>
+        </p>
+
+        <p>
+          <%= item_scetches_form.file_field :scetch %><br/>
+        </p>
+
+        <% unless item_scetches_form.object.new_record? %>
+          <%= item_scetches_form.check_box '_destroy' %>
+          <%= item_scetches_form.label '_destroy', 'Remove' %>
+        <% end %>
+
+      </td>
+      <td style="padding-left: 60px;">
+        <% unless item_scetches_form.object.new_record? %>
+          <%= image_tag(item_scetches_form.object.scetch.url(:tiny)) %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+
+  
+<% end %>

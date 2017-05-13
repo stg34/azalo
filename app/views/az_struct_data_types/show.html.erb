@@ -1,0 +1,19 @@
+<table>
+  <tr>
+    <td class="param"><p><%= t(:az_label_name) %>:</p></td>
+    <td class="value"><p><%=h @struct.name %></p></td>
+  </tr>
+  <tr>
+    <td class="param"><p>Описание:</p></td>
+    <td class="value"><%= RedCloth.new(@struct.description).to_html %></td>
+  </tr>
+  <tr>
+    <td class="param"><p>Переменные:</p></td>
+    <td class="value">
+      <%= render( :partial => 'show_variables_list', :locals => {:struct => @struct}) %>
+    </td>
+  </tr>
+</table>
+
+<%= link_to t(:az_label_edit), edit_az_struct_data_type_path(@struct) %><br/>
+<%= back_link_for_data_type(@struct) %>

@@ -1,0 +1,94 @@
+﻿<div class="main-page">
+
+  <div class="main-content">
+    <div class="main-top-block">
+
+      <% if false && logged_in? && !current_user.roles.include?(:visitor) %>
+        <div class="main-top-notifications">
+          <%= link_to 'Изменения, обновления и исправления ошибок', image_path("/updates.html"), :class => 'updates' %>
+        </div>
+      <% end %>
+
+      <h1>Azalo - система подготовки технического задания на вебсайты</h1>
+      <div class="video">
+        <iframe width="560" height="349" src="https://www.youtube.com/embed/McBiXkf2wII?rel=0&hd=1" frameborder="0" allowfullscreen></iframe>
+        <%= aligner_tag %>
+        <%= link_to "Еще видео", {:controller=>'az_dashboard', :action => 'video', :id=>1}, :class => 'more-videos' %>
+
+      </div>
+      <div class="text">
+        <h2>Что?</h2>
+        <p>Azalo - система для построения технических заданий на разработку сайта.</p>
+        <h2>Как?</h2>
+        <p>
+        <ol>
+          <li>Нарисуйте структуру сайта</li>
+          <li>Опишите страницы, используя инструменты ускоряющие работу</li>
+          <li>Используйте готовые типовые части сайта</li>
+          <li>Прикрепите эскизы страниц</li>
+        </ol>
+        </p>
+        <h2>Кому?</h2>
+        <p>Это сервис будет полезен тем, кто связан с разработкой сайтов:</p>
+        <ul>
+          <li>фрилансерам</li>
+          <li>веб-студиям</li>
+          <li>заказчикам</li>
+        </ul>
+
+      </div>
+      <%= aligner_tag %>
+    </div>
+
+    <%= aligner_tag %>
+    <div class="main-middle-block">
+      <div class="main-middle-block-content">
+
+        <div class="news">
+          <h3>Новости</h3>
+          <% @news.each do |piece_of_news| %>
+            <div class="piece-of-news">
+              <div class="title"><%= piece_of_news.title %></div>
+              <div class='announce'><%= link_to piece_of_news.announce, :controller=>'az_news', :action=>'show', :id=>piece_of_news.id%></div>
+              <%= aligner_tag %>
+              <div class="date"><%= l(piece_of_news.created_at) %></div>
+            </div>
+          <% end %>
+          <%= aligner_tag %>
+          <% y_m = AzNews.get_latest_news_year_month %>
+          <% news_path = dashboard_news_archive_path(:year => y_m[0], :month => y_m[1])%>
+          <div class="new-archive-link-holder">
+            <%= link_to "Все новости",  news_path%>
+          </div>
+        </div>
+        <div class="explore-block">
+
+          <%= aligner_tag %>
+          <!--div class="info">
+                <h3>На этой неделе:</h3>
+                <h4>зарегистрировалось человек: <%= @new_users_this_week %></h4>
+                <h4>создано проектов: <%= @new_projects_this_week %></h4>
+              </div-->
+
+          <%= render(:partial => "projects_info_block", :locals => {:projects => @public_noteworthy_projects, :title => "Хорошие проекты:"}) %>
+          <%= render(:partial => "projects_info_block", :locals => {:projects => @public_active_projects, :title => "Активные проекты:"}) %>
+          <%= render(:partial => "projects_info_block", :locals => {:projects => @public_projects, :title => "Последние проекты:"}) %>
+
+          <%= aligner_tag %>
+        </div>
+        <%= aligner_tag %>
+
+      </div>
+    </div>
+    <div class="main-middle-block-bottom-border"></div>
+    <div class="bottom-menu-holder">
+      <%= link_to t(:az_menu_store), '/store' %>
+      <%= link_to t(:az_menu_feedback), '/feedback' %>
+      <%= link_to t(:az_menu_news), news_path %>
+      <%= link_to t(:az_menu_articles), '/articles' %>
+    </div>
+    <%#= render( :partial => '/layouts/carousel') %>
+  </div>
+  <%= aligner_tag %>
+
+</div>

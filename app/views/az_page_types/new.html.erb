@@ -1,0 +1,15 @@
+<h1>Новый тип страницы</h1>
+
+<%= form_for(@az_page_type) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= t(:az_label_name) %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.submit t(:az_label_create) %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_back), az_page_types_path %>

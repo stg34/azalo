@@ -1,0 +1,14 @@
+<table class="table">
+  <tr>
+    <th>company</th>
+    <th>remove</th>
+    <th>create</th>
+  </tr>
+<% @update_result.each_pair do |company, res| %>
+  <tr>
+    <td><%=h company.id %></td>
+    <td><%=h res[0] %></td>
+    <td><%=h res[1] %></td>
+  </tr>
+<% end %>
+</table>

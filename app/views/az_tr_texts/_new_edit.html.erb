@@ -1,0 +1,120 @@
+<%= f.hidden_field :owner_id %>
+
+<script type="text/javascript">
+  function show_hide_tr_text_descriptions(data_type)
+  {
+      var elements;
+      var i;
+      if (data_type === '<%= AzBaseDataType::StructTypeId %>')
+      {
+          elements = $$('.collection-dt');
+          for (i = 0; i < elements.size(); i++)
+              elements[i].hide();
+
+          elements = $$('.struct-dt');
+          console.log(elements);
+          for (i = 0; i < elements.size(); i++)
+              elements[i].show();
+      }
+      else if(data_type === '<%= AzBaseDataType::CollectionTypeId %>')
+      {
+          elements = $$('.collection-dt');
+          elements = elements.concat($$('.struct-dt'));
+          for (i = 0; i < elements.size(); i++)
+              elements[i].show();
+      }
+      else
+      {
+          elements = $$('.collection-dt');
+          for (i = 0; i < elements.size(); i++)
+              elements[i].hide();
+
+      }
+
+  }
+</script>
+
+<% if current_user.roles.include?(:admin) %>
+  <p>
+    <%= f.label :seed %><br />
+    <%= f.check_box :seed %>
+  </p>
+<% end %>
+
+<p>
+  <%= t(:az_label_name) %><br />
+  <%= f.text_field :name %>
+</p>
+
+<p>
+  Операция<br />
+  <%= f.select(:az_operation_id, @operations, { :include_blank => true }) %>
+</p>
+
+<p>
+  Тип данных<br />
+  <%= f.select(:data_type, @data_types, { :include_blank => true }, {:onchange => 'show_hide_tr_text_descriptions(this.value)'}) %>
+</p>
+
+<p>
+  <table>
+      <tr>
+        <td style="padding-right: 30px; vertical-align: top">
+          Текст <%= wiki_syntax_help %><br/><br/>
+          <%= f.text_area :text %>
+        </td>
+        <td style="vertical-align: top;">
+          <b>Переменные:</b><br/><br/>
+
+          <dl>
+            
+            <%
+            dt = @az_tr_text.data_type
+            hide_collection = ( dt == AzBaseDataType::CollectionTypeId ? "":"display: none;")
+            hide_struct_and_collection = ((dt == AzBaseDataType::CollectionTypeId || dt == AzBaseDataType::StructTypeId) ? "":"display: none;")
+            %>
+
+            <dt class="struct-dt collection-dt" style="<%= hide_struct_and_collection %>">%data_type_name%</dt>
+            <dd class="struct-dt collection-dt" style="<%= hide_struct_and_collection %>">Название структуры данных</dd>
+
+            <dt class="struct-dt collection-dt" style="<%= hide_struct_and_collection %>">%data_type_description%</dt>
+            <dd class="struct-dt collection-dt" style="<%= hide_struct_and_collection %>">Описание структуры данных</dd>
+
+            <dt class="collection-dt" style="<%= hide_collection %>">%collection_name%</dt>
+            <dd class="collection-dt" style="<%= hide_collection %>">Название коллекции</dd>
+
+            <dt class="collection-dt" style="<%= hide_collection %>">%collection_description%</dt>
+            <dd class="collection-dt" style="<%= hide_collection %>">Описание коллекции</dd>
+             
+            <dt class="struct-dt collection-dt" style="<%= hide_struct_and_collection %>">%variable_list%</dt>
+            <dd class="struct-dt collection-dt" style="<%= hide_struct_and_collection %>">Список пременных</dd>
+
+            <dt>%child_pages%</dt>
+            <dd>Список дочерних страниц</dd>
+
+            <dt>%image_list%</dt>
+            <dd>Список картинок для дизайнов</dd>
+
+            <dt>%design_list%</dt>
+            <dd>Список дизайнов</dd>
+
+            <dt>%project_name%</dt>
+            <dd>Название проекта</dd>
+
+            <dt>%page_name%</dt>
+            <dd>Название страницы</dd>
+
+            <dt>%page_title%</dt>
+            <dd><%= t(:az_label_page_title) %></dd>
+
+          </dl>
+
+        </td>
+      </tr>
+    </table>
+
+</p>
+
+
+
+

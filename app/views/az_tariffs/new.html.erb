@@ -1,0 +1,13 @@
+<h1>Новый тариф</h1>
+
+<%= form_for(@az_tariff) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:f => f}) %>
+
+  <p>
+    <%= f.submit t(:az_label_create) %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_back), az_tariffs_path %>

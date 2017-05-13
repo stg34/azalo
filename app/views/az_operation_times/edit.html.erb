@@ -1,0 +1,14 @@
+<h1>Editing az_operation_time</h1>
+
+<%= form_for(@az_operation_time) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:form => f}) %>
+  
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @az_operation_time %> |
+<%= link_to 'Back', az_operation_times_path %>

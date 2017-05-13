@@ -1,0 +1,77 @@
+<div style="float:left;" id="show-hide-right-data-box-container">
+
+  <%#= # --- TODO Disabled after Rails 3 migration. Fix me. --- link_to_function getHideLabel,
+        visual_effect(:toggle_slide, 'right-data-box', :duration => 0.5,
+                      :afterFinish => 'function() {' + switchShowHideLabels('show-hide-right-data-box', "#{t(:az_label_show)}", "#{t(:az_label_hide)}") + '}'),
+        :id => 'show-hide-right-data-box' %>
+
+</div>
+<%= aligner_tag %>
+<div id="right-data-box">
+<div id="tooltip-content-data-types-1" style="display:none;"><%= t(:az_tooltip_structure) %></div>
+
+<%= t_b %><%= t(:az_label_data_structure_drag_n_drop) %><%= t_e("tooltip-data-types-1", "tooltip-content-data-types-1") %>
+
+<%= aligner_tag %>
+
+<% def draggable_data_type(data_type) %>
+  <div style="float: left" class="draggable-data-type data-type-<%= data_type.id %>">
+    <%= image_tag('anchor.png') %>
+  </div>
+  <% if data_type.class == AzCollectionDataType %>
+    <%= link_to(h(data_type.name), "#", :onclick => "show_edit_collection_dialog(#{data_type.id}); return false;") %>
+  <% else %>
+    <%= link_to(h(data_type.name), :controller => data_type.class.to_s.tableize, :action => 'edit', :id => data_type.id) %>
+  <% end %>
+  
+  <% return %>
+<% end %>
+
+<div class="data-box-table-container">
+  <% n = 0 %>
+  <% @data_type_list_with_collections.each do |data_type_with_collections| %>
+    <% data_type = data_type_with_collections.data_type %>
+    <% collections = data_type_with_collections.collections %>
+    <% table_class = (n == @data_type_list_with_collections.size - 1 ? "last-data-types data-types" : "data-types") %>
+    <table class="<%= table_class %>">
+      <tr>
+        <td class="data-type">
+          <%= draggable_data_type(data_type) %>
+        </td>
+        <td  class="create-collection">
+          <% if data_type.class != AzCollectionDataType %>
+            <% alt = "#{t(:az_label_create_collection)} '#{h(data_type.name)}'" %>
+            <%= link_to image_tag('create_collection.png', :alt => alt, :title => alt), "#", :onclick => "show_new_collection_dialog(#{data_type.id}); return false;" %>
+          <% else %>
+              &nbsp;
+          <% end %>
+        </td>
+        <td class="delete">
+          <% alt = "#{t(:az_label_delete_data_structure)} '#{h(data_type.name)}'" %>
+          <%= link_to_remote(image_tag('delete.png', :alt => alt, :title => alt), :url => data_type, :confirm => t(:az_label_are_you_sure), :method => :delete, :complete => 'reload_page();') %>
+        </td>
+      </tr>
+      <% collections.each do |collection| %>
+        <tr>
+          <td class="collection-data-type">
+            <%= draggable_data_type(collection) %>
+          </td>
+          <td>
+            &nbsp;
+          </td>
+          <td class="delete">
+            <% alt = "#{t(:az_label_delete_collection)} '#{h(collection.name)}'" %>
+            <%= link_to_remote(image_tag('delete.png', :alt => alt, :title => alt), :url => collection, :confirm => t(:az_label_are_you_sure), :method => :delete, :complete => 'reload_page();') %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <% n += 1 %>
+  <% end %>
+  
+</div>
+<%= aligner_tag %>
+<%= link_to t(:az_label_new_data_structure), :controller=>'az_struct_data_types', :action => 'new', :owner_id =>@project.owner_id, :az_base_project_id => @project.id %>
+&nbsp;
+<%= link_to t(:az_label_update_data_structures_box), "#", :onclick => 'update_datatype_list(); return false;' %><br/>
+</div>

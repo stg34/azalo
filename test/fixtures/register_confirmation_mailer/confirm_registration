@@ -1,0 +1,3 @@
+RegisterConfirmationMailer#confirm_registration
+
+Find me in app/views/register_confirmation_mailer/confirm_registration.erb

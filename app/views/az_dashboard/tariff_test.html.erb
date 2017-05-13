@@ -1,0 +1,149 @@
+<div class="tariffs-page">
+  
+    <div class="main-content">      
+      <div class="main-top-block">
+        <h1>Выбор тарифного плана</h1>
+        <%= aligner_tag %>
+      </div>
+      <%= aligner_tag %>
+      <div class="main-middle-block">
+        <div class="main-middle-block-content">
+            
+
+            <table width="100%" class="table">
+              <tr>
+                <th>&nbsp;</th>
+                <% tariffs.each do |tariff| %>
+                  <th>
+                    <div class="name"><%= tariff.name %></div>
+                    <div class="price">
+                      <% if tariff.price != 0%>
+                        $<%= Integer(tariff.price) %>/месяц
+                      <% else %>
+                        Бесплатно
+                      <% end %>
+                      <%= link_to "Регистрация", {:controller => 'az_users', :action=>'new', :tariff => tariff.id}, :class=>'register' %>
+                    </div>
+                  </th>
+                <% end %>
+              </tr>
+              <tr class="tr1st trlarge">
+                <td class="option">Количество активных проектов</td>
+                <% tariffs.each do |tariff| %>
+                  <td><small><%= tariff.quota_active_projects %></small></td>
+                <% end %>
+              </tr>
+              <tr class="tr1st trlarge">
+                <td class="option">Компоненты</td>
+                <% tariffs.each do |tariff| %>
+                  <% if tariff.optimal %>
+                    <td class="optimal"><img src="/images/tick_big.gif" alt="Да" /></td>
+                  <% else %>
+                    <td><img src="/images/tick.gif" alt="Да" /></td>
+                  <% end %>
+                <% end %>
+              </tr>
+              <tr class="tr1st trlarge">
+                <td class="option">Редактор схемы сайта</td>
+                <% tariffs.each do |tariff| %>
+                  <% if tariff.optimal %>
+                    <td class="optimal"><img src="/images/tick_big.gif" alt="Да" /></td>
+                  <% else %>
+                    <td><img src="/images/tick.gif" alt="Да" /></td>
+                  <% end %>
+                <% end %>
+              </tr>
+              <tr class="tr1st trlarge">
+                <td class="option">Редактор технического задания</td>
+                <% tariffs.each do |tariff| %>
+                  <% if tariff.optimal %>
+                    <td class="optimal"><img src="/images/tick_big.gif" alt="Да" /></td>
+                  <% else %>
+                    <td><img src="/images/tick.gif" alt="Да" /></td>
+                  <% end %>
+                <% end %>
+              </tr>
+              <tr class="tr1st trlarge">
+                <td class="option">Сотрудники</td>
+                <% tariffs.each do |tariff| %>
+                  <td><%= tariff.quota_employees if tariff.quota_employees > 0 %></td>
+                <% end %>
+              </tr>
+              <tr class="tr1st trlarge">
+                <td class="option">Гостевые ссылки</td>
+                <% tariffs.each do |tariff| %>
+                  <% if tariff.optimal %>
+                    <td class="optimal"><img src="/images/tick_big.gif" alt="Да" /></td>
+                  <% else %>
+                    <td><img src="/images/tick.gif" alt="Да" /></td>
+                  <% end %>
+                <% end %>
+              </tr>
+              <tr class="tr1st trlarge">
+                <td class="option">Дисковое пространство</td>
+                <% tariffs.each do |tariff| %>
+                  <td><%= number_to_human_size(tariff.quota_disk) %></td>
+                <% end %>
+              </tr>
+              <tr>
+                <td class="option">Название студии, логотип и ссылка на сайт</td>
+                <td></td>
+                <td></td>
+                <td class="optimal"><img src="/images/tick_big.gif" alt="Название веб-студии, логотип и ссылка на сайт" /></td>
+                <td><img src="/images/tick.gif" alt="Название веб-студии, логотип и ссылка на сайт" /></td>
+                <td><img src="/images/tick.gif" alt="Название веб-студии, логотип и ссылка на сайт" /></td>
+              </tr>             
+            </table>
+          <%= aligner_tag %>
+        </div>
+      </div>
+      <div class="main-middle-block-bottom-border"></div>
+
+      <%= aligner_tag %>
+      <div class="main-bottom-block">
+        <div class="left">
+          <h2>А что означает 30 дней бесплатно?</h2>
+
+          Это означает, что после регистрации у вас будет 30 дней до того, как мы первый раз попросим
+          оплатить выбранный вами тарифный план на следующий месяц.
+
+          <h2>Зарегистрировавшись на бесплатный пакет, получу ли я 30 бесплатных дней,
+          перейдя на платный пакет?</h2>
+
+          К сожалению нет, это предложение действительно только для пользователей,
+          зарегистрировавшихся на один из платных пакетов.
+
+          <h2>Оплату в какой форме вы принимаете?</h2>
+          На данный момент принимаются платежи по картам Visa, MasterCard. Если у вас проблема
+          с оплатой по карте, <%= link_to 'напишите', '/feedback' %>, что-нибудь придумаем.
+
+          <h2>Я могу изменить тарифный план после регистрации?</h2>
+
+          Конечно! Вы сможете повысить или понизить тарифный план в любое время. Сделать это можно
+          просто в разделе вашего аккаунта «Мои данные»
+        </div>
+        
+        <div class="right">
+          <h2>Что такое «Активные проекты»?</h2>
+
+          В существует два основных типа проектов, активные и архивные. Активные — проекты,
+          над которыми вы работаете, архивные — работа над которыми уже завершена. Тарифные планы
+          ограничивают только количество активных проектов. Количество архивных не ограничено.
+
+          <h2>Что такое «Гостевые ссылки»?</h2>
+
+          Зачастую при работе над проектом необходимо продемонстрировать работу стороннему человеку, как правило заказчику.
+          При этом не хочется его регистрировать в системе, но и не хочется открывать проект в публичный доступ. Для
+          решения этой проблемы и существуют "Гостевые ссылки". Они позволяют просматривать проект тому кто имеет
+          определенную "секретную" ссылку и время жизни этой ссылки ограничено.
+
+        </div>
+        <%= aligner_tag %>
+
+      </div>
+
+    </div>
+    <%= aligner_tag %>
+
+  
+</div>

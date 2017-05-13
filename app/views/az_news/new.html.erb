@@ -1,0 +1,13 @@
+<h1>Создать новость</h1>
+
+<%= form_for(@az_news, :url=>{:controller=>'az_news', :action=>'create'}) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:form => f}) %>
+
+  <p>
+    <%= f.submit t(:az_label_create) %>
+  </p>
+<% end %>
+
+<%= link_to t(:az_label_back) %>

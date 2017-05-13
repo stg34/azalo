@@ -1,0 +1,44 @@
+<h1>Наcяльники</h1>
+
+<% disabled_style="color: silver" %>
+
+<div class="digg_pagination">
+  <%= will_paginate @companies %>
+</div>
+
+<table class="table companies">
+  <tr>
+    <th>id</th>
+    <th>logo</th>
+    <th>Ceo/email</th>
+    <th>Заходы</th>
+    <th>Заметка</th>
+    <th>Изменить</th>
+  </tr>
+<% for company in @companies %>
+  <% ceo = company.ceo %>
+  <tr>
+    <td><%= company.id %><a name="<%= ceo.login %>"/></td>
+    <td><%= image_tag(company.logo.url(:tiny)) %></td>
+    <td style="<%= disabled_style if company.ceo.disabled %>">
+      <b><%= ceo.login %></b><br/>
+      <%= ceo.name %> <%= ceo.lastname %><br/>
+      <%= h ceo.email %><br/>
+      Зарегистрирован: <%= h ceo.created_at.strftime("%Y.%m.%d") %><br/>
+    </td>
+    <td>
+      <% ceo.az_user_logins.each do |login| %>
+        <b><%= login.created_at %></b> <%= login.ip %><br/><span style="font-size: 10px;"><%= login.browser %></span><br/>
+      <% end %>
+    </td>
+    <td><%= RedCloth.new(n2e ceo.note).to_html %></td>
+    <td>
+      <%= link_to "Изменить", :controller => 'az_users', :action => 'edit', :id=>ceo.id %><br/>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<div class="digg_pagination">
+  <%= will_paginate @companies %>
+</div>

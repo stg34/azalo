@@ -1,0 +1,20 @@
+<h1>Listing az_project_stat_updates</h1>
+
+<table>
+  <tr>
+    <th>Az base project</th>
+  </tr>
+
+<% @az_project_stat_updates.each do |az_project_stat_update| %>
+  <tr>
+    <td><%=h az_project_stat_update.az_base_project_id %></td>
+    <td><%= link_to 'Show', az_project_stat_update %></td>
+    <td><%= link_to 'Edit', edit_az_project_stat_update_path(az_project_stat_update) %></td>
+    <td><%= link_to 'Destroy', az_project_stat_update, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New az_project_stat_update', new_az_project_stat_update_path %>

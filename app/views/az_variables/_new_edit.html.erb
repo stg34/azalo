@@ -1,0 +1,33 @@
+<p>
+  Название <%= required_field %><br/>
+  <%= form.text_field :name, :style=> "width: 200px;"%>
+</p>
+<p>
+  Описание&nbsp;&nbsp;&nbsp;<%= wiki_syntax_help %><br/>
+  <%= form.text_area :description, :style=> "width: 220px; height: 150px;"%>
+</p>
+
+<p>
+  Тип<br />
+  <select id="az_variable_az_base_data_type_id" name="az_variable[az_base_data_type_id]" class="var-edit-type-select">
+    <optgroup label="Простые типы данных">
+      <% @data_types.each do |dt| -%>
+        <option value="<%= dt.id %>" <%= 'selected="selected"' if @az_variable.az_base_data_type_id == dt.id %>><%= dt.name %></option>
+      <% end -%>
+    </optgroup>
+
+    <% if @project_structs_with_collections.size > 0 %>
+      <optgroup label="Структуры и списки">
+        <% @project_structs_with_collections.each do |data_type_with_collections| %>
+          <% struct = data_type_with_collections.data_type %>
+          <% collections = data_type_with_collections.collections %>
+          <option value="<%= struct.id %>" <%= 'selected="selected"' if @az_variable.az_base_data_type_id == struct.id %>><%= struct.name %></option>
+            <% collections.each do |collection| %>
+              <option value="<%= collection.id %>" <%= 'selected="selected"' if @az_variable.az_base_data_type_id == collection.id %>>&#8801; <%= collection.name %></option>
+          <% end -%>
+        <% end %>
+      </optgroup>
+    <% end %>
+  </select>
+</p>
+<%= form.hidden_field :az_struct_data_type_id %>

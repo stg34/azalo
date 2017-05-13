@@ -1,0 +1,16 @@
+<div id="tr-status-edit-dialog">
+  <% complete_str = "Windows.closeAll(); update_tr_page(#{page.id}); update_toc_tr_page_status_color(#{page.id});" %>
+  <% remote_form_for(page,
+            :complete => complete_str,
+            :url => {:controller => 'az_pages', :action => 'update_tr_page_status', :id => page.id}) do |page_form| %>
+    <%= page_form.error_messages %>
+    <div  class="page-status">
+      Статус блока в ТЗ<br/>
+      <%= page_form.select :status, statuses %>
+    </div>
+    <%= aligner_tag %>
+    <%= submit_and_disable_tag(page_form, t(:az_label_save)) %>
+    <%= page_form.submit t(:az_label_cancel), :onclick => 'Windows.closeAll(); return false;' %>
+
+  <% end %>
+</div>

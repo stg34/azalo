@@ -1,0 +1,17 @@
+  <div class="tr-status-block">
+    
+    <h3><%= h(page.name) %></h3>
+    
+    <%= aligner_tag %>
+    
+    <div class="tr-page-description">
+      <%= RedCloth.new(n2e(page.description)).to_html %>
+    </div>
+    <%= aligner_tag %>
+    <div class="tr-page-title">
+      <%= t(:az_label_page_title) %>: <%= h(page.title) %>
+    </div>
+
+  </div>
+
+

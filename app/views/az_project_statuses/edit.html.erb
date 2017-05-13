@@ -1,0 +1,14 @@
+<h1>Редактирование статуса проекта <%= @az_project_status.name %></h1>
+
+<%= form_for(@az_project_status) do |f| %>
+  <%= f.error_messages %>
+
+  <%= render( :partial => 'new_edit', :locals => {:f => f}) %>
+
+  <p>
+    <%= f.submit t(:az_label_save) %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @az_project_status %> |
+<%= link_to 'Back', az_project_statuses_path %>

@@ -1,0 +1,48 @@
+<% update_script = "Windows.closeAll(); update_variables_list_in_structure(#{struct.id});" %>
+<% show_description = struct.az_variables.select{|v| v.description.strip.size > 0}.size > 0 %>
+  
+    <table class="table">
+      <tr>
+        <th><%= t(:az_label_name) %></th>
+        <th>Тип</th>
+        <th>Валидатор</th>
+        <% if show_description %>
+          <th><%= t(:az_label_description) %></th>
+        <% end %>
+        <% if permitted_to_edit %>
+          <th>&nbsp;</th>
+        <% end %>
+      </tr>
+      <% struct.az_variables.each do |variable| %>
+        <tr>
+          <td><%= h(variable.name) %>            
+          </td>
+          <td><%= h(variable.az_base_data_type.name) %></td>
+          <td>
+            <% val_num = variable.az_validators.size %>
+            <% i = 0 %>
+            <% variable.az_validators.each do |v| %>
+              <% i += 1 %>
+              <%= h(v.name) %><%= ',<br/>' if val_num > 1 && i+1 <= val_num %>
+            <% end %>
+          </td>
+          <% if show_description %>
+            <td>
+              <%= RedCloth.new(n2e variable.description).to_html %>
+            </td>
+          <% end %>
+          <% if permitted_to_edit %>
+            <td class="tr-struct-controls-holder">
+              <% edit_img = image_tag('tr-edit.png', :alt => "Редактировать переменную '#{h(variable.name)}'", :title => "Редактировать переменную '#{h(variable.name)}'")%>
+              <% del_img = image_tag('tr-delete.png', :alt => "Удалить переменную '#{h(variable.name)}'", :title => "Удалить переменную '#{h(variable.name)}'") %>
+              <% down_img = image_tag('tr-down.png', :alt => "Переместить переменную '#{h(variable.name)}' вниз", :title => "Переместить переменную '#{h(variable.name)}' вниз") %>
+              <% up_img = image_tag('tr-up.png', :alt => "Переместить переменную '#{h(variable.name)}' вверх", :title => "Переместить переменную '#{h(variable.name)}' вверх") %>
+              <%= link_to(edit_img, "#", :onclick => "show_edit_variable_dialog(#{variable.id}); return false;", :class => "tr-variable-edit-link" ) %>
+              <%= link_to_remote del_img, :url => az_variable_path(variable), :confirm => t(:az_label_are_you_sure), :method => :delete, :complete => update_script, :eval_scripts => true %>
+              <%= link_to_remote(up_img, :url => {:controller=>'az_variables', :action => 'move_up', :id => variable.id}, :complete => update_script, :eval_scripts => true) %>
+              <%= link_to_remote(down_img, :url => {:controller=>'az_variables', :action => 'move_down', :id => variable.id}, :complete => update_script, :eval_scripts => true) %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
