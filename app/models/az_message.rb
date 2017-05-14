@@ -66,6 +66,6 @@ class AzMessage < ActiveRecord::Base
     return AzMessage.statuses3
   end
 
-  # self.per_page = 20
+  self.per_page = 20
 
 end

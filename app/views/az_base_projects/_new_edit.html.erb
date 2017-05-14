@@ -8,7 +8,7 @@
   </p>
 </div>
 
-<%= form_for(project, :builder => AzFormBuilder, :html => { :multipart => true }) do |f| %>
+<% form_for(project, :builder => AzFormBuilder, :html => { :multipart => true }) do |f| %>
   <%#= f.error_messages %>
 
   <label><%= t(:az_label_name) %><br/>

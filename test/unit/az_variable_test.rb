@@ -11,9 +11,6 @@ class AzVariableTest < ActiveSupport::TestCase
 
   # ---------------------------------------------------------------------------
   test "Create correct AzVariable" do
-
-    clear_az_db
-
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzVariable, 0)
@@ -44,9 +41,6 @@ class AzVariableTest < ActiveSupport::TestCase
   end
   # ---------------------------------------------------------------------------
   test "Create incorrect AzVariable" do
-
-    clear_az_db
-
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzVariable, 0)
@@ -82,9 +76,6 @@ class AzVariableTest < ActiveSupport::TestCase
   end
   # ---------------------------------------------------------------------------
   test "AzVariable.make_copy() 1" do
-
-    clear_az_db
-
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzVariable, 0)
@@ -122,9 +113,6 @@ class AzVariableTest < ActiveSupport::TestCase
   end
   # ---------------------------------------------------------------------------
   test "AzVariable.make_copy() 2" do
-
-    clear_az_db
-
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzVariable, 0)

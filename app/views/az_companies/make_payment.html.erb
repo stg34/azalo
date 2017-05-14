@@ -1,6 +1,6 @@
 <h1>Пополнить счет</h1>
 
-<%= form_for(payment, :builder => AzFormBuilder) do |f| %>
+<% form_for(payment, :builder => AzFormBuilder) do |f| %>
   <%= f.error_messages(:header_message => '', :message => '') %>
 
   <p>

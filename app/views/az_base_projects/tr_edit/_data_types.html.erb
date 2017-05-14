@@ -36,19 +36,19 @@
             <% url = struct_move_up_tr_path(t) %>
             <% title = t(:az_label_move_block_up, :block_name => h(t.name)) %>
             <% img = image_tag('go_up.png', :alt => title, :title => title) %>
-            <%# --- TODO Disabled after Rails 3 migration. Fix me. --- az_form_remote_tag(:url => url, :complete => "update_structs_validatots_in_tr()", :html => {:id=>"move_up_str_form_#{t.id}"}, :eval_scripts => true) do %>
-              <%#= hidden_field_tag :positions, data_types_positions %>
-              <%#= link_to(img, '#', :onclick => "$('move_up_str_form_#{t.id}').onsubmit(); return false;" ) %>
-            <%# end %>
+            <% az_form_remote_tag(:url => url, :complete => "update_structs_validatots_in_tr()", :html => {:id=>"move_up_str_form_#{t.id}"}, :eval_scripts => true) do %>
+              <%= hidden_field_tag :positions, data_types_positions %>
+              <%= link_to(img, '#', :onclick => "$('move_up_str_form_#{t.id}').onsubmit(); return false;" ) %>
+            <% end %>
           </td>
           <td style="padding: 1px;">
             <% url = struct_move_down_tr_path(t) %>
             <% title = t(:az_label_move_block_down, :block_name => h(t.name)) %>
             <% img = image_tag('go_down.png', :alt => title, :title => title) %>
-            <%# --- TODO Disabled after Rails 3 migration. Fix me. --- az_form_remote_tag(:url => url, :complete => "update_structs_validatots_in_tr()", :html => {:id=>"move_down_str_form_#{t.id}"}, :eval_scripts => true) do %>
-              <%#= hidden_field_tag :positions, data_types_positions %>
-              <%#= link_to(img, '#', :onclick => "$('move_down_str_form_#{t.id}').onsubmit(); return false;" ) %>
-            <%# end %>
+            <% az_form_remote_tag(:url => url, :complete => "update_structs_validatots_in_tr()", :html => {:id=>"move_down_str_form_#{t.id}"}, :eval_scripts => true) do %>
+              <%= hidden_field_tag :positions, data_types_positions %>
+              <%= link_to(img, '#', :onclick => "$('move_down_str_form_#{t.id}').onsubmit(); return false;" ) %>
+            <% end %>
           </td>
           <td style="padding: 1px;">
             <% url = "/az_struct_data_types/status_dialog/#{t.id}" %>

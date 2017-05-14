@@ -3,9 +3,8 @@ require 'az_page_test_helper'
 
 class PrTreeTest < ActiveSupport::TestCase
 
-  test 'build tree' do
+  test "build tree" do
 
-    clear_az_db
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzProject, 0)

@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+#one:
+#  az_company_id: 1
+#  description: MyString
+#  amount: 1.5
+#  az_invoice_id: 1
+#
+#two:
+#  az_company_id: 2
+#  description: MyString
+#  amount: 1.5
+#  az_invoice_id: 2

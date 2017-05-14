@@ -5,10 +5,7 @@ class AzCollectionTemplateTest < ActiveSupport::TestCase
   
   #include Authorization::TestHelper
 
-  test 'Create correct AzCollectionTemplate' do
-
-    clear_az_db
-
+  test "Create correct AzCollectionTemplate" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzCollectionTemplate, 0)
@@ -25,10 +22,7 @@ class AzCollectionTemplateTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzCollectionTemplate, 1)
   end
 
-  test 'Create incorrect AzCollectionTemplate' do
-
-    clear_az_db
-
+  test "Create incorrect AzCollectionTemplate" do
     Authorization.current_user = nil
 
     user = prepare_user(:user)
@@ -48,10 +42,7 @@ class AzCollectionTemplateTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzCollectionTemplate, 0)
   end
 
-  test 'make_copy AzCollectionTemplate' do
-
-    clear_az_db
-
+  test "make_copy AzCollectionTemplate" do
     Authorization.current_user = nil
 
     user = prepare_user(:user)

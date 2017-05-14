@@ -1,6 +1,6 @@
 <h1>Страница <q><%= @az_page_type.az_page.name %></q> --- Тип <q><%= @az_page_type.az_base_data_type.name %></q> </h1>
 
-<%= form_for(@az_page_type) do |f| %>
+<% form_for(@az_page_type) do |f| %>
   <%= f.error_messages %>
 
   <table class="table">

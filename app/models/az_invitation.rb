@@ -1,5 +1,4 @@
-# require 'md5'
-require 'digest/md5'
+require 'md5'
 
 class AzInvitation < ActiveRecord::Base
 
@@ -19,10 +18,7 @@ class AzInvitation < ActiveRecord::Base
 
   #attr_protected :owner_id
 
-  before_validation :build_hash_str
-  validate :user_validate_on_create, on: :create
-
-  def build_hash_str
+  def before_validation
     # TODO проверить, что такого хэша еще нет
     self.hash_str = MD5.new('w8882h3' + Time.now.to_s + self.invitation_data.to_s).hexdigest
 
@@ -35,11 +31,11 @@ class AzInvitation < ActiveRecord::Base
   end
 
   # TODO validate_on_create1 переименовать, убрав 1
-  def user_validate_on_create
+  def validate_on_create
     inv = AzInvitation.find(:all, :conditions => {:email => self.email, :invitation_type => self.invitation_type})
     if inv != nil
       if inv.size > 0
-        errors.add(:base, "User with given email already has invitation")
+        errors.add_to_base("User with given email already has invitation")
       end
     end
 
@@ -51,15 +47,15 @@ class AzInvitation < ActiveRecord::Base
       puts empl.inspect
       company = AzCompany.find(self.invitation_data)
       if company && company.ceo.email == self.email
-        errors.add(:base, "Пользователь с таким email уже работает в компании \"#{company.name}\"")
+        errors.add_to_base("Пользователь с таким email уже работает в компании \"#{company.name}\"")
       end
       if empl != nil
-        errors.add(:base, "Пользователь с таким email уже работает в компании \"#{company.name}\"")
+        errors.add_to_base("Пользователь с таким email уже работает в компании \"#{company.name}\"")
       end
     end
 
     if AzUser.find_by_email(self.email) && self.invitation_type == 'site'
-      errors.add(:base, "User with given email already has account on this site")
+      errors.add_to_base("User with given email already has account on this site")
     end
   end
 end

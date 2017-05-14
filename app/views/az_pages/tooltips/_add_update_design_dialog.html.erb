@@ -1,10 +1,9 @@
 <div class="add-update-design-dialog" id="add-update-design-dialog-content">
 
-  <%= form_for(design,
+  <% remote_form_for(design, 
       :update => "add-update-design-dialog-container",
       :success => "Windows.closeAll(); update_page_box(#{design.az_page.id});",
-      :builder => AzDialogFormBuilder,
-      remote: true) do |az_design_form| %>
+      :builder => AzDialogFormBuilder) do |az_design_form| %>
     <div class="dialog-form-content">
       <% dialog_title = (design_action == :new ? t(:az_label_new_design) : t(:az_label_update_design)) %>
       <%= page_dialog_title(dialog_title, design.az_page) %>

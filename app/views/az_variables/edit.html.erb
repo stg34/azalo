@@ -7,7 +7,7 @@
     <% end %>
   </h1>
 
-  <%= form_for(@az_variable) do |f| %>
+  <% form_for(@az_variable) do |f| %>
     <%= f.error_messages %>
 
     <%= render( :partial => 'new_edit', :locals => {:form => f}) %>

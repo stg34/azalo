@@ -8,9 +8,6 @@ require 'az_project_test_helper'
 class AzValidatorTest < ActiveSupport::TestCase
   # ---------------------------------------------------------------------------
   test "Create correct AzValidator" do
-
-    clear_az_db
-
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzValidator, 0)
@@ -46,9 +43,6 @@ class AzValidatorTest < ActiveSupport::TestCase
   end
   # ---------------------------------------------------------------------------
   test "Create incorrect AzValidator" do
-
-    clear_az_db
-
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzValidator, 0)
@@ -94,8 +88,6 @@ class AzValidatorTest < ActiveSupport::TestCase
   # ---------------------------------------------------------------------------
   test "AzProjectBlock reset seed test" do
 
-    clear_az_db
-
     Authorization.current_user = nil
 
     user = prepare_user(:user)
@@ -135,8 +127,6 @@ class AzValidatorTest < ActiveSupport::TestCase
   end
   # ---------------------------------------------------------------------------
   test "Test update_from_source AzValidator" do
-
-    clear_az_db
   
     Authorization.current_user = nil
 
@@ -174,9 +164,6 @@ class AzValidatorTest < ActiveSupport::TestCase
   end
   # ---------------------------------------------------------------------------
   test "Test update_from_seed AzValidator" do
-
-    clear_az_db
-
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzValidator, 0)

@@ -16,7 +16,7 @@
         <%= link_to(block.name, block, :style => 'padding-left: 4px;') %>
       </th>
       <th>
-        <%= form_for(block, :url => "/az_projects/remove_component/#{@project.id}/#{block.id}") do |f| %>
+        <% form_for(block, :url => "/az_projects/remove_component/#{@project.id}/#{block.id}") do |f| %>
           <%= f.submit "X", :class =>"remove-component", :confirm => t(:az_label_are_you_sure_may_take_a_while) %>
         <% end %>
       </th>

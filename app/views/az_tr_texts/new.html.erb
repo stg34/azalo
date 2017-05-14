@@ -1,6 +1,6 @@
 <h1>Новый текст</h1>
 
-<%= form_for(@az_tr_text, :builder => AzFormBuilder) do |f| %>
+<% form_for(@az_tr_text, :builder => AzFormBuilder) do |f| %>
 
   <%= render( :partial => 'new_edit', :locals => {:f => f}) %>
 

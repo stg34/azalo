@@ -1,6 +1,6 @@
 <h1>Редактирование статьи</h1>
 
-<%= form_for(@az_article, :html => { :multipart => true }) do |f| %>
+<% form_for(@az_article, :html => { :multipart => true }) do |f| %>
   <%= f.error_messages %>
 
   <%= render( :partial => '/az_articles/new_edit', :locals => {:f => f}) %>

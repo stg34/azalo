@@ -86,7 +86,7 @@
     будет возвращена половина стоимости старого тарифа - 5 уе, и списана половина стоимости нового тарифа, т.е. 10.
   </p>
 </div>
-<%= form_for(@az_company, :url => {:controller => 'az_companies', :action => 'set_tariff', :id => @az_company.id },
+<% form_for(@az_company, :url => {:controller => 'az_companies', :action => 'set_tariff', :id => @az_company.id },
                          :builder => AzFormBuilder) do |f| %>
   <%= f.error_messages %>
 

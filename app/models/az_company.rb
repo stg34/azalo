@@ -500,14 +500,14 @@ class AzCompany < ActiveRecord::Base
       wp = AzWarningPeriod.new
       wp.ends_at = Time.now + AZ_WARNING_PERIOD
       self.az_warning_period = wp
-      MessageMailer.cash_warning_message(ceo.email,
+      MessageMailer.deliver_cash_warning_message(ceo.email,
                                          'Задолженность по оплате услуг сервиса azalo.net',
                                          id, name, "#{ceo.name} #{ceo.lastname}",
-                                         get_balance, wp.ends_at).deliver
-      MessageMailer.cash_warning_message(Admin_email,
-                                         'Задолженность по оплате услуг сервиса azalo.net',
+                                         get_balance, wp.ends_at)
+      MessageMailer.deliver_cash_warning_message(Admin_email,
+                                         "Задолженность по оплате услуг сервиса azalo.net",
                                          id, name, "#{ceo.name} #{ceo.lastname}",
-                                         get_balance, wp.ends_at).deliver
+                                         get_balance, wp.ends_at)
 
       wp.save!
       #puts "created cash warning for #{self.name} #{self.id}"

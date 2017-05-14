@@ -3,8 +3,6 @@ require 'paperclip'
 
 class AzDesign < OwnedActiveRecord
 
-  attr_accessible :description, :az_page_id, :created_at, :updated_at, :owner_id, :copy_of
-
   belongs_to  :az_page
   
   has_many    :az_images, :dependent => :destroy
@@ -19,39 +17,43 @@ class AzDesign < OwnedActiveRecord
   
   attr_accessor :design_rnd
 
-  before_save :check_parent_page
-
-  validate :design_valid
-
-  def design_valid
+  def validate
     validate_parent_not_root
     validate_owner_id
   end
 
   def validate_owner_id
     if az_page == nil
-      errors.add(:base, "No parent page! Design '#{id}'")
+      errors.add_to_base("No parent page! Design '#{id}'")
       return
     end
     if az_page.owner_id != owner_id
-      errors.add(:base, "Incorrect owner_id value. Page has '#{az_page.owner_id}', Design has '#{owner_id}'")
+      errors.add_to_base("Incorrect owner_id value. Page has '#{az_page.owner_id}', Design has '#{owner_id}'")
     end
   end
 
   def validate_parent_not_root
     if az_page && az_page.root
-      errors.add(:base, 'Design cannot belongs to root page')
+      errors.add_to_base("Design cannot belongs to root page")
     end
   end
 
-  def check_parent_page
+  def before_destroy
+    puts "Design before_destroy"
+  end
+
+  def after_destroy
+    puts "Design after_destroy"
+  end
+
+  def before_save
     if self.id
       old = AzDesign.find(self.id)
       if old.az_page_id != self.az_page_id
         raise "Exception!!!"
       end
     end
-    puts "--------- =-= DESIGN =-= id: #{self.id}  page_id: #{self.az_page_id}  -------------------"
+    #puts "--------- =-= DESIGN =-= id: #{self.id}  page_id: #{self.az_page_id}  -------------------"
   end
 
   def self.get_model_name
@@ -111,7 +113,7 @@ class AzDesign < OwnedActiveRecord
 
   def make_copy_design(project, page)
     puts "DESIGN MAKE_COPY new_owner_id = #{page.owner.id}"
-    dup = self.az_clone
+    dup = self.clone
     dup.copy_of = id
     dup.az_page = page
     dup.owner = page.owner

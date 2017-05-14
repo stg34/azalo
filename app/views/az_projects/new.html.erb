@@ -10,7 +10,7 @@
 
 <h1><%= t(:az_label_new_project) %></h1>
 
-<%= form_for(@project, :builder => AzFormBuilder) do |f| %>
+<% form_for(@project, :builder => AzFormBuilder) do |f| %>
 
   <%= t(:az_label_name_of_new_project) %> <%= required_field %><br/>
   <%= f.text_field :name %><br/>

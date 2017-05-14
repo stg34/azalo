@@ -7,8 +7,7 @@ require 'az_page_test_helper'
 class AzDesignTest < ActiveSupport::TestCase
 
   # ---------------------------------------------------------------------------
-  test 'Create correct AzDesign' do
-    clear_az_db
+  test "Create correct AzDesign" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzDesign, 0)
@@ -32,8 +31,7 @@ class AzDesignTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzDesign, 1)
   end
   # ---------------------------------------------------------------------------
-  test 'Create incorrect AzDesign' do
-    clear_az_db
+  test "Create incorrect AzDesign" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzDesign, 0)

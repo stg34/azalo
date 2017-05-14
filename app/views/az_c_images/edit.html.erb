@@ -1,6 +1,6 @@
 <h1>Editing az_c_image</h1>
 
-<%= form_for(@az_c_image, :html => { :multipart => true }) do |f| %>
+<% form_for(@az_c_image, :html => { :multipart => true }) do |f| %>
   <%= f.error_messages %>
   <p>
     <%= f.file_field :c_image %><br/>

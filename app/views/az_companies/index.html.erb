@@ -2,11 +2,11 @@
 <fieldset>
   <legend>Фильтр</legend>
   <b>Тариф</b>
-  <%= form_for(AzCompany.new, :url => {:controller => 'az_companies', :action => 'set_filter'}) do |f| %>
+  <% form_for(AzCompany.new, :url => {:controller => 'az_companies', :action => 'set_filter'}) do |f| %>
     <%= f.select(:az_tariff_id, @tariffs) %>
     <%= f.submit('Найти') %>
   <% end %>
-  <%= form_for(AzCompany.new, :url => {:controller => 'az_companies', :action => 'reset_filter'}) do |f| %>
+  <% form_for(AzCompany.new, :url => {:controller => 'az_companies', :action => 'reset_filter'}) do |f| %>
     <%= f.submit('Сброс') %>
   <% end %>
 </fieldset>

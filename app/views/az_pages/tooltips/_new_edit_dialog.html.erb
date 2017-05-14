@@ -1,6 +1,6 @@
 <div id="new-edit-page-dialog" class="dialog">
 
-  <%= form_for(page, remote: true, :update => "new-edit-page-dialog", :builder => AzDialogFormBuilder) do |page_form| %>
+  <% remote_form_for(page, :update => "new-edit-page-dialog", :builder => AzDialogFormBuilder) do |page_form| %>
     <%= page_form.error_messages %>
 
     <div class="dialog-form-content">

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120826154427) do
+ActiveRecord::Schema.define(:version => 20130430074114) do
 
   create_table "az_activities", :force => true do |t|
     t.string   "action",      :null => false
@@ -42,7 +42,10 @@ ActiveRecord::Schema.define(:version => 20120826154427) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id",         :null => false
+    t.integer  "copy_of"
   end
+
+  add_index "az_allowed_operations", ["copy_of"], :name => "index_az_allowed_operations_on_copy_of"
 
   create_table "az_articles", :force => true do |t|
     t.string   "title"
@@ -81,9 +84,55 @@ ActiveRecord::Schema.define(:version => 20120826154427) do
     t.integer  "tr_position"
   end
 
+  add_index "az_base_data_types", ["az_base_data_type_id"], :name => "az_base_data_type_id"
+  add_index "az_base_data_types", ["az_base_data_type_id"], :name => "index_az_base_data_types_on_az_base_data_type_id"
   add_index "az_base_data_types", ["az_base_project_id"], :name => "index_az_base_data_types_on_az_base_project_id"
   add_index "az_base_data_types", ["copy_of"], :name => "index_az_base_data_types_on_copy_of"
   add_index "az_base_data_types", ["owner_id"], :name => "index_az_base_data_types_on_owner_id"
+
+  create_table "az_base_project_stats", :force => true do |t|
+    t.integer  "az_base_project_id"
+    t.integer  "components_num"
+    t.integer  "pages_num"
+    t.integer  "pages_words_num"
+    t.integer  "commons_num"
+    t.integer  "commons_words_num"
+    t.integer  "definitions_num"
+    t.integer  "definitions_words_num"
+    t.integer  "structs_num"
+    t.integer  "structs_variables_num"
+    t.integer  "design_sources_num"
+    t.integer  "designs_num"
+    t.integer  "images_num"
+    t.integer  "words_num"
+    t.integer  "disk_usage"
+    t.float    "quality"
+    t.integer  "version"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "commons_common_num"
+    t.integer  "commons_acceptance_condition_num"
+    t.integer  "commons_content_creation_num"
+    t.integer  "commons_purpose_exploitation_num"
+    t.integer  "commons_purpose_functional_num"
+    t.integer  "commons_requirements_hosting_num"
+    t.integer  "commons_requirements_reliability_num"
+    t.integer  "commons_functionality_num"
+  end
+
+  add_index "az_base_project_stats", ["az_base_project_id"], :name => "index_az_base_project_stats_on_az_base_project_id"
+  add_index "az_base_project_stats", ["commons_num"], :name => "index_az_base_project_stats_on_commons_num"
+  add_index "az_base_project_stats", ["components_num"], :name => "index_az_base_project_stats_on_components_num"
+  add_index "az_base_project_stats", ["definitions_num"], :name => "index_az_base_project_stats_on_definitions_num"
+  add_index "az_base_project_stats", ["design_sources_num"], :name => "index_az_base_project_stats_on_design_sources_num"
+  add_index "az_base_project_stats", ["designs_num"], :name => "index_az_base_project_stats_on_designs_num"
+  add_index "az_base_project_stats", ["disk_usage"], :name => "index_az_base_project_stats_on_disk_usage"
+  add_index "az_base_project_stats", ["images_num"], :name => "index_az_base_project_stats_on_images_num"
+  add_index "az_base_project_stats", ["pages_num"], :name => "index_az_base_project_stats_on_pages_num"
+  add_index "az_base_project_stats", ["quality"], :name => "index_az_base_project_stats_on_quality"
+  add_index "az_base_project_stats", ["structs_num"], :name => "index_az_base_project_stats_on_structs_num"
+  add_index "az_base_project_stats", ["structs_variables_num"], :name => "index_az_base_project_stats_on_structs_variables_num"
+  add_index "az_base_project_stats", ["words_num"], :name => "index_az_base_project_stats_on_words_num"
 
   create_table "az_base_projects", :force => true do |t|
     t.string   "name",                                    :null => false
@@ -105,11 +154,13 @@ ActiveRecord::Schema.define(:version => 20120826154427) do
     t.integer  "disk_usage",           :default => 0,     :null => false
     t.boolean  "seed"
     t.integer  "position"
-    t.boolean  "public_access"
+    t.boolean  "public_access",        :default => false, :null => false
     t.integer  "parent_project_id"
     t.boolean  "deleting",             :default => false
     t.boolean  "cache",                :default => false, :null => false
-    t.boolean  "public",               :default => false
+    t.boolean  "explorable",           :default => true
+    t.boolean  "forkable",             :default => true
+    t.float    "quality_correction",   :default => 1.0
   end
 
   add_index "az_base_projects", ["owner_id"], :name => "index_az_base_projects_on_owner_id"
@@ -210,6 +261,10 @@ ActiveRecord::Schema.define(:version => 20120826154427) do
     t.integer  "position",                          :null => false
   end
 
+  add_index "az_definitions", ["az_base_project_id"], :name => "index_az_definitions_on_az_base_project_id"
+  add_index "az_definitions", ["copy_of"], :name => "index_az_definitions_on_copy_of"
+  add_index "az_definitions", ["owner_id"], :name => "index_az_definitions_on_owner_id"
+
   create_table "az_design_sources", :force => true do |t|
     t.integer  "az_design_id",        :null => false
     t.string   "source_file_name",    :null => false
@@ -219,7 +274,12 @@ ActiveRecord::Schema.define(:version => 20120826154427) do
     t.integer  "owner_id",            :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "copy_of"
   end
+
+  add_index "az_design_sources", ["az_design_id"], :name => "az_design_id"
+  add_index "az_design_sources", ["az_design_id"], :name => "index_az_design_sources_on_az_design_id"
+  add_index "az_design_sources", ["copy_of"], :name => "index_az_design_sources_on_copy_of"
 
   create_table "az_designs", :force => true do |t|
     t.text     "description", :null => false
@@ -429,6 +489,8 @@ ActiveRecord::Schema.define(:version => 20120826154427) do
   end
 
   add_index "az_pages", ["az_base_project_id"], :name => "index_az_pages_on_az_base_project_id"
+  add_index "az_pages", ["az_design_double_page_id"], :name => "index_az_pages_on_az_design_double_page_id"
+  add_index "az_pages", ["az_functionality_double_page_id"], :name => "index_az_pages_on_az_functionality_double_page_id"
   add_index "az_pages", ["parent_id"], :name => "index_az_pages_on_parent_id"
 
   create_table "az_participants", :force => true do |t|
@@ -462,6 +524,7 @@ ActiveRecord::Schema.define(:version => 20120826154427) do
     t.boolean  "started",                                      :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "comment",                                      :default => ""
   end
 
   add_index "az_payments", ["az_company_id"], :name => "index_az_payments_on_az_company_id"
@@ -472,6 +535,11 @@ ActiveRecord::Schema.define(:version => 20120826154427) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id",           :null => false
+  end
+
+  create_table "az_project_stat_updates", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "az_project_statuses", :force => true do |t|
@@ -580,9 +648,6 @@ ActiveRecord::Schema.define(:version => 20120826154427) do
     t.decimal  "price",                  :precision => 9, :scale => 2, :default => 100.0, :null => false
     t.integer  "quota_disk",                                           :default => 0,     :null => false
     t.integer  "quota_active_projects",                                :default => 0,     :null => false
-    t.integer  "quota_components",                                     :default => 0,     :null => false
-    t.integer  "quota_structures",                                     :default => 0,     :null => false
-    t.integer  "quota_commons",                                        :default => 0,     :null => false
     t.integer  "quota_employees",                                      :default => 0,     :null => false
     t.integer  "position",                                                                :null => false
     t.integer  "tariff_type",                                                             :null => false
@@ -632,10 +697,12 @@ ActiveRecord::Schema.define(:version => 20120826154427) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id",             :null => false
+    t.integer  "copy_of"
   end
 
   add_index "az_typed_pages", ["az_base_data_type_id"], :name => "index_az_typed_pages_on_az_base_data_type_id"
   add_index "az_typed_pages", ["az_page_id"], :name => "index_az_typed_pages_on_az_page_id"
+  add_index "az_typed_pages", ["copy_of"], :name => "index_az_typed_pages_on_copy_of"
   add_index "az_typed_pages", ["owner_id"], :name => "index_az_typed_pages_on_owner_id"
 
   create_table "az_user_logins", :force => true do |t|
@@ -696,6 +763,8 @@ ActiveRecord::Schema.define(:version => 20120826154427) do
   end
 
   add_index "az_validators", ["az_variable_id"], :name => "index_az_validators_on_az_variable_id"
+  add_index "az_validators", ["owner_id"], :name => "index_az_validators_on_owner_id"
+  add_index "az_validators", ["owner_id"], :name => "owner_id"
 
   create_table "az_variables", :force => true do |t|
     t.string   "name"
@@ -709,6 +778,8 @@ ActiveRecord::Schema.define(:version => 20120826154427) do
     t.text     "description"
   end
 
+  add_index "az_variables", ["az_base_data_type_id"], :name => "az_base_data_type_id"
+  add_index "az_variables", ["az_base_data_type_id"], :name => "index_az_variables_on_az_base_data_type_id"
   add_index "az_variables", ["az_struct_data_type_id"], :name => "index_az_variables_on_az_struct_data_type_id"
   add_index "az_variables", ["copy_of"], :name => "index_az_variables_on_copy_of"
   add_index "az_variables", ["owner_id"], :name => "index_az_variables_on_owner_id"

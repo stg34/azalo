@@ -2,10 +2,7 @@ require 'test_helper'
 require 'az_definition_test_helper'
 class AzDefinitionTest < ActiveSupport::TestCase
  # ---------------------------------------------------------------------------
-  test 'Create correct AzDefinition' do
-
-    clear_az_db
-
+  test "Create correct AzDefinition" do
     Authorization.current_user = nil
     
     assert is_table_size_equal?(AzDefinition, 0)
@@ -21,10 +18,7 @@ class AzDefinitionTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzDefinition, 1)
   end
   # ---------------------------------------------------------------------------
-  test 'AzDefinition reset seed test' do
-
-    clear_az_db
-
+  test "AzDefinition reset seed test" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzDefinition, 0)
@@ -49,9 +43,7 @@ class AzDefinitionTest < ActiveSupport::TestCase
 
   end
   # ---------------------------------------------------------------------------
-  test 'Test update_from_source AzDefinition' do
-
-    clear_az_db
+  test "Test update_from_source AzDefinition" do
   
     Authorization.current_user = nil
 
@@ -86,10 +78,7 @@ class AzDefinitionTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzDefinition, 2)
   end
   # ---------------------------------------------------------------------------
-  test 'Test update_from_seed AzDefinition' do
-
-    clear_az_db
-
+  test "Test update_from_seed AzDefinition" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzDefinition, 0)

@@ -11,7 +11,7 @@
   <h2>Создать</h2>
 <% end %>
 
-<%= form_for(@az_struct_data_type, :builder => AzFormBuilder) do |f| %>
+<% form_for(@az_struct_data_type, :builder => AzFormBuilder) do |f| %>
   <%#= f.error_messages %>
 
   <%= f.hidden_field :az_base_project_id %>
@@ -48,7 +48,7 @@
             <%= s.description %>
           </td>
           <td>
-            <%= form_for(@az_struct_data_type, :url =>{:controller => 'az_struct_data_types', :action => 'copy_and_attach_to_project', :id => s.id, :project_id => @az_struct_data_type.az_base_project_id}) do |f| %>
+            <% form_for(@az_struct_data_type, :url =>{:controller => 'az_struct_data_types', :action => 'copy_and_attach_to_project', :id => s.id, :project_id => @az_struct_data_type.az_base_project_id}) do |f| %>
               <%= f.submit 'Копировать' %>
             <% end %>
           </td>

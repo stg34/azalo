@@ -1,7 +1,0 @@
-<% show_description = struct.az_variables.select{|v| v.description.strip.size > 0}.size > 0 %>
-| <%= t(:az_label_name) %> | Тип | Валидатор <% if show_description %>| <%= t(:az_label_description) %><% end %>|
-<% struct.az_variables.each do |variable| -%>
-<% validator_names = variable.az_validators.collect{|v| v.name}.join(', ') -%>
-|<%= h(variable.name) %> | <%= h(variable.az_base_data_type.name) %> | <%= h(validator_names) %> <% if show_description %> | <%= n2e variable.description %> <% end %>
-<% end -%>
-    

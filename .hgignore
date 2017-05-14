@@ -1,8 +1,11 @@
 # use glob syntax.
 syntax: glob
+!old/*
 .idea/*
 tmp/*
 log/*
 public/system/*
 public/system.bak/*
 public/images/captchas/*
+tmp/cache/*
+dumps/*

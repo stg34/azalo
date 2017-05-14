@@ -2,7 +2,7 @@
 
 <h1>Новая переменная структуры <q><%= @az_variable.az_struct_data_type.name %></q></h1>
 
-<%= form_for(@az_variable) do |f| %>
+<% form_for(@az_variable) do |f| %>
   <%= f.error_messages %>
 
   <%= render( :partial => 'new_edit', :locals => {:form => f}) %>

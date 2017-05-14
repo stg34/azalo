@@ -165,7 +165,7 @@ class AzTrText < OwnedActiveRecord
   end
 
   def make_copy(owner)
-    dup = self.az_clone
+    dup = self.clone
     dup.copy_of = id
     dup.owner = owner
     dup.seed = false

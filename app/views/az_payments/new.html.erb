@@ -2,7 +2,7 @@
 
 Пополнение счета на данный момент осуществляется с помощью карт Visa/Mastercard через систему Liqpay.<br/>
 
-<%= form_for(@az_payment, :builder => AzFormBuilder) do |f| %>
+<% form_for(@az_payment, :builder => AzFormBuilder) do |f| %>
   <p>
     <%= f.hidden_field :az_company_id %>
   </p>

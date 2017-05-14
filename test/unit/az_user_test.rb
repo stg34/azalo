@@ -4,9 +4,7 @@ require 'az_user_test_helper'
 class AzTaskTest < ActiveSupport::TestCase
 
   # ---------------------------------------------------------------------------
-  test 'Create correct AzUser' do
-
-    clear_az_db
+  test "Create correct AzUser" do
     Authorization.current_user = nil
     
     #AzUser.set_registration_open(true)
@@ -34,8 +32,7 @@ class AzTaskTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzUser, 1)
   end
   # ---------------------------------------------------------------------------
-  test 'Create user with too short password' do
-    clear_az_db
+  test "Create user with too short password" do
     Authorization.current_user = nil
 
     #AzUser.set_registration_open(true)
@@ -72,8 +69,7 @@ class AzTaskTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzUser, 0)
   end
   # ---------------------------------------------------------------------------
-  test 'Create and update correct AzUser' do
-    clear_az_db
+  test "Create and update correct AzUser" do
     Authorization.current_user = nil
 
     #AzUser.set_registration_open(true)
@@ -112,8 +108,7 @@ class AzTaskTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzUser, 1)
   end
   # ---------------------------------------------------------------------------
-  test 'Create user and update password' do
-    clear_az_db
+  test "Create user and update password" do
     Authorization.current_user = nil
 
     #AzUser.set_registration_open(true)
@@ -189,8 +184,7 @@ class AzTaskTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzUser, 1)
   end
   # ---------------------------------------------------------------------------
-  test 'Set password to nil' do
-    clear_az_db
+  test "Set password to nil" do
     Authorization.current_user = nil
 
     #AzUser.set_registration_open(true)

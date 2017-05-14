@@ -8,7 +8,7 @@
 
 
 #killall rake
-#export VVERBOSE=1; export QUEUE=mailer; nohup rake environment resque:work & > /dev/null
+#export VVERBOSE=1; export QUEUE=mailer; nohup rake production resque:work & > /dev/null
 
 #exit 0
 

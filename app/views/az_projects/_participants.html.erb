@@ -1,6 +1,6 @@
 <fieldset class="participatnts-block">
   <legend><%= t(:az_label_project_participants) %></legend>
-  <%= form_for(@project, :url => '/az_projects/change_members/' + @project.id.to_s) do |f| %>
+  <% form_for(@project, :url => '/az_projects/change_members/' + @project.id.to_s) do |f| %>
     <table class="table participants-table">
       <% @az_rm_roles.each do |role| %>
       <tr>

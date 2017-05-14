@@ -1,7 +1,5 @@
-<%= height = Paperclip::Geometry.parse(page.get_main_design.get_head_az_image.image.options.styles[:medium].geometry).height %>
-<%= width = Paperclip::Geometry.parse(page.get_main_design.get_head_az_image.image.options.styles[:medium].geometry).width %>
-<% #height = Paperclip::Geometry.parse(page.get_main_design.get_head_az_image.image.options.styles[:medium]).height -%>
-<% #width = Paperclip::Geometry.parse(page.get_main_design.get_head_az_image.image.options.styles[:medium]).width -%>
+<% height = Paperclip::Geometry.parse(page.get_main_design.get_head_az_image.image.options[:styles][:medium]).height -%>
+<% width = Paperclip::Geometry.parse(page.get_main_design.get_head_az_image.image.options[:styles][:medium]).width -%>
 
 <div class="designs-dialog">
   <h3 id="design_dialog_design_description"></h3>

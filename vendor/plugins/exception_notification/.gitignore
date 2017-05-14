@@ -1,0 +1,8 @@
+doc
+.project
+.idea
+*.gem
+.idea
+.idea/*
+.idea/**/*
+.DS_Store

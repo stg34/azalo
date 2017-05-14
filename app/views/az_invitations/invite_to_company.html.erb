@@ -1,6 +1,6 @@
 <h1>Отправить приглашение на работу в компании &quot;<%= @cmp.name %>&quot;</h1>
 
-<%= form_for(@az_invitation, :builder => AzFormBuilder, :url => { :action => 'create_invitation_to_company' }) do |f| %>
+<% form_for(@az_invitation, :builder => AzFormBuilder, :url => { :action => 'create_invitation_to_company' }) do |f| %>
   <p>
     Email приглашаемого человека<br />
     <%= f.text_field :email %>

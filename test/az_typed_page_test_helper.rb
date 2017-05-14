@@ -1,6 +1,6 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-require 'test_helper'
+require 'test_help'
 require 'az_allowed_operation_test_helper'
 require 'declarative_authorization/maintenance'
 

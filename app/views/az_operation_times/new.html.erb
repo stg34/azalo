@@ -1,6 +1,6 @@
 <h1>New az_operation_time</h1>
 
-<%= form_for(@az_operation_time) do |f| %>
+<% form_for(@az_operation_time) do |f| %>
   <%= f.error_messages %>
 
   <%= render( :partial => 'new_edit', :locals => {:form => f, :az_operations => @az_operations}) %>

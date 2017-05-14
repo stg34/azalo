@@ -8,11 +8,13 @@ class OwnedActiveRecord < ActiveRecord::Base
 
   belongs_to :owner, :foreign_key => 'owner_id', :class_name => 'AzCompany'
 
-  validate :validate_owner_id_in_my_works
+  def validate
+    validate_owner_id_in_my_works
+  end
 
   def validate_owner_id_common(name, parent_name)
     if az_base_project != nil && az_base_project.owner_id != owner_id
-      errors.add(:base, "Incorrect owner_id value. #{parent_name} project has '#{az_base_project.owner_id}', #{name} has '#{owner_id}'")
+      errors.add_to_base("Incorrect owner_id value. #{parent_name} project has '#{az_base_project.owner_id}', #{name} has '#{owner_id}'")
     end
   end
 
@@ -57,7 +59,7 @@ class OwnedActiveRecord < ActiveRecord::Base
     end
 
     if !works.include?(owner_id)
-      errors.add(:base, "Incorrect owner_id value. No my work with id '#{owner_id}' #{self.class}")
+      errors.add_to_base("Incorrect owner_id value. No my work with id '#{owner_id}' #{self.class}")
     end
   end
 

@@ -39,7 +39,6 @@ class PrTree < ActiveRecord::Base
 
   def walk_public_admin_subtree(page_type, &b)
     walked_page_ids = {}
-
     walk(nil, page_type) do |node|
       if !node.main_page.root && !walked_page_ids[node.main_page.id]
         b.call(node)
@@ -95,30 +94,6 @@ class PrTree < ActiveRecord::Base
 
       build_tree_internal(n, not_embedded.concat(children_embedded), level + 1, max_level)
     end
-  end
-
-  def self.generate_gv(project)
-    ptree = PrTree.build(project)
-    lines = ['digraph G {', 'node [shape=box];', 'graph [rankdir="LR"];']
-    ptree.walk(){|n| lines << "\"#{n.get_parent.main_page.name}-#{n.get_parent.main_page.id}\" -> \"#{n.main_page.name}-#{n.main_page.id}\";" unless n.get_parent.nil? }
-    lines << '}'
-    puts lines.join("\n")
-  end
-
-  def self.generate_gv1(project)
-    ptree = PrTree.build(project)
-    lines = ['digraph G {', 'node [shape=box];', 'graph [rankdir="LR"];']
-    nodes = []
-    links = []
-
-    ptree.walk(){|n| links << "#{n.get_parent.main_page.id} -> #{n.main_page.id};" unless n.get_parent.nil?; nodes << n }
-    links.uniq!
-    lines.concat(links)
-    nodes.each do |n|
-      lines << "#{n.main_page.id} [label=\"#{n.main_page.name}\"];"
-    end
-    lines << '}'
-    puts lines.join("\n")
   end
 
   private

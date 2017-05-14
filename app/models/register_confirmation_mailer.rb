@@ -1,6 +1,6 @@
 class RegisterConfirmationMailer < ActionMailer::Base
 
-  # include Resque::Mailer  # TODO Removed during Rails 3 migration
+  include Resque::Mailer
   
   def confirm_registration(email, hash_str, host, sent_at = Time.now)
     subject    'Подтверждение регистрации'

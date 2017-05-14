@@ -1,8 +1,5 @@
 class AzVariable < OwnedActiveRecord
 
-  attr_accessible :name, :az_base_data_type_id, :az_struct_data_type_id, :created_at, :updated_at, :copy_of,
-                  :owner_id, :position, :description, :az_base_data_type
-
   # TODO validate az_base_data_type.owner_id == az_struct_data_type.owner_id == self.owner_id
 
   belongs_to :az_base_data_type
@@ -16,11 +13,13 @@ class AzVariable < OwnedActiveRecord
 
   acts_as_list :scope => :az_struct_data_type_id
 
-  validate :validate_owner_id
+  def validate
+    validate_owner_id
+  end
 
   def validate_owner_id
     if az_struct_data_type && az_struct_data_type.owner_id != owner_id
-      errors.add(:base, "Incorrect owner_id value. Structure has '#{az_struct_data_type.owner_id}', variable has '#{owner_id}'")
+      errors.add_to_base("Incorrect owner_id value. Structure has '#{az_struct_data_type.owner_id}', variable has '#{owner_id}'")
     end
   end
 
@@ -53,7 +52,7 @@ class AzVariable < OwnedActiveRecord
   end
 
   def make_copy_variable(owner, project, parent_struct)
-    dup = self.az_clone
+    dup = self.clone
 
     #copy for belongs_to :az_base_data_type
 

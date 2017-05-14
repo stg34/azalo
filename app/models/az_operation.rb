@@ -1,7 +1,4 @@
 class AzOperation < ActiveRecord::Base
-
-  attr_accessible :crud_name, :name
-
   #belongs_to :az_base_data_type
   has_many :az_operation_times, :dependent => :destroy
 

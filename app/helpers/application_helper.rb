@@ -25,7 +25,7 @@ module ApplicationHelper
       end
 
     end
-    return str.html_safe
+    return str
   end
 
   def page_box_images(page)
@@ -72,16 +72,16 @@ module ApplicationHelper
     dnd_anchor = ""
     remove_double = ""
     if page.design_source == nil
-      dnd_anchor = content_tag('div', "", :class => 'draggable-design-source', :title=>'Тяни-бросай этот дизайн на другую страницу');
+      dnd_anchor = @template.content_tag('div', "", :class => 'draggable-design-source', :title=>'Тяни-бросай этот дизайн на другую страницу');
     else
       title = "Убрать дублирование дизайна страницы '#{page.design_source.name}'"
       onclick = "set_page_design_source('', #{page.id}); return false;"
-      remove_double_button = content_tag('input', '', :value => 'X', :type => 'submit', :class => 'remove-design-source', :title => title, :onclick => onclick)
-      remove_double = content_tag('div', remove_double_button, :class => 'remove-design-source-holder');
+      remove_double_button = @template.content_tag('input', '', :value => 'X', :type => 'submit', :class => 'remove-design-source', :title => title, :onclick => onclick)
+      remove_double = @template.content_tag('div', remove_double_button, :class => 'remove-design-source-holder');
     end
 
     str = "<div class='box_tiny_image_holder' style='width: #{w + holder_delta_w}px; height: #{h + 6}px'>" + link + scr + '</div>' + aligner_tag
-    (remove_double + dnd_anchor + str.html_safe).html_safe
+    return remove_double + dnd_anchor + str
   end
 
   def design_image_tag(design, size, show_tooltip = true)
@@ -114,11 +114,11 @@ module ApplicationHelper
   end
 
   def dfn(a)
-    return ('<dfn>' + a + '</dfn>').html_safe
+    return '<dfn>' + a + '</dfn>'
   end
 
   def dfn_c(a)
-    return ('<dfn class="capitalize">' + a + '</dfn>').html_safe
+    return '<dfn class="capitalize">' + a + '</dfn>'
   end
 
   def boolean_to_img(b, size = :medium)
@@ -130,47 +130,47 @@ module ApplicationHelper
   end
 
   def img_go_up
-      return '<img class="ud-down-arrows" src="/images/go_up.png">'.html_safe
+      return '<img class="ud-down-arrows" src="/images/go_up.png">'
   end
 
   def img_go_down
-      return '<img class="ud-down-arrows" src="/images/go_down.png">'.html_safe
+      return '<img class="ud-down-arrows" src="/images/go_down.png">'
   end
 
   def img_plus(size = :medium)
     case size
       when :small
-        return '<img src="/images/plus_small.png">'.html_safe
+        return '<img src="/images/plus_small.png">'
       when :medium
-        return '<img src="/images/plus.png">'.html_safe
+        return '<img src="/images/plus.png">'
       when :large
-        return '<img src="/images/plus.png">'.html_safe
+        return '<img src="/images/plus.png">'
     end
-    return '<img src="/images/plus.png">'.html_safe
+    return '<img src="/images/plus.png">'
   end
 
   def img_minus(size = :medium)
       case size
       when :small
-        return '<img src="/images/minus_small.png">'.html_safe
+        return '<img src="/images/minus_small.png">'
       when :medium
-        return '<img src="/images/minus.png">'.html_safe
+        return '<img src="/images/minus.png">'
       when :large
-        return '<img src="/images/minus.png">'.html_safe
+        return '<img src="/images/minus.png">'
     end
-    return '<img src="/images/minus.png">'.html_safe
+    return '<img src="/images/minus.png">'
   end
 
   def img_new
-      return '<img src="/images/new.png">'.html_safe
+      return '<img src="/images/new.png">'
   end
 
   def img_edit
-      return '<img src="/images/edit.png">'.html_safe
+      return '<img src="/images/edit.png">'
   end
 
   def img_delete
-      return '<img src="/images/delete.png">'.html_safe
+      return '<img src="/images/delete.png">'
   end
 
   def boolean_to_yes(b)
@@ -215,7 +215,7 @@ module ApplicationHelper
 
   
   def aligner_tag
-    return '<div class="aligner"></div>'.html_safe
+    return '<div class="aligner"></div>'
   end
 
   def percent_complete1(page)
@@ -510,7 +510,7 @@ module ApplicationHelper
     end
 
     str += "</table>"
-    str = content_tag('div', str.html_safe, :class => 'page-box-components')
+    str = @template.content_tag('div', str, :class => 'page-box-components')
     return str
   end
 
@@ -616,7 +616,7 @@ module ApplicationHelper
   def page_box_min_size
     min_width = '<div class="page_box_min_width"></div>'
     min_height = '<div  class="page_box_min_height"></div>'
-    (min_height + min_width).html_safe
+    return min_height + min_width
   end
 
   def page_description_tooltip(page, element_id, show_title = true)
@@ -670,7 +670,7 @@ module ApplicationHelper
       EOF
       str_b += str1
     end
-    return (str + str_b).html_safe
+    return str + str_b
   end
 
   def page_element_id(parent_id, page_num)
@@ -697,7 +697,7 @@ module ApplicationHelper
 #    end
 
     str += aligner_tag
-    return str.html_safe
+    return str
   end
 
 #  def page_data_content_tag(page)
@@ -750,7 +750,7 @@ module ApplicationHelper
   end
 
   def wiki_syntax_help
-    %q[<a onclick="window.open('/help/wiki_syntax.html', '', 'resizable=yes, location=no, width=300, height=640, menubar=no, status=no, scrollbars=yes'); return false;" href="/help/wiki_syntax.html">Помощь по синтаксису</a>].html_safe
+    %q[<a onclick="window.open('/help/wiki_syntax.html', '', 'resizable=yes, location=no, width=300, height=640, menubar=no, status=no, scrollbars=yes'); return false;" href="/help/wiki_syntax.html">Помощь по синтаксису</a>]
   end
 
   def required_field
@@ -767,11 +767,11 @@ module ApplicationHelper
 
 
   def t_b
-    return '<table><tr><td>'.html_safe
+    return '<table><tr><td>'
   end
 
   def t_e(id, content_id)
-    return ('</td><td>' + tooltip_image(id, content_id) + '</td></tr></table>').html_safe
+    return '</td><td>' + tooltip_image(id, content_id) + '</td></tr></table>'
   end
 
   def is_browser_ie
@@ -885,7 +885,7 @@ module ApplicationHelper
   end
 
   def page_dialog_title(title, page, title_class=nil, title_id=nil)
-    return dialog_title("#{title} (#{page.name})", title_class, title_id).html_safe
+    return dialog_title("#{title} (#{page.name})", title_class, title_id)
   end
 
   def project_access_icon(project)
@@ -906,11 +906,4 @@ def is_node_collapsed(path)
     end
   end
   return true
-end
-
-
-def link_to_remote(name, options = {}, html_options = nil)
-  html_options ||= {}
-  html_options.merge!(remote: true)
-  link_to name, options, html_options
 end

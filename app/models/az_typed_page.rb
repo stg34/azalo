@@ -1,7 +1,5 @@
 class AzTypedPage < OwnedActiveRecord
 
-  attr_accessible :az_page_id, :az_base_data_type_id, :created_at, :updated_at, :owner_id, :copy_of
-
   # TODO validete az_page.owner_id == az_base_data_type.owner_id == self.owner_id
   
   belongs_to :az_page
@@ -10,11 +8,13 @@ class AzTypedPage < OwnedActiveRecord
   has_many :az_typed_page_operations
   has_many :az_allowed_operations, :dependent => :destroy
 
-  validate :validate_owner_id
+  def validate
+    validate_owner_id
+  end
 
   def validate_owner_id
     if az_page.owner_id != owner_id
-      errors.add(:base, "Incorrect owner_id value. TypedPage has '#{az_page.owner_id}', page has '#{owner_id}'")
+      errors.add_to_base("Incorrect owner_id value. TypedPage has '#{az_page.owner_id}', page has '#{owner_id}'")
     end
   end
 
@@ -33,6 +33,11 @@ class AzTypedPage < OwnedActiveRecord
       #time += tpo.az_operation_time.operation_time
     end
     return time
+  end
+
+  def before_destroy
+    #puts "before_destroy ========================================"
+    #remove_dependent_objects
   end
 
   def remove_dependent_objects

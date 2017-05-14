@@ -1,7 +1,7 @@
 <fieldset class="definitions-block">
   <legend><%= t(:az_label_definition) %></legend>
   
-  <%= form_for(@project, :url => "/#{@project.class.to_s.underscore.pluralize}/change_definitions/" + @project.id.to_s) do |f| %>
+  <% form_for(@project, :url => "/#{@project.class.to_s.underscore.pluralize}/change_definitions/" + @project.id.to_s) do |f| %>
     <table class="table">
       <% @definitions.each do |definition| %>
       <tr>

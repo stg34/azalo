@@ -1,4 +1,4 @@
-<% if false && data_type_id %> <%## --- TODO Disabled after Rails 3 migration. Fix me. --- %>
+<% if data_type_id %>
   <% form_remote_tag(:url => {:controller => 'az_pages', :action => 'remove_data_type', :id => page.id, :data_type_id => data_type_id}, :html=>{:class => "edit_az_page"}) do %>
     <%= submit_tag 'X', {:class=>'remove-component-page', :disabled => !permitted_to?(:edit, page), :onclick=>"remove_data_type_from_page(#{page.id}, #{data_type_id}); return false;"} %>
   <% end %>

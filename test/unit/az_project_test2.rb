@@ -13,8 +13,8 @@ require 'az_struct_data_type_test_helper'
 require 'az_collection_template_test_helper'
 require 'az_collection_data_type_test_helper'
 
-# require 'test/factories/pages'
-require 'factories/page'
+#require 'factories/pages'
+
 class AzProjectTest2 < ActiveSupport::TestCase
 
   def write_project_yaml(project, file_name = 'test.yaml')
@@ -45,8 +45,6 @@ class AzProjectTest2 < ActiveSupport::TestCase
    #   ---------------------
    # =, H - связи между страницами
    # -, | - связи между источниками
-
-   clear_az_db
 
    Authorization.current_user = nil
 
@@ -112,13 +110,11 @@ class AzProjectTest2 < ActiveSupport::TestCase
    assert_equal(table_size(AzPage), 0)
  end
  # ---------------------------------------------------------------------------
-  test "Copy AzProject 2 (definitions and commons)" do
+ test "Copy AzProject 2 (definitions and commons)" do
 
-    clear_az_db
-
-    Authorization.current_user = nil
+   Authorization.current_user = nil
     commons = AzCommon.get_child_classes
-
+    
     #assert false # где az_commons_functionalities ?
 
     assert is_table_size_equal?(AzProject, 0)
@@ -192,8 +188,6 @@ class AzProjectTest2 < ActiveSupport::TestCase
   end
  # ---------------------------------------------------------------------------
   test "Copy AzProject (with assigned block)" do
-
-    clear_az_db
 
     Authorization.current_user = nil
 
@@ -325,8 +319,6 @@ class AzProjectTest2 < ActiveSupport::TestCase
    # =, H - связи между страницами
    # -, | - связи между источниками
 
-   clear_az_db
-
    Authorization.current_user = nil
 
    assert is_table_size_equal?(AzPage, 0)
@@ -412,8 +404,6 @@ class AzProjectTest2 < ActiveSupport::TestCase
 
 
   test 'Copy Project with structures and validators' do
-
-    clear_az_db
 
     Authorization.current_user = nil
 
@@ -579,8 +569,6 @@ class AzProjectTest2 < ActiveSupport::TestCase
 
   test 'Copy Project with structures, typed_pages and operations' do
 
-    clear_az_db
-
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzPage, 0)
@@ -603,8 +591,6 @@ class AzProjectTest2 < ActiveSupport::TestCase
 
     pages_o = {}
     pages_c = {}
-
-    n = 0
 
     defaults = {:az_base_project => project_src, :owner => company}
     pages_o['a_o'] = Factory(:az_page, defaults.merge({:parents => [project_src_root] }))

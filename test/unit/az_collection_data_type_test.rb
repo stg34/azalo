@@ -7,9 +7,6 @@ require 'az_project_test_helper'
 class AzCollectionDataTypeTest < ActiveSupport::TestCase
   
   test "Create correct AzCollectionDataType" do
-
-    clear_az_db
-
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzCollectionDataType, 0)
@@ -36,9 +33,6 @@ class AzCollectionDataTypeTest < ActiveSupport::TestCase
   end
 
   test "Create incorrect AzCollectionDataType" do
-
-    clear_az_db
-
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzCollectionDataType, 0)
@@ -74,9 +68,6 @@ class AzCollectionDataTypeTest < ActiveSupport::TestCase
   end
 
   test "make_copy AzCollectionDataType" do
-
-    clear_az_db
-
     Authorization.current_user = nil
 
     user = prepare_user(:user)

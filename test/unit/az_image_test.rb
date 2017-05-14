@@ -6,8 +6,7 @@ require 'az_project_test_helper'
 
 class AzImageTest < ActiveSupport::TestCase
   # ---------------------------------------------------------------------------
-  test 'Create correct AzImage' do
-    clear_az_db
+  test "Create correct AzImage" do
     Authorization.current_user = nil
 
     test_files_dir = get_test_files_dir
@@ -40,8 +39,7 @@ class AzImageTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzImage, correct_files.size)
   end
   # ---------------------------------------------------------------------------
-  test 'Create AzImage with incorrect mime-type' do
-    clear_az_db
+  test "Create AzImage with incorrect mime-type" do
     Authorization.current_user = nil
 
     test_files_dir = get_test_files_dir
@@ -74,8 +72,7 @@ class AzImageTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzImage, 0)
   end
   # ---------------------------------------------------------------------------
-  test 'Create AzImage with incorrect file size' do
-    clear_az_db
+  test "Create AzImage with incorrect file size" do
     Authorization.current_user = nil
 
     test_files_dir = File.expand_path(File.dirname(__FILE__) + "/../test_files/")

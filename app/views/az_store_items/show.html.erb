@@ -127,7 +127,7 @@
 
           <% else %>
 
-            <%= form_for(@az_store_item, :url => {:action => 'buy', :id => @az_store_item, :company_id => cmp}) do |f| %>
+            <% form_for(@az_store_item, :url => {:action => 'buy', :id => @az_store_item, :company_id => cmp}) do |f| %>
               <%= f.submit 'Купить', :confirm => t(:az_label_are_you_sure) %>
             <% end %>
 

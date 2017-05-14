@@ -3,7 +3,7 @@
 <% @az_user.password = @az_user.password_confirmation = nil %>
 
 <%#= error_messages_for :az_user %>
-<%= form_for(:az_user, :url => az_users_path, :builder => AzFormBuilder) do |f| -%>
+<% form_for(:az_user, :url => az_users_path, :builder => AzFormBuilder) do |f| -%>
 
   <% if @hide_hash %>
     <div style="display: none">

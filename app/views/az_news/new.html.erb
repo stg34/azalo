@@ -1,6 +1,6 @@
 <h1>Создать новость</h1>
 
-<%= form_for(@az_news, :url=>{:controller=>'az_news', :action=>'create'}) do |f| %>
+<% form_for(@az_news, :url=>{:controller=>'az_news', :action=>'create'}) do |f| %>
   <%= f.error_messages %>
 
   <%= render( :partial => 'new_edit', :locals => {:form => f}) %>

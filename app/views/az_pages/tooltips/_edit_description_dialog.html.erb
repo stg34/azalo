@@ -8,10 +8,9 @@
 <% end %>
 
 <div class="page-description-dialog" id="page-description-dialog-content">
-  <%= form_for(page,
-              remote: true,
-              :url => {:controller => 'az_pages', :action => 'update_description_and_title', :id => page.id},
-              :complete => complete_str) do |page_form| %>
+  <% remote_form_for(page,
+            :url => {:controller => 'az_pages', :action => 'update_description_and_title', :id => page.id},
+            :complete => complete_str) do |page_form| %>
  
       <% if show_title %>
         Заголовок

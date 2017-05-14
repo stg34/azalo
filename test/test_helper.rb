@@ -1,7 +1,6 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-# require 'test_help'
-require 'test_helper'
+require 'test_help'
 require 'declarative_authorization/maintenance'
 require 'az_tariff_test_helper'
 
@@ -22,7 +21,7 @@ class ActiveSupport::TestCase
   # The only drawback to using transactional fixtures is when you actually 
   # need to test transactions.  Since your test is bracketed by a transaction,
   # any transactions started in your code will be automatically rolled back.
-  # self.use_transactional_fixtures = true
+  #self.use_transactional_fixtures = true
 
   # Instantiated fixtures are slow, but give you @david where otherwise you
   # would need people(:david).  If you don't want to migrate your existing
@@ -40,35 +39,7 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 
   def logger
-    Rails.logger
-  end
-
-  def clear_az_db
-    ActiveSupport::TestCase.clear_az_db
-  end
-
-  def self.clear_az_db
-    AzAllowedOperation.delete_all
-    AzBaseProject.delete_all
-    AzCollectionDataType.delete_all
-    AzCollectionTemplate.delete_all
-    AzCommon.delete_all
-    AzCompany.delete_all
-    AzDefinition.delete_all
-    AzDesign.delete_all
-    AzImage.delete_all
-    AzOperation.delete_all
-    AzPage.delete_all
-    AzPageAzPage.delete_all
-    AzParticipant.delete_all
-    AzProjectStatus.delete_all
-    AzSimpleDataType.delete_all
-    AzStructDataType.delete_all
-    AzTypedPage.delete_all
-    AzValidator.delete_all
-    AzVariable.delete_all
-    AzUser.delete_all
-
+    RAILS_DEFAULT_LOGGER
   end
 
   def show_errors(errors)

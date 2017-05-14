@@ -8,7 +8,7 @@
     <% if not_enough_money %>
       Недостаточно денег. <%= link_to "Пополнить счет на #{amount}$", make_payment_path(:company_id => cmp.id, :amount => amount) %>
     <% else %>
-      <%= form_for(@az_store_item, :url => {:action => 'buy', :id => @az_store_item, :company_id => cmp}) do |f| %>
+      <% form_for(@az_store_item, :url => {:action => 'buy', :id => @az_store_item, :company_id => cmp}) do |f| %>
         <%= f.submit 'Купить', :confirm => t(:az_label_are_you_sure) %>
       <% end %>
     <% end %>

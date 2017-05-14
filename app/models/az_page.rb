@@ -1,10 +1,4 @@
-require 'statuses'
-
 class AzPage < OwnedActiveRecord
-
-  attr_accessible :name, :title, :az_base_project_id, :owner_id, :position, :root, :page_type, :parent_id, :estimated_time,
-                  :created_at, :updated_at, :az_design_double_page_id, :az_functionality_double_page_id, :copy_of,
-                  :description, :status, :tr_position, :embedded, :az_base_project, :owner, :parents
 
   # TODO Провалидировать, что owner_id у страниц :design_source и :functionality_source корректный
 
@@ -52,8 +46,7 @@ class AzPage < OwnedActiveRecord
 
   validates_uniqueness_of :root, :scope=>:az_base_project_id, :if => :root
 
-  validate :validate1
-  def validate1
+  def validate
     validate_owner_id_common('page', 'Project')
     validate_embedded_attribute if parents.size > 0
     validate_design_source
@@ -62,13 +55,13 @@ class AzPage < OwnedActiveRecord
   
   def validate_design_source
     if root && design_source
-      errors.add(:base, "Root page cannot has design")
+      errors.add_to_base("Root page cannot has design")
     end
   end
 
   def validate_embedded_attribute
     if embedded && !can_be_embedded?
-      errors.add(:base, "This page cannot be embedded")
+      errors.add_to_base("This page cannot be embedded")
     end
   end
 
@@ -82,7 +75,7 @@ class AzPage < OwnedActiveRecord
         #puts "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"
         #puts self.inspect
         #puts "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"
-        errors.add(:base, "Only root page can has no parents")
+        errors.add_to_base("Only root page can has no parents")
       end
     end
   end
@@ -109,6 +102,21 @@ class AzPage < OwnedActiveRecord
   def self.get_model_name
     return 'Страница'
   end
+
+#  def before_save
+#    if parents.size == 0 && !root
+#      parents << az_base_project.get_root_page
+#    end
+#  end
+
+  def before_destroy
+
+  end
+
+  def after_destroy
+    
+  end
+
 
 #  def self.reject_designs(attributes)
 #
@@ -344,10 +352,7 @@ class AzPage < OwnedActiveRecord
   end
 
   def no_az_design
-    # return
-    design = AzDesign.new#(:description => 'Нет дизайна')
-    design.description = 'Нет дизайна'
-    design
+    return AzDesign.new(:description => 'Нет дизайна')
   end
 
   def get_project
@@ -460,12 +465,7 @@ class AzPage < OwnedActiveRecord
     a = Time.now
     b = Time.now; puts a-b; a=b;
 
-    # dup = self.clone
-    dup = self.az_clone
-    # dup = AzPage.new
-    # self.attributes.each_pair{|attr, val| dup.send(attr+'=', val)}
-    # dup.id = nil
-
+    dup = self.clone
     dup.copying = true
     
     dup.owner = project.owner

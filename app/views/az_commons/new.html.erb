@@ -1,6 +1,6 @@
 <h1>Новое "<%= @az_common.class.get_label %>"</h1>
 
-<%= form_for(@az_common, :builder => AzFormBuilder) do |f| %>
+<% form_for(@az_common, :builder => AzFormBuilder) do |f| %>
   <%#= f.error_messages %>
 
   <%= render( :partial => '/az_commons/new_edit', :locals => {:form => f}) %>

@@ -7,11 +7,10 @@ require 'az_collection_data_type_test_helper'
 require 'az_project_test_helper'
 
 class AzStructDataTypeTest < ActiveSupport::TestCase
-  # fixtures :az_base_data_types
+  fixtures :az_base_data_types
 
   # ---------------------------------------------------------------------------
-  test 'Create correct AzStructDataType' do
-    clear_az_db
+  test "Create correct AzStructDataType" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzStructDataType, 0)
@@ -31,8 +30,7 @@ class AzStructDataTypeTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzStructDataType, 1)
   end
   # ---------------------------------------------------------------------------
-  test 'Create correct AzStructDataType with variables' do
-    clear_az_db
+  test "Create correct AzStructDataType with variables" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzStructDataType, 0)
@@ -69,8 +67,7 @@ class AzStructDataTypeTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzStructDataType, 1)
   end
   # ---------------------------------------------------------------------------
-  test 'Create incorrect AzStructDataType' do
-    clear_az_db
+  test "Create incorrect AzStructDataType" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzStructDataType, 0)
@@ -91,15 +88,13 @@ class AzStructDataTypeTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzStructDataType, 0)
   end
 
-  test 'AzStructDataType.make_copy() 1' do
-
+  test "AzStructDataType.make_copy() 1" do
     # Копируем простую структуру данных:
     # Структура_1
     # |---Переменная_1 : Простой_тип_1
     # |---Переменная_2 : Простой_тип_2
     # |---Переменная_3 : Простой_тип_3
 
-    clear_az_db
     Authorization.current_user = nil
 
     user = prepare_user(:user)
@@ -158,13 +153,12 @@ class AzStructDataTypeTest < ActiveSupport::TestCase
 
   end
   # ---------------------------------------------------------------------------
-  test 'AzStructDataType.make_copy() 2' do
+  test "AzStructDataType.make_copy() 2" do
     # Копируем структуру данных с коллекцией внутри одного проекта:
     # Структура_1
     # |---Переменная_1 : Простой_тип_1
     # |---Переменная_2 : Коллекция<Простой_тип_2>
 
-    clear_az_db
     Authorization.current_user = nil
 
     user = prepare_user(:user)
@@ -180,13 +174,12 @@ class AzStructDataTypeTest < ActiveSupport::TestCase
 
   end
   # ---------------------------------------------------------------------------
-  test 'AzStructDataType.make_copy() 3' do
+  test "AzStructDataType.make_copy() 3" do
     # Копируем структуру данных с коллекцией между проектами:
     # Структура_1
     # |---Переменная_1 : Простой_тип_1
     # |---Переменная_2 : Коллекция<Простой_тип_2>
 
-    clear_az_db
     Authorization.current_user = nil
 
     user = prepare_user(:user)
@@ -205,10 +198,9 @@ class AzStructDataTypeTest < ActiveSupport::TestCase
 
   end
   # ---------------------------------------------------------------------------
-  test 'AzStructDataType.make_copy() 4' do
+  test "AzStructDataType.make_copy() 4" do
     # Копируем структуру данных с рекурсией внутри одного проекта:
 
-    clear_az_db
     Authorization.current_user = nil
 
     user = prepare_user(:user)
@@ -227,10 +219,9 @@ class AzStructDataTypeTest < ActiveSupport::TestCase
 
   end
   # ---------------------------------------------------------------------------
-  test 'AzStructDataType.make_copy() 5' do
+  test "AzStructDataType.make_copy() 5" do
     # Копируем структуру данных с рекурсией внутри одного проекта:
 
-    clear_az_db
     Authorization.current_user = nil
 
     user = prepare_user(:user)
@@ -249,8 +240,7 @@ class AzStructDataTypeTest < ActiveSupport::TestCase
 
   end
   # ---------------------------------------------------------------------------
-  test 'AzStructDataType reset seed test' do
-    clear_az_db
+  test "AzStructDataType reset seed test" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzStructDataType, 0)
@@ -287,8 +277,6 @@ class AzStructDataTypeTest < ActiveSupport::TestCase
     # |---Переменная_1 : Простой_тип_1
     # |---Переменная_2 : Коллекция<Простой_тип_2>
 
-    # clear_az_db
-
     assert is_table_size_equal?(AzSimpleDataType, 0)
     assert is_table_size_equal?(AzVariable, 0)
     assert is_table_size_equal?(AzStructDataType, 0)
@@ -307,10 +295,10 @@ class AzStructDataTypeTest < ActiveSupport::TestCase
     cdt = create_collection_data_type(user, company, 'list_of_foo', ctpl, simple_types[rand(simple_types.size)], project_src)
     assert_not_nil cdt
 
-    var1 = create_variable(user, company, sdt, simple_types[rand(simple_types.size)], 'var_name_1')
+    var1 = create_variable(user, company, sdt, simple_types[rand(simple_types.size)], "var_name_1")
     assert_not_nil var1
 
-    var2 = create_variable(user, company, sdt, cdt, 'var_name_2')
+    var2 = create_variable(user, company, sdt, cdt, "var_name_2")
     assert_not_nil var2
 
     assert is_table_size_equal?(AzSimpleDataType, simple_types.size)
@@ -343,6 +331,7 @@ class AzStructDataTypeTest < ActiveSupport::TestCase
         # Если тип - массив, то он меняется, но его тип данных, если он простой не меняется.
         assert o_var.az_base_data_type.az_base_data_type.id == c_var.az_base_data_type.az_base_data_type.id
         assert o_var.az_base_data_type.id == c_var.az_base_data_type.copy_of
+
         # Скопрированная переменная должна иметь тип, который принадлежит project_dst
         assert c_var.az_base_data_type.az_base_project.id == project_dst.id
       end

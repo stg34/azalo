@@ -1,6 +1,6 @@
 <h1><%= @az_company.name %></h1>
 
-<%= form_for(@az_company, :url => {:action => :user_update, :id => @az_company.id },
+<% form_for(@az_company, :url => {:action => :user_update, :id => @az_company.id }, 
                          :html => { :multipart => true },
                          :builder => AzFormBuilder) do |f| %>
   <%= f.error_messages %>

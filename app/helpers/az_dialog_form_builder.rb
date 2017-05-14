@@ -20,13 +20,12 @@ class AzDialogFormBuilder < AzFormBuilder
 #  end
 
   def field_holder(content, method, options = {})
-    # errors_present = !self.error_message_on(method).empty?
-    errors_present = self.object.errors.any?
+    errors_present = !self.error_message_on(method).empty?
     error_class = errors_present ? 'dialog_error_description' : ''
 
     if errors_present
       rnd = Integer(rand()*100000000).to_s
-      message = @template.content_tag('div', self.object.errors(method), :id => "validate-message-content-#{rnd}")
+      message = @template.content_tag('div', self.error_message_on(method), :id => "validate-message-content-#{rnd}")
       message_container = @template.content_tag('div', message, :style=>'display: none')
       img = @template.image_tag('/images/error_help.png', :id => "validate-message-#{rnd}", :class => "help-image")
       script = "<script>TooltipManager.addHTML('validate-message-#{rnd}', 'validate-message-content-#{rnd}');</script>"

@@ -1,6 +1,6 @@
 <h1>Новая коллекция</h1>
 
-<%= form_for(@az_collection_data_type) do |f| %>
+<% form_for(@az_collection_data_type) do |f| %>
   <%= f.error_messages %>
 
   <%= render( :partial => 'new_edit', :locals => {:form => f}) %>

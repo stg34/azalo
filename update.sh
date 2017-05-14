@@ -10,7 +10,7 @@ password='1234567890'
 
 #tar -cf /opt/dumps/azalo.src.$dump_date.tar ./
 
-hg pull ssh://boris@stgteam.dp.ua:10222/programs/sites/stg/tr_gen_light
+hg pull ssh://boris@stgteam.dp.ua:10222/projects/programs/azalo/tr_gen_light.production
 hg up
 
 ps ax | grep ruby | grep 3000

@@ -1,6 +1,6 @@
 <h1>Редактирование языка</h1>
 
-<%= form_for(@az_language, :html => { :multipart => true }) do |f| %>
+<% form_for(@az_language, :html => { :multipart => true }) do |f| %>
   <%= f.error_messages %>
 
   <%= render( :partial => 'new_edit', :locals => {:f => f}) %>

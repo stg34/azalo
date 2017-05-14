@@ -15,9 +15,6 @@ Az_image_image_width_big=400
 Az_image_image_height_big=600
 
 class AzImage < ActiveRecord::Base #OwnedActiveRecord TODO
-
-  attr_accessible :az_design, :image_file_name
-
   #has_attached_file :image
 
   #has_attached_file :image, :styles => { :big => "400x600>", :medium => "200x300>", :small => "100x150>", :tiny => {:geometry => "50x75"} }
@@ -47,30 +44,35 @@ class AzImage < ActiveRecord::Base #OwnedActiveRecord TODO
   #                                         :tiny => {:geometry => "#{Az_image_image_width_tiny}x#{Az_image_image_height_tiny}", :processors => [:cropper]} }
   ########################################################################################################################################################
 
-  # after_post_process :save_tiny_image_dimensions
-  before_save :save_tiny_image_dimensions
-  before_create :remove_unassigned_images
+  after_post_process :save_tiny_image_dimensions
+
+  def before_destroy
+    puts "#{self.class} #{self.id}"
+  end
+
   def save_tiny_image_dimensions
-    # geo = Paperclip::Geometry.from_file(image.queued_for_write[:tiny])
-    # self.tiny_image_width = geo.width
-    # self.tiny_image_height = geo.height
+    geo = Paperclip::Geometry.from_file(image.queued_for_write[:tiny])
+    self.tiny_image_width = geo.width
+    self.tiny_image_height = geo.height
   end
 
   validates_attachment_size           :image, :in => 1..3.megabytes
   validates_attachment_content_type   :image, :content_type => ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
   validates_attachment_presence       :image
 
-  validate :validate_owner_id
+  def validate
+    validate_owner_id
+  end
 
   def validate_owner_id
     if !new_record? && az_design.owner_id != owner_id
-      errors.add(:base, "Incorrect owner_id value. Design has '#{az_design.owner_id}', Image has '#{owner_id}'")
+      errors.add_to_base("Incorrect owner_id value. Design has '#{az_design.owner_id}', Image has '#{owner_id}'")
     end
   end
 
   #validates_presence_of :az_design
 
-  def remove_unassigned_images
+  def before_create
     AzImage.remove_unassigned_images
   end
 
@@ -98,7 +100,7 @@ class AzImage < ActiveRecord::Base #OwnedActiveRecord TODO
 
   def make_copy_image(design)
     puts "IMAGE MAKE_COPY new_owner_id = #{design.owner.id}"
-    dup = self.az_clone
+    dup = self.clone
     dup.copy_of = id
     dup.az_design = design
     dup.owner = design.owner

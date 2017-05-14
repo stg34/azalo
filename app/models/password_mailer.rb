@@ -1,6 +1,6 @@
 class PasswordMailer < ActionMailer::Base
 
-  # include Resque::Mailer  # TODO Removed during Rails 3 migration
+  include Resque::Mailer
 
   def reset_password_hash(login, name, email, hash_str, host, sent_at = Time.now)
     subject    'Azalo.net: Восстановление пароля'

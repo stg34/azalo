@@ -1,6 +1,6 @@
 class AzBalanceTransactionsController < ApplicationController
 
-  filter_access_to :index
+  filter_access_to:index
   filter_access_to :all, :attribute_check => true
 
   layout "main"

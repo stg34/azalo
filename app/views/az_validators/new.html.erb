@@ -8,7 +8,7 @@
 </div>
 <%= t_b %><h1>Новый валидатор</h1><%= t_e("tooltip-validator-1", "tooltip-content-validator-1") %>
 
-<%= form_for(@az_validator, :builder => AzFormBuilder) do |f| %>
+<% form_for(@az_validator, :builder => AzFormBuilder) do |f| %>
   <%#= f.error_messages %>
 
   <%= render( :partial => 'new_edit', :locals => {:form => f}) %>

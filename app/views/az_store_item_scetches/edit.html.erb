@@ -1,6 +1,6 @@
 <h1>Редактирования скетча товара</h1>
 
-<%= form_for(@az_store_item_scetch, :html => { :multipart => true }) do |f| %>
+<% form_for(@az_store_item_scetch, :html => { :multipart => true }) do |f| %>
   <%= f.error_messages %>
 
   <%= render( :partial => 'new_edit', :locals => {:f => f}) %>

@@ -15,9 +15,6 @@ require 'az_project_status_test_helper'
 
 class AzCompanyTest < ActiveSupport::TestCase
   test "AzCompany create_default_content test" do
-
-    clear_az_db
-
     Authorization.current_user = nil
 
     commons = [AzCommonsCommon,
@@ -106,8 +103,6 @@ class AzCompanyTest < ActiveSupport::TestCase
 
   test "AzCompany new_tariff_test_1_2" do
 
-    clear_az_db
-
     # Тесты соотв. рис. 1 и 2
     
     Authorization.current_user = nil
@@ -189,8 +184,6 @@ class AzCompanyTest < ActiveSupport::TestCase
 
   test "AzCompany new_tariff_test_3" do
 
-    clear_az_db
-
     # Тесты соотв. рис. 3
 
     Authorization.current_user = nil
@@ -266,9 +259,6 @@ class AzCompanyTest < ActiveSupport::TestCase
 
   test "AzCompany new_tariff_test_4_a" do
 
-
-    clear_az_db
-
     # Тест 4 а
 
     Authorization.current_user = nil
@@ -307,9 +297,6 @@ class AzCompanyTest < ActiveSupport::TestCase
   end
 
   test "AzCompany new_tariff_test_4" do
-
-    clear_az_db
-
     # Тест 4
 
     Authorization.current_user = nil
@@ -342,9 +329,6 @@ class AzCompanyTest < ActiveSupport::TestCase
   end
 
   test "AzCompany new_tariff_test_5" do
-
-    clear_az_db
-
     # Тест 5
 
     Authorization.current_user = nil
@@ -458,9 +442,6 @@ class AzCompanyTest < ActiveSupport::TestCase
 
 
   test "AzCompany free tariff and public and private projects" do
-
-    clear_az_db
-
     # Проверка на создание приватных проектов у компании с бесплатным тарифом
 
     Authorization.current_user = nil
@@ -531,8 +512,6 @@ class AzCompanyTest < ActiveSupport::TestCase
 
   test "AzCompany copying project by locked company" do
     # Попытка копирования чужого проекта в заблокированную компанию
-
-    clear_az_db
 
     Authorization.current_user = nil
     user = prepare_user(:user)

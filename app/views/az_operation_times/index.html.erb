@@ -19,7 +19,7 @@
         <% t = 0 %>
         <% t = sdt[az_operation].operation_time if sdt[az_operation] %>
 
-        <%= form_for(AzOperationTime.new) do |f| %>
+        <% form_for(AzOperationTime.new) do |f| %>
           <%= f.text_field 'operation_time', {:value => t, :size=>2, :class=>'ids_input'} %>
           <%= f.hidden_field 'az_operation_id', {:value => az_operation.id, :size=>2, :class=>'ids_input'} %>
           <%= f.hidden_field 'az_base_data_type_id', {:value => sdt.id, :size=>2, :class=>'ids_input'} %>

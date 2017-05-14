@@ -1,12 +1,12 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-require 'test_helper'
+require 'test_help'
 require 'declarative_authorization/maintenance'
 
 class ActiveSupport::TestCase
   
   def logger
-    Rails.logger
+    RAILS_DEFAULT_LOGGER
   end
 
   def create_project(user, owner, name, seed = nil)
@@ -62,22 +62,21 @@ class ActiveSupport::TestCase
     assert original.customer == copy.customer
     assert original.az_project_status_id == copy.az_project_status_id
     assert original.layout_time == copy.layout_time
+    
+    if original.favicon_file_name != nil
+      original.favicon.styles.each_pair do |k, v|
+        file_name_o = File.expand_path(original.favicon.path(k))
+        file_name_c = File.expand_path(copy.favicon.path(k))
 
-    # TODO Fix me. Favicon temporary disabled. See AzBaseProject
-    # if original.favicon_file_name != nil
-    #   original.favicon.styles.each_pair do |k, v|
-    #     file_name_o = File.expand_path(original.favicon.path(k))
-    #     file_name_c = File.expand_path(copy.favicon.path(k))
-    #
-    #     #puts file_name_o
-    #     #puts file_name_c
-    #
-    #     assert file_name_o != file_name_c
-    #     assert File.basename(file_name_o) == File.basename(file_name_c)
-    #     assert File.exist?(file_name_c)
-    #     assert File.size(file_name_c) == File.size(file_name_o)
-    #   end
-    # end
+        #puts file_name_o
+        #puts file_name_c
+
+        assert file_name_o != file_name_c
+        assert File.basename(file_name_o) == File.basename(file_name_c)
+        assert File.exist?(file_name_c)
+        assert File.size(file_name_c) == File.size(file_name_o)
+      end
+    end
 
     original.az_pages.each do |p|
       #puts p.inspect

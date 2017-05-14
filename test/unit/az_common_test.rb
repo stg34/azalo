@@ -4,9 +4,6 @@ require 'az_common_test_helper'
 class AzCommonTest < ActiveSupport::TestCase
   # ---------------------------------------------------------------------------
   test "Create commons test" do
-
-    clear_az_db
-
     Authorization.current_user = nil
 
     user = prepare_user(:user)
@@ -57,9 +54,6 @@ class AzCommonTest < ActiveSupport::TestCase
   end
   # ---------------------------------------------------------------------------
   test "Copy commons test" do
-
-    clear_az_db
-
     Authorization.current_user = nil
 
     user = prepare_user(:user)
@@ -134,8 +128,6 @@ class AzCommonTest < ActiveSupport::TestCase
   # ---------------------------------------------------------------------------
   test "AzCommon reset seed test" do
 
-    clear_az_db
-
     Authorization.current_user = nil
 
     user = prepare_user(:user)
@@ -195,8 +187,6 @@ class AzCommonTest < ActiveSupport::TestCase
   # ---------------------------------------------------------------------------
   test "Test update_from_source AzCommon" do
 
-    clear_az_db
-
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzCommon, 0)
@@ -232,9 +222,6 @@ class AzCommonTest < ActiveSupport::TestCase
   end
   # ---------------------------------------------------------------------------
   test "Test update_from_seed AzCommon" do
-
-    clear_az_db
-
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzCommon, 0)

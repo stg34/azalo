@@ -7,8 +7,7 @@ require 'az_common_test_helper'
 
 class AzProjectBlockTest < ActiveSupport::TestCase
   # ---------------------------------------------------------------------------
-  test 'create AzProjectBlock' do
-    clear_az_db
+  test "create AzProjectBlock" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzProjectBlock, 0)
@@ -42,8 +41,7 @@ class AzProjectBlockTest < ActiveSupport::TestCase
 
   end
   # ---------------------------------------------------------------------------
-  test 'attach AzProjectBlock' do
-    clear_az_db
+  test "attach AzProjectBlock" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzProjectBlock, 0)
@@ -95,8 +93,7 @@ class AzProjectBlockTest < ActiveSupport::TestCase
 
   end
   # ---------------------------------------------------------------------------
-  test 'attach AzProjectBlock with definitions' do
-    clear_az_db
+  test "attach AzProjectBlock with definitions" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzProject, 0)
@@ -160,9 +157,8 @@ class AzProjectBlockTest < ActiveSupport::TestCase
 
   end
   # ---------------------------------------------------------------------------
-  test 'AzProjectBlock reset seed test' do
+  test "AzProjectBlock reset seed test" do
 
-    clear_az_db
     Authorization.current_user = nil
 
     user = prepare_user(:user)
@@ -190,8 +186,7 @@ class AzProjectBlockTest < ActiveSupport::TestCase
 
   end
   # ---------------------------------------------------------------------------
-  test 'move definitions' do
-    clear_az_db
+  test "move definitions" do
     Authorization.current_user = nil
 
     user = prepare_user(:user)
@@ -263,8 +258,7 @@ class AzProjectBlockTest < ActiveSupport::TestCase
   # ---------------------------------------------------------------------------
 
 
-  test 'move commons' do
-    clear_az_db
+  test "move commons" do
     Authorization.current_user = nil
 
     user = prepare_user(:user)

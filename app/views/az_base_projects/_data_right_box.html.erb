@@ -1,6 +1,6 @@
 <div style="float:left;" id="show-hide-right-data-box-container">
 
-  <%#= # --- TODO Disabled after Rails 3 migration. Fix me. --- link_to_function getHideLabel,
+  <%= link_to_function getHideLabel,
         visual_effect(:toggle_slide, 'right-data-box', :duration => 0.5,
                       :afterFinish => 'function() {' + switchShowHideLabels('show-hide-right-data-box', "#{t(:az_label_show)}", "#{t(:az_label_hide)}") + '}'),
         :id => 'show-hide-right-data-box' %>

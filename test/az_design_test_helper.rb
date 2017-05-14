@@ -1,13 +1,13 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-require 'test_helper'
+require 'test_help'
 require 'az_design_source_test_helper'
 require 'declarative_authorization/maintenance'
 
 class ActiveSupport::TestCase
   
   def logger
-    Rails.logger
+    RAILS_DEFAULT_LOGGER
   end
 
   def create_design(user, owner, description, page)

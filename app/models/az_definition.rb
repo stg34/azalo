@@ -1,7 +1,5 @@
 class AzDefinition < OwnedActiveRecord
-
-  attr_accessible :name, :definition, :az_user_id, :az_base_project_id, :created_at, :updated_at, :owner_id, :seed, :copy_of, :status, :position
-
+  
   belongs_to :az_base_project
 
   belongs_to :matrix, :class_name=>'AzDefinition', :foreign_key=>'copy_of'
@@ -9,18 +7,18 @@ class AzDefinition < OwnedActiveRecord
   validates_presence_of     :name
   validates_presence_of     :definition
 
-  before_create :set_initial_position
-
   include Statuses
 
-  validate :validate_owner
-
-  def validate_owner
+  def validate
     validate_owner_id_common('definition', 'Project')
   end
 
   def self.get_model_name
     return "Определние"
+  end
+
+  def before_create
+    self.set_initial_position
   end
 
   def self.get_by_company(company)
@@ -40,7 +38,7 @@ class AzDefinition < OwnedActiveRecord
   end
 
   def make_copy_definition(owner, project)
-    dup = self.az_clone
+    dup = self.clone
     dup.copy_of = id
     dup.owner = owner
     dup.az_base_project = project

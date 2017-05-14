@@ -66,6 +66,16 @@
 #
 # http://wiki.rubyonrails.org/rails/pages/HowToSendEmailsWithActionMailer
 
+#production:
+#  delivery_method: :smtp
+#  smtp_settings:
+#    address: '194.0.200.220'
+#    port: 25
+#    domain: "stg.dp.ua"
+#    authentication: :login
+#    user_name: "redmine@stg.dp.ua"
+#    password: "rWX2EmOsN"
+#
 
 production:
   delivery_method: :sendmail
@@ -73,3 +83,12 @@ production:
 development:
   delivery_method: :sendmail
 
+#development:
+#  delivery_method: :smtp
+#  smtp_settings:
+#    address: '194.0.200.220'
+#    port: 25
+#    domain: "stg.dp.ua"
+#    authentication: :login
+#    user_name: "redmine@stg.dp.ua"
+#    password: "rWX2EmOsN"

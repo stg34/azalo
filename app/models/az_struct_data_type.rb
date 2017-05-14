@@ -1,8 +1,5 @@
 class AzStructDataType < AzBaseDataType
-
-  attr_accessible :name, :type, :az_base_data_type_id, :az_collection_template_id, :created_at, :updated_at,
-                  :copy_of, :owner_id, :seed, :az_base_project_id, :description, :status, :position, :tr_position
-
+  
   #has_many :az_typed_pages, :foreign_key => 'az_base_data_type_id'
   #has_many :typed_pages, :through => :az_typed_pages, :source => 'az_page', :dependent => :destroy
 
@@ -39,7 +36,7 @@ class AzStructDataType < AzBaseDataType
   # TODO заменить везеде project_id на Project (когда это писалось это было необходимо для получения owner_id,
   # AzBaseProject.find(project_id) - это хуже чем передать объект)
   def make_copy_data_type(owner, project)
-    dup = self.az_clone
+    dup = self.clone
     dup.owner = owner
     dup.az_base_project = project
     dup.copy_of = id

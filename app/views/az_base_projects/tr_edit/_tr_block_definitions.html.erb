@@ -26,13 +26,13 @@
           <td style="padding: 1px;">
             <% alt_title = t(:az_label_move_block_up, :block_name => h(definition.name)) %>
             <% up_img = image_tag('tr-up.png', :alt => alt_title, :title => alt_title) %>
-            <%# --- TODO Disabled after Rails 3 migration. Fix me. ---= az_link_to_remote(up_img, :url => {:controller => "az_base_projects", :action => 'move_definition_up_tr', :id => project.id, :definition_id => definition.id},
+            <%= az_link_to_remote(up_img, :url => {:controller => "az_base_projects", :action => 'move_definition_up_tr', :id => project.id, :definition_id => definition.id},
               :complete => "update_definitions_in_tr()") %>
           </td>
           <td style="padding: 1px;">
             <% alt_title = t(:az_label_move_block_down, :block_name => h(definition.name)) %>
             <% down_img = image_tag('tr-down.png', :alt => alt_title, :title => alt_title) %>
-            <%# --- TODO Disabled after Rails 3 migration. Fix me. ---= az_link_to_remote(down_img, :url => {:controller => "az_base_projects", :action => 'move_definition_down_tr', :id => project.id, :definition_id => definition.id},
+            <%= az_link_to_remote(down_img, :url => {:controller => "az_base_projects", :action => 'move_definition_down_tr', :id => project.id, :definition_id => definition.id},
               :complete => "update_definitions_in_tr()") %>
           </td>
           <td style="padding: 1px;">

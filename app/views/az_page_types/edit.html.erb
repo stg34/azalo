@@ -1,6 +1,6 @@
 <h1>Редактирование типа страниц</h1>
 
-<%= form_for(@az_page_type) do |f| %>
+<% form_for(@az_page_type) do |f| %>
   <%= f.error_messages %>
 
   <%= render( :partial => 'new_edit', :locals => {:f => f}) %>

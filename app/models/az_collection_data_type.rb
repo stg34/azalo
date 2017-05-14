@@ -1,8 +1,5 @@
 class AzCollectionDataType < AzBaseDataType
 
-  attr_accessible :name, :type, :az_base_data_type_id, :az_collection_template_id, :created_at, :updated_at, :copy_of,
-                  :owner_id, :seed, :az_base_project_id, :description, :status, :position, :tr_position, :az_base_data_type, :az_collection_template
-
   # TODO валидировать:
   # name - не пусто
   # az_base_data_type_id - не пусто
@@ -22,6 +19,16 @@ class AzCollectionDataType < AzBaseDataType
   validates_presence_of :az_collection_template
   validates_presence_of :az_base_project
 
+  def validate
+    #if az_base_data_type.class != AzStructDataType
+    #  errors.add_to_base("Incorrect type of collection. Collection can has Struct elements only")
+    #end
+  end
+
+  def before_save
+    #self.name = self.az_collection_template.name + '<' + self.az_base_data_type.name + '>'
+  end
+
   def self.get_model_name
     return "Коллекция"
   end
@@ -40,7 +47,7 @@ class AzCollectionDataType < AzBaseDataType
   end
 
   def make_copy_data_type(owner, project)
-    dup = self.az_clone
+    dup = self.clone
     dup.copy_of = id
     dup.owner = owner
     dup.az_base_project = project

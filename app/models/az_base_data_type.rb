@@ -19,8 +19,6 @@ class AzBaseDataType < OwnedActiveRecord
 
   validates_presence_of     :name
 
-  before_create :set_initial_position
-
   has_many :az_operation_times
   has_many :az_collection_data_types, :foreign_key => 'az_base_data_type_id', :source => 'az_collection_data_type', :dependent => :destroy # Обратная сторона из AzCollectionDataType  belongs_to :az_base_data_type
 
@@ -37,6 +35,10 @@ class AzBaseDataType < OwnedActiveRecord
 
   def make_copy_data_type(owner, project)
     return self
+  end
+
+  def before_create
+    self.set_initial_position
   end
 
 #  def find_parent_project_ids

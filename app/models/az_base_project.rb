@@ -3,36 +3,8 @@ require 'paperclip'
 
 class AzBaseProject < OwnedActiveRecord
   Max_quality = 18.3
-
-  #filter_access_to :all #TODO Fix me
-
-  attr_accessible :author_id,
-                  :az_project_status_id,
-                  :cache,
-                  :copy_of,
-                  :created_at,
-                  :customer,
-                  :deleting,
-                  :disk_usage,
-                  :explorable,
-                  :favicon_content_type,
-                  :favicon_file_name,
-                  :favicon_file_size,
-                  :favicon_updated_at,
-                  :forkable,
-                  # :id,
-                  :layout_time,
-                  :name,
-                  :owner_id,
-                  :parent_project_id,
-                  :percent_complete,
-                  :position,
-                  :public_access,
-                  :quality_correction,
-                  :rm_id,
-                  :seed,
-                  :type,
-                  :updated_at
+  #TODO
+  #filter_access_to :all
 
   has_many    :az_pages,   :order=>:position, :dependent => :destroy#, :conditions => {:parent_id => nil}
 
@@ -66,6 +38,12 @@ class AzBaseProject < OwnedActiveRecord
 
   validates_presence_of     :name
   validates_presence_of     :author
+
+  def before_destroy
+    #puts "destroy project: #{self.id}"
+    #pids = az_pages.collect{|p| p.id}.join(', ')
+    #puts "pages: #{pids}"
+  end
 
   def store_item
     # Обход бага рельсов. см. описание в AzProject и AzProjectBlock
@@ -597,9 +575,8 @@ class AzBaseProject < OwnedActiveRecord
     variable_ids_original_copy = {}
     design_ids_original_copy = {}
     typed_page_ids_original_copy = {}
-
+    
     prj = new(project_hash['az_project'])
-    prj.id = nil
     prj.seed = false
 
     if local_copy
@@ -741,14 +718,14 @@ class AzBaseProject < OwnedActiveRecord
     b = Time.now; puts a-b; a=b;
     #b = Time.now; puts "-> 1. " + (b-a).to_s; a=b;
 
-    dup = self.az_clone
+    dup = self.clone
     dup.owner = company
     dup.copy_of = id
     dup.seed = false
-    # dup.favicon = favicon   # TODO Fix me. Restore favicon copying
+    dup.favicon = favicon
     dup.percent_complete = 0
     dup.position = self.class.get_last_position(owner) + 1
-
+    
     dup.save!
 
     #b = Time.now; puts "-> 2. " + (b-a).to_s; a=b;
@@ -982,7 +959,7 @@ class AzBaseProject < OwnedActiveRecord
 
     designs = AzDesign.find(:all, :conditions => {:az_page_id => az_page_ids})
     design_ids = designs.collect{|design| design.id}
-
+    pp design_ids
     images_num = AzImage.count(:conditions => {:az_design_id => design_ids})
     puts "images_num = #{images_num}"
     design_sources_num = AzDesignSource.count(:conditions => {:az_design_id => design_ids})

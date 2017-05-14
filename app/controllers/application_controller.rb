@@ -1,6 +1,6 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
-require 'authenticated_system'
+
 class ApplicationController < ActionController::Base
 
     def putsd(*args)
@@ -8,22 +8,22 @@ class ApplicationController < ActionController::Base
       puts(args)
     end
 
-    # ############################################################
-    # # ERROR HANDLING et Foo
-    # include ExceptionNotification::ExceptionNotifiable
-    # #Comment out the line below if you want to see the normal rails errors in normal development.
-    # #alias :rescue_action_locally :rescue_action_in_public if Rails.env == 'development'
-    # #self.exception_notifiable_noisy_environments = ["production", 'development']
-    # self.exception_notifiable_noisy_environments = ["production"]
-    # #self.error_layout = 'error'
-    # self.exception_notifiable_notification_level = [:email]
-    # self.exception_notifiable_verbose = false #SEN uses logger.info, so won't be verbose in production
-    # #self.exception_notifiable_pass_through = :hoptoad # requires the standard hoptoad gem to be installed, and setup normally
-    # #    self.exception_notifiable_silent_exceptions = [Acl9::AccessDenied, MethodDisabled, ActionController::RoutingError ]
-    # #specific errors can be handled by something else:
-    # #rescue_from 'Acl9::AccessDenied', :with => :access_denied
-    # # END ERROR HANDLING
-    # ############################################################
+    ############################################################
+    # ERROR HANDLING et Foo
+    include ExceptionNotification::ExceptionNotifiable
+    #Comment out the line below if you want to see the normal rails errors in normal development.
+    #alias :rescue_action_locally :rescue_action_in_public if Rails.env == 'development'
+    #self.exception_notifiable_noisy_environments = ["production", 'development']
+    self.exception_notifiable_noisy_environments = ["production"]
+    #self.error_layout = 'error'
+    self.exception_notifiable_notification_level = [:email]
+    self.exception_notifiable_verbose = false #SEN uses logger.info, so won't be verbose in production
+    #self.exception_notifiable_pass_through = :hoptoad # requires the standard hoptoad gem to be installed, and setup normally
+    #    self.exception_notifiable_silent_exceptions = [Acl9::AccessDenied, MethodDisabled, ActionController::RoutingError ]
+    #specific errors can be handled by something else:
+    #rescue_from 'Acl9::AccessDenied', :with => :access_denied
+    # END ERROR HANDLING
+    ############################################################
 
 
   @@app_session = nil
@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   #protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
+  filter_parameter_logging :password
 
   helper_method :current_user, :logged_in?
 
@@ -59,9 +59,9 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     logger.debug "* Accept-Language: #{request.env['HTTP_ACCEPT_LANGUAGE']}"
-    # # I18n.locale = extract_locale_from_accept_language_header || I18n.default_locale
-    # # I18n.locale = 'ru'
-    # logger.debug "* Locale set to '#{I18n.locale}'"
+    I18n.locale = extract_locale_from_accept_language_header || I18n.default_locale
+    I18n.locale = 'ru'
+    logger.debug "* Locale set to '#{I18n.locale}'"
   end
  
   def extract_locale_from_accept_language_header
@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
   end
 
   def accept_la_filter
-    puts "#{current_user.class} ==================================================================================="
+    #puts "#{current_user.class} ==================================================================================="
     if current_user && current_user.class == AzUser
       #puts "#{current_user.class} ==================================================================================="
       if current_user.la_accepted != nil || !current_user.roles.include?(:user)
@@ -106,7 +106,7 @@ class ApplicationController < ActionController::Base
       @default_url_options = {}
     end
     
-    #@default_url_options[:host] = request.host_with_port
+    @default_url_options[:host] = request.host_with_port
     #request.host  would return the host without the port number (quite obvious I guess)
   end
 
@@ -165,11 +165,11 @@ class ApplicationController < ActionController::Base
     Authorization.current_user = current_user
 
     logger.info "=================== Authorization.current_user =============================="
-    # if Authorization.current_user.class == AzUser
-    #   logger.info ">>>>>>>>>> current user: " + Authorization.current_user.login + ", roles: #{Authorization.current_user.role_symbols}, IP: " + request_origin + " <<<<<<<<<<"
-    # else
-    #   logger.info ">>>>>>>>>> current user: " + 'Guest' + " IP: " + request_origin + " <<<<<<<<<<"
-    # end
+    if Authorization.current_user.class == AzUser
+      logger.info ">>>>>>>>>> current user: " + Authorization.current_user.login + ", roles: #{Authorization.current_user.role_symbols}, IP: " + request_origin + " <<<<<<<<<<"
+    else
+      logger.info ">>>>>>>>>> current user: " + 'Guest' + " IP: " + request_origin + " <<<<<<<<<<"
+    end
 
     @@app_session = session
 
@@ -193,13 +193,13 @@ class ApplicationController < ActionController::Base
   def show_type_str_to_sym(show_type_str)
 
     case show_type_str
-      when 'design'
+      when 'design':
           show_type_sym = :design
-      when 'components'
+      when 'components':
           show_type_sym = :components
-      when 'data'
+      when 'data':
           show_type_sym = :data
-      when 'description'
+      when 'description':
           show_type_sym = :description
       else
         show_type_sym = :design
@@ -209,7 +209,7 @@ class ApplicationController < ActionController::Base
 
   def permission_denied
     #flash[:error] = "Sorry, you are not allowed to access that page."
-    puts "#{Rails.root} ================================================================================"
+    puts "#{RAILS_ROOT} ================================================================================"
     puts request.inspect
     puts request.xhr?
     if request.xhr?
@@ -217,7 +217,7 @@ class ApplicationController < ActionController::Base
     else
       #render :file => "public/403.html", :status => 403, :layout => false
       #render :file => "#{RAILS_ROOT}/public/403.html"
-      text = IO.read("#{Rails.root}/public/403.html")
+      text = IO.read("#{RAILS_ROOT}/public/403.html")
       render :status => 403, :text => text , :content_type => 'text/html' #TODO Чё за фигня? Почему не #render :file => "public/403.html" ???
     end
   end
@@ -261,14 +261,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # unless ActionController::Base.consider_all_requests_local
-  #   rescue_from Exception, :with => :error_500
-  #   rescue_from ActiveRecord::RecordNotFound, :with => :error_404
-  #   #rescue_from AbstractController::ActionNotFound, :with => :method_missing
-  #   rescue_from ActionController::RoutingError, :with => :error_404
-  #   rescue_from ActionController::UnknownController, :with => :error_404
-  #   rescue_from ActionController::UnknownAction, :with => :error_404
-  # end
+  unless ActionController::Base.consider_all_requests_local
+    rescue_from Exception, :with => :error_500
+    rescue_from ActiveRecord::RecordNotFound, :with => :error_404
+    #rescue_from AbstractController::ActionNotFound, :with => :method_missing
+    rescue_from ActionController::RoutingError, :with => :error_404
+    rescue_from ActionController::UnknownController, :with => :error_404
+    rescue_from ActionController::UnknownAction, :with => :error_404
+  end
 
 end
 

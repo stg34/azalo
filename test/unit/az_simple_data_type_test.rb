@@ -2,12 +2,11 @@ require 'test_helper'
 require 'az_simple_data_type_test_helper'
 
 class AzSimpleDataTypeTest < ActiveSupport::TestCase
-  # fixtures :az_base_data_types
+  fixtures :az_base_data_types
 
   #include Authorization::TestHelper
   
-  test 'Create correct AzSimpleDataType' do
-    clear_az_db
+  test "Create correct AzSimpleDataType" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzSimpleDataType, 0)
@@ -23,8 +22,7 @@ class AzSimpleDataTypeTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzSimpleDataType, 1)
   end
 
-  test 'Create incorrect AzSimpleDataType' do
-    clear_az_db
+  test "Create incorrect AzSimpleDataType" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzSimpleDataType, 0)
@@ -41,8 +39,7 @@ class AzSimpleDataTypeTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzSimpleDataType, 0)
   end
 
-  test 'make_copy AzSimpleDataType' do
-    clear_az_db
+  test "make_copy AzSimpleDataType" do
     Authorization.current_user = nil
 
     user = prepare_user(:user)

@@ -1,8 +1,5 @@
 class AzValidator < OwnedActiveRecord
 
-  attr_accessible :owner_id, :az_variable_id, :name, :description, :condition, :message, :position, :copy_of, :seed,
-                  :created_at, :updated_at
-
   belongs_to :az_variable
   
   validates_presence_of :name
@@ -22,7 +19,7 @@ class AzValidator < OwnedActiveRecord
   end
 
   def make_copy_validator(owner, variable)
-    dup = self.az_clone
+    dup = self.clone
     dup.copy_of = id
     dup.owner = owner
     dup.az_variable = variable

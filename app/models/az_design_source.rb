@@ -1,8 +1,5 @@
 class AzDesignSource < ActiveRecord::Base
 
-  attr_accessible :az_design_id, :source_file_name, :source_content_type, :source_file_size, :source_updated_at,
-                  :owner_id, :created_at, :updated_at, :copy_of, :az_design, :id
-
   belongs_to  :az_design
   #has_many    :az_design_sources, :dependent => :destroy
 
@@ -11,11 +8,17 @@ class AzDesignSource < ActiveRecord::Base
 
   validates_attachment_size           :source, :in => 1..20.megabytes
 
-  validate :validate_owner_id
+  def before_destroy
+    puts "#{self.class} #{self.id}"
+  end
+
+  def validate
+    validate_owner_id
+  end
 
   def validate_owner_id
     if !new_record? && az_design.owner_id != owner_id
-      errors.add(:base, "Incorrect owner_id value. Design has '#{az_design.owner_id}', DesignSource has '#{owner_id}'")
+      errors.add_to_base("Incorrect owner_id value. Design has '#{az_design.owner_id}', DesignSource has '#{owner_id}'")
     end
   end
 
@@ -42,7 +45,7 @@ class AzDesignSource < ActiveRecord::Base
 
   def make_copy_design_source(design)
     puts "DESIGN_SOURCE MAKE_COPY new_owner_id = #{design.owner.id}"
-    dup = self.az_clone
+    dup = self.clone
     dup.copy_of = self.id
     dup.az_design = design
     dup.owner = design.owner

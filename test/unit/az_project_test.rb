@@ -67,8 +67,6 @@ class AzProjectTest < ActiveSupport::TestCase
     # =, H - связи между страницами
     # -, | - связи между источниками
 
-    clear_az_db
-
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzPage, 0)
@@ -140,8 +138,6 @@ class AzProjectTest < ActiveSupport::TestCase
   # ---------------------------------------------------------------------------
   test "Copy AzProject 2 (definitions and commons)" do
 
-    clear_az_db
-
     Authorization.current_user = nil
 
     commons = AzCommon.get_child_classes
@@ -210,8 +206,6 @@ class AzProjectTest < ActiveSupport::TestCase
   end
   # ---------------------------------------------------------------------------
   test "Copy AzProject (with assigned block)" do
-
-    clear_az_db
 
     Authorization.current_user = nil
     
@@ -324,8 +318,6 @@ class AzProjectTest < ActiveSupport::TestCase
   end
   # ---------------------------------------------------------------------------
  test "AzProject reset seed test" do
-
-   clear_az_db
 
     Authorization.current_user = nil
 

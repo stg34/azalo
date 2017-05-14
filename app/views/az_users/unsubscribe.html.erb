@@ -1,5 +1,5 @@
 <h1>Изменение состава подписки</h1>
-<%= form_for(@user, :url => {:controller => 'az_users', :action => 'unsubscribe', :id => @crypted_id}) do |f| %>
+<% form_for(@user, :url => {:controller => 'az_users', :action => 'unsubscribe', :id => @crypted_id}) do |f| %>
   <%= render :partial => 'az_users/change_subscribtion', :locals => {:f => f} %>
 <% end %>
 

@@ -2,13 +2,13 @@
   <h1>Статьи</h1>
 
   <% @az_articles.each do |article| %>
-      <h2><%#= link_to h(article.title), article_path(article), :class=> 'article-title' %></h2>
+      <h2><%= link_to h(article.title), article_path(article), :class=> 'article-title' %></h2>
       <%= RedCloth.new(n2e article.announce).to_html %>
-      <%#= link_to t(:az_label_read_article), article_path(article) %>
+      <%= link_to t(:az_label_read_article), article_path(article) %>
   <% end %>
 
   <div class="digg_pagination">
-    <%#= will_paginate @az_articles %>
+    <%= will_paginate @az_articles %>
   </div>
       
 </div>

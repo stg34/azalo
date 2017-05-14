@@ -1,6 +1,6 @@
 class InvitationMailer < ActionMailer::Base
 
-  # include Resque::Mailer  # TODO Removed during Rails 3 migration
+  include Resque::Mailer
 
   def invitation_to_site(email, hash_str, user_name, host, sent_at = Time.now)
     subject    "#{user_name} приглашает на сайт Azalo.net"

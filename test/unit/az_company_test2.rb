@@ -15,9 +15,7 @@ require 'az_project_status_test_helper'
 
 class AzCompanyTest2 < ActiveSupport::TestCase
 
-  test 'AzCompany ceo not disabled' do
-
-    clear_az_db
+ test "AzCompany ceo not disabled" do
 
     Authorization.current_user = nil
     user = prepare_user(:user)
@@ -47,9 +45,7 @@ class AzCompanyTest2 < ActiveSupport::TestCase
     assert_equal 1, company.enabled_employees.size
   end
 
-  test 'AzCompany employee quota test 1' do
-
-    clear_az_db
+  test "AzCompany employee quota test 1" do
 
     Authorization.current_user = nil
     user = prepare_user(:user)
@@ -76,11 +72,9 @@ class AzCompanyTest2 < ActiveSupport::TestCase
     
   end
 
-  test 'AzCompany employee quota test 2' do
+  test "AzCompany employee quota test 2" do
 
     # Добавление сотрудника к компании у которой не исчерпана квота по работникам, удаление и снова добавление нового юзера
-
-    clear_az_db
 
     Authorization.current_user = nil
     user = prepare_user(:user)
@@ -134,11 +128,9 @@ class AzCompanyTest2 < ActiveSupport::TestCase
     
   end
 
-  test 'AzCompany employee quota test 3' do
+  test "AzCompany employee quota test 3" do
 
     # Добаввление сотрудников к компании с большой квотой, а потом даунгрейд тарифа на меньшее кол-во сотрудников
-
-    clear_az_db
 
     Authorization.current_user = nil
     user = prepare_user(:user)
@@ -230,10 +222,8 @@ class AzCompanyTest2 < ActiveSupport::TestCase
 
 
 
-  test 'AzCompany employee quota test private projects' do
+  test "AzCompany employee quota test private projects" do
     # Тестирование работы с приватными проектами при переходах между тарифами
-
-    clear_az_db
 
     Authorization.current_user = nil
     user = prepare_user(:user)

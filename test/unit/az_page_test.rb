@@ -6,10 +6,8 @@ require 'az_image_test_helper'
 
 class AzPageAzPageTypeTest < ActiveSupport::TestCase
   # ---------------------------------------------------------------------------
-  test 'Create correct AzPage' do
+  test "Create correct AzPage" do
     Authorization.current_user = nil
-
-    clear_az_db
 
     assert is_table_size_equal?(AzPage, 0)
 
@@ -32,10 +30,7 @@ class AzPageAzPageTypeTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzPage, 4+1)
   end
   # ---------------------------------------------------------------------------
-  test 'Create incorrect AzPage' do
-
-    clear_az_db
-
+  test "Create incorrect AzPage" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzPage, 0)
@@ -66,10 +61,7 @@ class AzPageAzPageTypeTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzPage, 2+1)
   end
   # ---------------------------------------------------------------------------
-  test 'Copy AzPage 1' do
-
-    clear_az_db
-
+  test "Copy AzPage 1" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzPage, 0)
@@ -83,20 +75,16 @@ class AzPageAzPageTypeTest < ActiveSupport::TestCase
     project_src = create_project(user, company, 'project')
     assert_not_nil project_src
     root_src = project_src.get_root_page
-    assert is_table_size_equal?(AzPage, 3)
 
     project_dst = create_project(user, company, 'project')
     assert_not_nil project_dst
 
-    assert is_table_size_equal?(AzPage, 6)
-
     page_o = create_page(user, company, project_src, 'name_1', AzPage::Page_user, 'description_1', 'title_1', 5, root_src, nil, nil)
     assert_not_nil page_o
 
-    assert is_table_size_equal?(AzPage, 7)
+    assert 5, table_size(AzPage)
 
     page_c = page_o.make_copy_page(project_dst)
-
     assert_not_nil page_c
 
     assert page_c.title == page_o.title
@@ -106,14 +94,11 @@ class AzPageAzPageTypeTest < ActiveSupport::TestCase
     assert page_c.page_type == page_o.page_type
     assert page_c.description == page_o.description
     assert page_c.copy_of == page_o.id
-
+    
     assert is_table_size_equal?(AzPage, 8)
   end
   # ---------------------------------------------------------------------------
-  test 'Copy AzPage 1 (designs and images)' do
-
-    clear_az_db
-
+  test "Copy AzPage 1 (designs and images)" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzPage, 0)
@@ -177,10 +162,7 @@ class AzPageAzPageTypeTest < ActiveSupport::TestCase
     assert is_table_size_equal?(AzImage, 0)
   end
   # ---------------------------------------------------------------------------
-  test 'Destroy design (functionality) source page' do
-
-    clear_az_db
-
+  test "Destroy design (functionality) source page" do
     Authorization.current_user = nil
 
     assert is_table_size_equal?(AzPage, 0)

@@ -2,7 +2,7 @@
 <h2><%= h @az_user.email %></h2>
 <h2><%= h @az_user.name %> <%= h @az_user.lastname %></h2>
 
-<%= form_for(@az_user) do |f| %>
+<% form_for(@az_user) do |f| %>
   <%= f.error_messages %>
 
   <p>

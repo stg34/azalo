@@ -1,9 +1,10 @@
 --- 
-address: 127.0.0.1
+#address: 127.0.0.1
+address: 0.0.0.0
 log_file: log/mongrel.log
 port: "4001"
 cwd: /opt/azalo
 environment: production
 pid_file: /var/run/az_mongrel.pid
-servers: 4
+servers: 3
 

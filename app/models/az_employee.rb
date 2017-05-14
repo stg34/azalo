@@ -10,34 +10,30 @@ class AzEmployee < OwnedActiveRecord
   validates_presence_of     :az_user
   validates_presence_of     :az_company
 
-  validate :validate1
-  # validate :validate_on_create1, on: :create
-
-  def validate_on_create1
+  def validate_on_create
     empl = AzEmployee.find(:first, :conditions => { :az_user_id => self.az_user_id, :az_company_id => self.az_company_id })
     if empl != nil
-      errors.add(:base, "User #{self.az_user.name} already works in #{self.az_company.name}")
+      errors.add_to_base("User #{self.az_user.name} already works in #{self.az_company.name}")
     end
   end
 
-  def validate1
+  def validate
     validate_employee_quota
     validate_ceo_id_not_disabled
-    validate_on_create1 if new_record?
   end
 
   def validate_employee_quota
     if az_company.employee_quota_reached
       if new_record?
         puts 'Error 1 new employee'
-        errors.add(:base, "Error! Employee quota exceed")
+        errors.add_to_base("Error! Employee quota exceed") 
       else
         puts 'Error 2 new employee'
         puts 'existing employee'
         old_emplayee = AzEmployee.find(self.id)
         if old_emplayee.disabled == true and self.disabled == false
           puts 'Error 2.1 new employee ----------------'
-          errors.add(:base, "Error! Employee quota exceed")
+          errors.add_to_base("Error! Employee quota exceed") 
         end
       end
     end
@@ -46,7 +42,7 @@ class AzEmployee < OwnedActiveRecord
 
   def validate_ceo_id_not_disabled
     if !new_record? && self.disabled == true && self.az_user == self.az_company.ceo
-      errors.add(:base, "CEO cannot be disabled")
+      errors.add_to_base("CEO cannot be disabled") 
     end
   end
 

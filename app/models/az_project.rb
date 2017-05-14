@@ -2,41 +2,7 @@ require 'rubygems'
 #require 'paperclip'
 
 class AzProject < AzBaseProject
-
-  # attr_accessible :id, :name, :customer, :favicon_file_name, :favicon_content_type, :favicon_file_size, :favicon_updated_at,
-  #                 :created_at, :updated_at, :owner_id, :author_id, :rm_id, :type, :layout_time, :copy_of, :percent_complete,
-  #                 :az_project_status_id, :disk_usage, :seed, :position, :public_access, :parent_project_id, :deleting,
-  #                 :cache, :explorable, :forkable, :quality_correction
-
-  attr_accessible :author_id,
-    :az_project_status_id,
-    :cache,
-    :copy_of,
-    :created_at,
-    :customer,
-    :deleting,
-    :disk_usage,
-    :explorable,
-    :favicon_content_type,
-    :favicon_file_name,
-    :favicon_file_size,
-    :favicon_updated_at,
-    :forkable,
-    # :id,
-    :layout_time,
-    :name,
-    :owner_id,
-    :parent_project_id,
-    :percent_complete,
-    :position,
-    :public_access,
-    :quality_correction,
-    :rm_id,
-    :seed,
-    :type,
-    :updated_at
-
-
+  
   has_many :az_participants, :dependent => :destroy
   has_many :workers, :through => :az_participants, :source => 'az_employee', :conditions => {:disabled => false}
   has_many :az_activities, :foreign_key => :project_id
@@ -54,9 +20,7 @@ class AzProject < AzBaseProject
   validates_format_of       :name, :with => /^[\w\s\'\-\.]*$/i
   validates_numericality_of :layout_time
 
-  validate :validate1
-
-  def validate1
+  def validate
     #puts "PROJECT VALIDATE '#{name}'..."
     #puts "public_access == #{public_access}"
     #puts "owner.private_project_quota_exceeded = #{owner.private_project_quota_exceeded}"
@@ -68,11 +32,11 @@ class AzProject < AzBaseProject
     if public_access == false && private_project_quota_exceeded_test
       #puts 'PROJECT VALIDATE ERROR!!!'
       if is_active?
-        errors.add(:base, 'Превышено количество приватных проектов для вашего тарифа. Вы можете сделать проект публичным или сменить тариф на другой, с большим количеством приватных проектов.')
+        errors.add_to_base('Превышено количество приватных проектов для вашего тарифа. Вы можете сделать проект публичным или сменить тариф на другой, с большим количеством приватных проектов.')
       end
     end
     if owner.get_locked
-      errors.add(:base, 'Company is locked')
+      errors.add_to_base('Company is locked')
     end
   end
 
@@ -88,9 +52,9 @@ class AzProject < AzBaseProject
 #    puts "=----------------------===========================---------------------------"
 #
 #    if active_projects.size > self.owner.az_tariff.quota_active_projects
-#      errors.add(:base, "Превышено количество активных проектов!")
+#      errors.add_to_base("Превышено количество активных проектов!")
 #    elsif active_projects.size == self.owner.az_tariff.quota_active_projects && !project_in_active
-#      errors.add(:base, "Превышено количество активных проектов!")
+#      errors.add_to_base("Превышено количество активных проектов!")
 #    end
 #
 #  end
@@ -212,8 +176,8 @@ class AzProject < AzBaseProject
   end
 
   def set_percent_complete(pc)
-    # self.percent_complete = pc
-    # save(false)
+    self.percent_complete = pc
+    save(false)
   end
 
   def make_copy(owner)

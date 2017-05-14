@@ -7,7 +7,7 @@
         <span class="contact-label">Вы можете написать в поддержку:</span> <span class="contact-skype">support@azalo.net</span><br/>
         <span class="contact-label">Или оставить сообщение с помощью формы ниже:</span><br/>
 
-        <%= form_for(@az_message, :builder => AzFormBuilder) do |f| %>
+        <% form_for(@az_message, :builder => AzFormBuilder) do |f| %>
           <%#= f.error_messages %>
 
           <%= f.hidden_field :message_type, :value => 0 %>

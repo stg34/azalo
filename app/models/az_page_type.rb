@@ -1,7 +1,6 @@
 # TODO где проверка owner?
 class AzPageType < ActiveRecord::Base
-  # set_table_name "az_base_data_types"
-  self.table_name = 'az_base_data_types'
+  set_table_name "az_base_data_types"
 
   # TODO эта таблица связывает отношением многие-ко-многим таипы и страницы.
   # Может ли один тип принадлежать страницам из разных проектов?

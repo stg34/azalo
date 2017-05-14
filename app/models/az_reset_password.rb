@@ -1,19 +1,16 @@
-require 'digest/md5'
+require 'md5'
 
 class AzResetPassword < ActiveRecord::Base
 
   belongs_to :az_user
   
   validates_presence_of :az_user_id
-
-  after_create :destroy_old_resets
-  before_create :create_hash_str
-
-  def create_hash_str
+  
+  def before_create
     self.hash_str = self.hash_str = MD5.new('w87a2hz' + Time.now.to_s).hexdigest
   end
 
-  def destroy_old_resets
+  def after_create
 
     AzResetPassword.delete_all('created_at < DATE_ADD(Now(), INTERVAL -30 DAY)')
     
@@ -24,6 +21,7 @@ class AzResetPassword < ActiveRecord::Base
       end
     end
 
+    #self.hash_str = '1234567890'
   end
 
 end

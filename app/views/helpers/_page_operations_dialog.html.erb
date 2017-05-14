@@ -2,7 +2,7 @@
 <div id="typed-page-operations-dialog">
   <%= page_dialog_title("Операции", page) %>
   <% tpaop = typed_page.az_allowed_operations.collect{|aop| aop.az_operation.id} %>
-  <%= az_remote_form_for(typed_page,
+  <% az_remote_form_for(typed_page,
                      :complete => "Windows.closeAll(); update_page_box(#{page.id})",
                      :url => {:controller => 'az_typed_pages', :action => 'update_operations', :id => typed_page.id}) do |f| %>
     <table class="table" style="width: 200px">

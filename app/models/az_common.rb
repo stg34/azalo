@@ -1,24 +1,21 @@
-require 'statuses'
-
 class AzCommon < OwnedActiveRecord
 
   include Statuses
-
-  attr_accessible :owner_id, :az_base_project_id, :name, :description, :comment, :type, :copy_of, :created_at, :updated_at, :seed, :status, :position
 
   belongs_to :az_base_project
 
   validates_presence_of     :name
   validates_presence_of     :description
 
-  validate :validate_owner
-  before_create :set_initial_position
-
-  def validate_owner
+  def validate
     validate_owner_id_common('common', 'Project')
   end
-
+  
   # TODO validete az_common.owner_id == az_base_project.owner_id
+
+  def before_create
+    self.set_initial_position
+  end
 
   def self.get_by_company(company)
     return find_all_by_owner_id(company.id, :conditions => {:az_base_project_id => nil}, :order => :position)
@@ -57,7 +54,7 @@ class AzCommon < OwnedActiveRecord
   end
 
   def make_copy_common(owner, project)
-    dup = self.az_clone
+    dup = self.clone
     dup.copy_of = id
     dup.owner = owner
     dup.az_base_project = project

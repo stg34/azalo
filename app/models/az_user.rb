@@ -91,7 +91,7 @@ class AzUser < ActiveRecord::Base
 #    acts_as_captcha #:base => "base error when captcha fails", :field => "field error when captcha fails"
 #  end
 
-  validate :validate_on_update, on: :update
+  
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #
@@ -158,7 +158,7 @@ class AzUser < ActiveRecord::Base
         #puts "2"
         if self.new_password != self.new_password_confirmation
           #puts "3"
-          errors.add(:base, "Пароли не совападают.")
+          errors.add_to_base("Пароли не совападают.")
           errors.add(:new_password, "Новый пароль должен совпадать с подтверждением.")
           errors.add(:new_password_confirmation, "Подтверждение должно совпадать с новым паролем.")
         elsif self.new_password.empty?
@@ -167,7 +167,7 @@ class AzUser < ActiveRecord::Base
         end
       else
         #puts "4"
-        errors.add(:base, "Неверный старый пароль.")
+        errors.add_to_base("Неверный старый пароль.")
         errors.add(:old_password, "Неверный старый пароль.")
       end
     end
@@ -178,11 +178,11 @@ class AzUser < ActiveRecord::Base
 #    if !AzUser.registration_open?
 #      invitation = AzInvitation.find(:first, :conditions => {:hash_str => self.hash_str})
 #      if invitation == nil
-#        errors.add(:base, "Your invitation not found. Sorry.")
+#        errors.add_to_base("Your invitation not found. Sorry.")
 #        errors.add(:hash_str, "приглашение не найдено")
 #      else
 #        if invitation.email != self.email
-#          errors.add(:base, "You enter email differs from email where invitation was sent.")
+#          errors.add_to_base("You enter email differs from email where invitation was sent.")
 #          errors.add(:email, "приглашение было выслано на другой адрес")
 #        end
 #      end
@@ -245,6 +245,10 @@ class AzUser < ActiveRecord::Base
 
   def get_invitations_to_get_work
     return AzInvitation.find(:all, :conditions => {:invitation_type => 'company', :user_id => self.id, :rejected => nil})
+  end
+
+  def after_create
+    
   end
 
   def guest_project_ids

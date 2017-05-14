@@ -1,4 +1,4 @@
-require 'digest/md5'
+require 'md5'
 
 class AzGuestLink < OwnedActiveRecord # TODO
 
@@ -20,9 +20,8 @@ class AzGuestLink < OwnedActiveRecord # TODO
   # TODO validete az_guest_link.owner_id == az_base_project.owner_id
 
   attr_accessor :expired_in
-  before_validation :build_hash_str, on: :create
 
-  def build_hash_str
+  def before_validation_on_create
     # TODO проверить, что такого хэша еще нет
     self.hash_str = MD5.new('g8482h9' + Time.now.to_s).hexdigest
   end
