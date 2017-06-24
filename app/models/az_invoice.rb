@@ -1,6 +1,6 @@
 class AzInvoice < ActiveRecord::Base
   belongs_to :az_balance_transaction
-  has_many :az_bills
+  has_many :az_bills, :dependent => :destroy
 
   def get_total_fee
     

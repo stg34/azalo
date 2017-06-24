@@ -7,16 +7,16 @@ class AzCompany < ActiveRecord::Base
   belongs_to :ceo, :class_name=>'AzUser', :foreign_key=>'ceo_id'
   belongs_to :az_tariff
 
-  has_many :invitations, :class_name=>'AzInvitation', :foreign_key => 'invitation_data', :conditions => {:invitation_type => 'company'}
+  has_many :invitations,              :class_name=>'AzInvitation', :foreign_key => 'invitation_data', :conditions => {:invitation_type => 'company'}, :dependent => :destroy
   has_many :not_accepted_invitations, :class_name=>'AzInvitation', :foreign_key => 'invitation_data', :conditions => {:invitation_type => 'company'}
 
   has_many :enabled_employees, :class_name => 'AzEmployee', :conditions => {:disabled => false}
   has_many :az_employees, :dependent => :destroy
   
-  has_one :az_test_period
-  has_one :az_warning_period
+  has_one :az_test_period, :dependent => :destroy
+  has_one :az_warning_period, :dependent => :destroy
 
-  has_many :az_balance_transactions
+  has_many :az_balance_transactions, :dependent => :destroy
 
   attr_accessor :delete_logo #Чекбокс для удаления логотипа при редактировании юзером своей компании
   attr_accessor :create_default_content_co_create #Чекбокс для создания дефолтного контента, при ручном создании компании админом

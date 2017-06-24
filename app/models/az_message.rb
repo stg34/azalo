@@ -1,3 +1,4 @@
+require 'will_paginate' # TDOD Без этого не стартует rake azalo:db_info. WTF???
 class AzMessage < ActiveRecord::Base
 
   validates_presence_of     :email

@@ -5,7 +5,7 @@ class AzProject < AzBaseProject
   
   has_many :az_participants, :dependent => :destroy
   has_many :workers, :through => :az_participants, :source => 'az_employee', :conditions => {:disabled => false}
-  has_many :az_activities, :foreign_key => :project_id
+  has_many :az_activities, :foreign_key => :project_id, :dependent => :destroy
 
   #has_one :az_store_item, :as => :item # TODO похоже это не работает если наш класс использует STI (а наш класс AzProjectBlock как раз и использует). Баг рельсов
   # в качестве решения проблемы используем функцию ниже

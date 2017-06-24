@@ -106,9 +106,8 @@ end
 namespace :azalo  do
   desc "remove_dead_companies2"
   task :remove_dead_companies2 => :environment do
-
-    companies = AzCompany.find(:all)
-    #companies = AzCompany.find(:all, :conditions => {:id => 106})
+    companies = AzCompany.find(:all, :conditions => 'id > 120', :limit => 1000)
+    puts "#{companies.count}"
     removed_companies_num = 0
     companies.each_with_index do |company, i|
       if company.ceo.login == 'admin' # Пропуск предзаготовленных компаний принадлежащих админу.
@@ -126,5 +125,46 @@ namespace :azalo  do
   end
 end
 
+namespace :azalo  do
+  desc 'remove_users_wo_company_and_employment'
+  task :remove_users_wo_company_and_employment => :environment do
+    Authorization.current_user = AzUser.find(:first, :conditions=> {:login => 'admin'})
+    users = AzUser.all
+    users.each do |user|
+      puts '-'*80
+      puts "#{user.login} - #{user.az_companies.count}:#{user.employments.count}"
+      if user.az_companies.count == 0 && user.employments.count == 0
+        user.destroy
+      end
+    end
+  end
+end
 
+namespace :azalo  do
+  desc 'remove_dead_using_periods'
+  task :remove_dead_using_periods => :environment do
+    periods = AzUsingPeriod.all
+    periods.each do |period|
+      if period.az_company.blank?
+        puts '-'*80
+        puts "#{period.id}"
+        period.destroy
+      end
+    end
+  end
+end
+
+namespace :azalo  do
+  desc 'remove_dead_balance_transactions'
+  task :remove_dead_balance_transactions => :environment do
+    transactions = AzBalanceTransaction.all
+    transactions.each do |transaction|
+      if transaction.az_company.blank?
+        puts '-'*80
+        puts "#{transaction.id}"
+        transaction.destroy
+      end
+    end
+  end
+end
 

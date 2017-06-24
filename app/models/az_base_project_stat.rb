@@ -1,5 +1,7 @@
 class AzBaseProjectStat < ActiveRecord::Base
 
+  belongs_to :az_base_project
+
   def quality_metric(pages_num_log, value, n, weight)
     x = value/pages_num_log
     return x/Math.sqrt(x*x + n)*weight

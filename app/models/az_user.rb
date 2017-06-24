@@ -57,8 +57,8 @@ class AzUser < ActiveRecord::Base
   #has_many :created_projects,       :class_name => "AzProject",       :foreign_key => 'author_id'
   #has_many :created_blocks,         :class_name => "AzProjectBlock",  :foreign_key => 'author_id'
   #has_many :participated_projects,  :through => :works, :source => :project
-  has_many :az_contacts, :foreign_key => 'my_id'
-  has_many :az_subscribtions
+  has_many :az_contacts, :foreign_key => 'my_id', :dependent => :destroy
+  has_many :az_subscribtions, :dependent => :destroy
 
   has_many :az_subscribtion_categories, :through => :az_subscribtions, :source => :az_subscribtion_category
 
@@ -73,8 +73,6 @@ class AzUser < ActiveRecord::Base
   attr_accessor :hash_str
   attr_accessor :invited_to_company
 
-  
-
   #has_and_belongs_to_many   :contacts, :class_name=>'User', :join_table => "contacts", :foreign_key => 'my_id', :association_foreign_key => 'contact_id'
 
   # HACK HACK HACK -- how to do attr_accessible from here?
@@ -83,8 +81,8 @@ class AzUser < ActiveRecord::Base
   attr_accessible :login, :email, :name, :lastname, :password, :password_confirmation, :roles
   attr_accessor :old_password, :new_password, :new_password_confirmation
 
-  has_many :az_guest_links
-  has_many :az_user_logins, :limit => 2, :order => "created_at DESC"
+  has_many :az_guest_links, :dependent => :destroy
+  has_many :az_user_logins, :limit => 2, :order => "created_at DESC", :dependent => :destroy
   has_many :all_logins, :order => "created_at DESC", :class_name => "AzUserLogin",  :foreign_key => 'az_user_id'
 
 #  if @@open_registartion
