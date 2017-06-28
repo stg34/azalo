@@ -13,6 +13,7 @@ class AzNews < ActiveRecord::Base
 
   def self.get_latest_news_year_month
     news = AzNews.find(:first, :limit => 1, :order =>"created_at DESC", :conditions => {:visible => true})
+    return [] if news.blank?
     return [news.created_at.year, news.created_at.month]
   end
 

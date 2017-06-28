@@ -139,7 +139,6 @@ class AzProjectsController < AzBaseProjectsController
       end
       #ApplicationController.set_guest_project_ids(project.id)
       #prepare_show_data(project.id)
-      #@project.set_percent_complete(@project_complete_percent)
     end
 
     respond_to do |format|
@@ -180,7 +179,6 @@ class AzProjectsController < AzBaseProjectsController
 
     if !(@project.cache && fragment_exist?(:controller => params[:controller], :action => params[:action], :id => params[:id], :show_type => params[:show_type]))
       prepare_show_data(params[:id])
-      @project.set_percent_complete(@project_complete_percent)
       @project_tree = PrTree.build(@project)
       @project_commons = commons_by_classes(@project)
       @common_classes = Common_classes
@@ -207,45 +205,6 @@ class AzProjectsController < AzBaseProjectsController
         format.xml  { render :xml => @project.to_xml(xml_inlude) }
     end
   end
-
-  
-
-#  def show1
-#
-#    if session[:project_show_type] == nil
-#      session[:project_show_type] = :design
-#    end
-#    @show_type = session[:project_show_type]
-#
-#    prepare_show_data(params[:id])
-#
-#    @project.set_percent_complete(@project_complete_percent)
-#
-#    @project_commons = commons_by_classes(@project)
-#
-#    @common_classes = Common_classes
-#
-#    az_pages_options =  {:except => ['updated_at', 'created_at']}
-#    xml_inlude = { :include => { :az_pages => az_pages_options },  :except => ['updated_at', 'created_at'] }
-#
-#    respond_to do |format|
-#        #if current_user == nil
-#        #  format.html { render 'plain_show'}
-#        #else
-#          #format.html { render 'show'}
-#          putsd "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-#          if session[:collapsed_project_panel] == nil
-#            project_panel_collapsed = true
-#            putsd "project_panel_collapsed = true"
-#          else
-#            project_panel_collapsed = !(session[:collapsed_project_panel][@project.id] == true)
-#          end
-#
-#          format.html { render :template => 'az_base_projects/show', :locals => { :project_panel_collapsed => project_panel_collapsed }}
-#        #end
-#        format.xml  { render :xml => @project.to_xml(xml_inlude) }
-#    end
-#  end
 
   def prepare_show_data(project_id)
     a = Time.now

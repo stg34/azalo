@@ -19,7 +19,6 @@ class AzSettingsController < ApplicationController
   def seeds
     @seed_project_blocks = AzProjectBlock.get_seeds
     @seed_projects = AzProject.get_seeds
-    @seed_tasks = AzTask.get_seeds
     @seed_structs = AzStructDataType.get_seeds
     @seed_commons = AzCommon.get_seeds
     @seed_definitions = AzDefinition.get_seeds

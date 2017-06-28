@@ -46,7 +46,7 @@
     </td>
     <td>
       <% company.az_employees.each do |az_employee| %>
-        <%= az_employee.az_user.login %><br/>
+        <%= az_employee.az_user.try(:login) %><br/>
       <% end %>
     </td>
     <td>

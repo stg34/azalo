@@ -56,44 +56,6 @@
 
 <br />
 
-<h2>Задачи</h2>
-
-<table class="table">
-  <tr>
-    <th>Id</th>
-    <th><%= t(:az_label_project_owner) %></th>
-    <th><%= t(:az_label_name) %></th>
-    <th><%= t(:az_label_description) %></th>
-    <th>Родитель</th>
-    <th>Тип</th>
-    <th>Копия</th>
-    <th><%= AzPage.get_page_types[AzPage::Page_user] %></th>
-    <th><%= AzPage.get_page_types[AzPage::Page_admin] %></th>
-    <th>.</th>
-    <th>.</th>
-    <th>.</th>
-  </tr>
-
-<% @seed_tasks.each do |az_task| %>
-  <tr>
-    <td><%=h az_task.id %></td>
-    <td><%=h az_task.get_owner_name %></td>
-    <td><%=h az_task.name %></td>
-    <td><%=h az_task.description %></td>
-    <td><%=h az_task.parent_id %></td>
-    <td><%=h AzTask.get_task_types[az_task.task_type] %></td>
-    <td><%=h az_task.copy_of %></td>
-    <td><%= boolean_to_img(az_task.role_user) %></td>
-    <td><%= boolean_to_img(az_task.role_admin) %></td>
-    <td><%= link_to t(:az_label_show), az_task %></td>
-    <td><%= link_to t(:az_label_edit), edit_az_task_path(az_task) %></td>
-    <td><%= link_to t(:az_label_delete), az_task, :confirm => t(:az_label_are_you_sure), :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
 <h2>Структуры</h2>
 <table class="table">
   <tr>

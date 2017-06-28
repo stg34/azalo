@@ -175,11 +175,6 @@ class AzProject < AzBaseProject
     return {:tasks_time => 0, :tasks_time_done => 0 }
   end
 
-  def set_percent_complete(pc)
-    self.percent_complete = pc
-    save(false)
-  end
-
   def make_copy(owner)
     dup = super(owner)
     dup.created_at = Time.now

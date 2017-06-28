@@ -106,8 +106,7 @@ end
 namespace :azalo  do
   desc "remove_dead_companies2"
   task :remove_dead_companies2 => :environment do
-    companies = AzCompany.find(:all, :conditions => 'id > 120', :limit => 1000)
-    puts "#{companies.count}"
+    companies = AzCompany.find(:all, :conditions => 'id > 2', :limit => 1000)
     removed_companies_num = 0
     companies.each_with_index do |company, i|
       if company.ceo.login == 'admin' # Пропуск предзаготовленных компаний принадлежащих админу.

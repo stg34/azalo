@@ -56,9 +56,9 @@
               <% end %>
             <%= aligner_tag %>
             <% y_m = AzNews.get_latest_news_year_month %>
-            <% news_path = dashboard_news_archive_path(:year => y_m[0], :month => y_m[1])%>
+            <% news_path = dashboard_news_archive_path(:year => y_m[0] || 2000, :month => y_m[1] || 1)%>
             <div class="new-archive-link-holder">
-              <%= link_to "Все новости",  news_path%>
+              <%= link_to "Все новости",  news_path %>
             </div>
           </div>
           <div class="explore-block">

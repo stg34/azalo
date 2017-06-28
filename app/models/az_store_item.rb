@@ -4,7 +4,7 @@ class AzStoreItem < ActiveRecord::Base
   belongs_to :az_language
 
   has_many :az_purchases
-  has_many :az_store_item_scetches
+  has_many :az_store_item_scetches, :dependent => :destroy
 
   has_attached_file :scheme, :styles => { :big => "600x1200>", :medium => '400x800>', :small => "200x400>", :tiny => "100x200>"}
 

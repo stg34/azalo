@@ -845,9 +845,9 @@ module ApplicationHelper
 
   def item_list_header(title, company, show_company_name = false)
 
-    if !company.az_tariff.show_logo_and_site
-      return ''
-    end
+    # if !company.az_tariff.show_logo_and_site
+    #   return ''
+    # end
 
     image = image_tag(company.logo.url(:main), :alt => "#{company.name}")
     
