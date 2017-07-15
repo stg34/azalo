@@ -3,4 +3,4 @@ INSTALLATION
 0. install ruby ruby-1.8.7-p358
 1. gem update --system 1.6.2
 2. gem install bundler (version? 1.14.6?)
-
+3. mysql -u <mysql-userR> -p azalo < db/dumps/dump.2017.07.15.sql
