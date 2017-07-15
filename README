@@ -4,6 +4,15 @@ INSTALLATION
 1. gem update --system 1.6.2
 2. gem install bundler (version? 1.14.6?)
 3. mysql -u <mysql-userR> -p azalo < db/dumps/dump.2017.07.15.sql
+4. Если ошибка вида:
+"Mysql::Error: Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column "
+
+https://stackoverflow.com/questions/34115174/error-related-to-only-full-group-by-when-executing-a-query-in-mysql
+
+mysql> set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+mysql> set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+(Надо разобраться, как сделать нормально)
+
 
 
 Login: admin
